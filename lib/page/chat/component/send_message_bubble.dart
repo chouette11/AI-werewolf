@@ -20,16 +20,17 @@ class SendMessageBubble extends StatelessWidget {
                 blurRadius: 1,
               )
             ],
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(40),
-              topLeft: Radius.circular(40),
-              bottomLeft: Radius.circular(40),
+            borderRadius: BorderRadius.all(
+              Radius.circular(24),
             ),
-            color: ColorConstant.purple95
+            color: ColorConstant.secondary,
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(message),
+            child: Text(
+              message,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ),
       ),

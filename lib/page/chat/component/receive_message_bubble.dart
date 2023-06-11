@@ -17,15 +17,15 @@ class ReceiveMessageBubble extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: ColorConstant.black60,
                   spreadRadius: 0.1,
                   blurRadius: 1,
                 )
               ],
-              borderRadius: BorderRadius.circular(20),
-              color: ColorConstant.purple95,
+              borderRadius: BorderRadius.circular(24),
+              color: ColorConstant.secondary,
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
