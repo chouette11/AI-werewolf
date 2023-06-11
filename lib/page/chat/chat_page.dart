@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 
@@ -12,7 +13,15 @@ class ChatPage extends StatelessWidget {
     final myOpp = ["aaaa", "bbbb", "cccc"];
     final oppMy = ["dddd", "eeee", "ffff"];
     return Scaffold(
-      appBar: AppBar(title: const Text("お題はうどん")),
+      appBar: AppBar(
+        backgroundColor: ColorConstant.main,
+        centerTitle: true, 
+        title: const Text(
+          "お題はうどん",
+          style: TextStyle(color: ColorConstant.base, fontSize: 16),
+        ),
+        automaticallyImplyLeading: false,
+      ),
       bottomSheet: const BottomTextField(),
       body: ListView.builder(
         reverse: true,
