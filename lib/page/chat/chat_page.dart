@@ -27,6 +27,7 @@ class ChatPage extends ConsumerWidget {
           // ref.read(messagesProvider.notifier).addMessage("aaaa");
         },
         child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         backgroundColor: ColorConstant.main,
         centerTitle: true, 
