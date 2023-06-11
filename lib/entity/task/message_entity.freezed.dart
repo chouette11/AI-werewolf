@@ -113,9 +113,10 @@ class __$$_MessageEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MessageEntity implements _MessageEntity {
+class _$_MessageEntity extends _MessageEntity {
   const _$_MessageEntity(
-      {required this.content, required this.userId, required this.createdAt});
+      {required this.content, required this.userId, required this.createdAt})
+      : super._();
 
   @override
   final String content;
@@ -150,11 +151,12 @@ class _$_MessageEntity implements _MessageEntity {
       __$$_MessageEntityCopyWithImpl<_$_MessageEntity>(this, _$identity);
 }
 
-abstract class _MessageEntity implements MessageEntity {
+abstract class _MessageEntity extends MessageEntity {
   const factory _MessageEntity(
       {required final String content,
       required final String userId,
       required final DateTime createdAt}) = _$_MessageEntity;
+  const _MessageEntity._() : super._();
 
   @override
   String get content;
