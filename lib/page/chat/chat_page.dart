@@ -14,9 +14,9 @@ class ChatPage extends StatelessWidget {
     final oppMy = ["dddd", "eeee", "ffff"];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorConstant.accent,
+        backgroundColor: ColorConstant.main,
         centerTitle: true, 
-        title: Text(
+        title: const Text(
           "お題はうどん",
           style: TextStyle(color: ColorConstant.base, fontSize: 16),
         ),
