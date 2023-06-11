@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/repository/task_repository.dart';
+import 'package:wordwolf/repository/message_repository.dart';
 
 final exampleTextFieldProvider = StateProvider<String>((ref) => '');
 
