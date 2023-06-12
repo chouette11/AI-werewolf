@@ -4,9 +4,8 @@ class ColorConstant {
   ColorConstant._();
 
   static const base = Color(0xFFFFFFFF);
-  static const secondary = Color(0xFFDCE7CD);
-  static const main = Color(0xFF58624E);
-  static const accent = Color(0xFF161F0F);
+  static const secondary = Color(0xFFE1EDE8);
+  static const main = Color(0xFF397756);
 
   static const black100 = Color(0xFFFFFFFF);
   static const black99 = Color(0xFFFAFAFA);

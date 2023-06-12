@@ -19,7 +19,7 @@ class ReceiveMessageBubble extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
-                  color: ColorConstant.black60,
+                  color: ColorConstant.secondary,
                   spreadRadius: 0.1,
                   blurRadius: 1,
                 )

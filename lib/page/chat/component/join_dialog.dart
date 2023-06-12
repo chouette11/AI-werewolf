@@ -16,7 +16,7 @@ class AnswerDialog extends ConsumerWidget {
     final value = ref.watch(answerRadioValueProvider);
 
     return AlertDialog(
-      backgroundColor: ColorConstant.secondary,
+      backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -29,6 +29,7 @@ class AnswerDialog extends ConsumerWidget {
             ListTile(
               title: const Text('Lafayette'),
               leading: Radio<String>(
+                activeColor: ColorConstant.main,
                 value: userList[0],
                 groupValue: value,
                 onChanged: (String? value) {
@@ -43,6 +44,7 @@ class AnswerDialog extends ConsumerWidget {
             ListTile(
               title: const Text('Thomas Jefferson'),
               leading: Radio<String>(
+                activeColor: ColorConstant.main,
                 value: userList[1],
                 groupValue: value,
                 onChanged: (String? value) {
@@ -54,7 +56,12 @@ class AnswerDialog extends ConsumerWidget {
                 },
               ),
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('決定')),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('決定'),
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: ColorConstant.main),
+            ),
           ],
         ),
       ),

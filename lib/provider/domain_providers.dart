@@ -16,7 +16,7 @@ final routerProvider = Provider<GoRouter>(
         routes: [
           GoRoute(
             path: 'chat',
-            builder: (context, state) => const ChatPage(),
+            builder: (context, state) => ChatPage(roomId: state.extra! as String),
           ),
         ],
       ),

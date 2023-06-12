@@ -1,49 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/provider/presentation_providers.dart';
 
-class JoinDialog extends StatelessWidget {
+class JoinDialog extends ConsumerWidget {
   const JoinDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       backgroundColor: ColorConstant.secondary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
-      content: const SizedBox(
+      content: SizedBox(
         width: 240,
         height: 160,
         child: Column(
           children: [
-            Text(
+            const Text(
               '参加ID',
               style: TextStyleConstant.normal32,
             ),
-            SizedBox(height: 56),
+            const SizedBox(height: 56),
             SizedBox(
               height: 40,
               width: 224,
               child: TextField(
+                onChanged: (value) => ref
+                    .watch(idTextFieldProvider.notifier)
+                    .update((state) => value),
                 textAlign: TextAlign.left,
                 autofocus: true,
-                cursorColor: ColorConstant.accent,
+                cursorColor: ColorConstant.main,
                 decoration: InputDecoration(
                   fillColor: ColorConstant.base,
                   filled: true,
                   hintText: 'IDを入力',
                   hintStyle:
-                      TextStyle(fontSize: 16, color: ColorConstant.accent),
+                      TextStyle(fontSize: 16, color: ColorConstant.black0),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                     borderSide: BorderSide.none,
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  color: ColorConstant.accent,
+                  color: ColorConstant.black0,
                 ),
               ),
             ),
@@ -56,9 +62,12 @@ class JoinDialog extends StatelessWidget {
             height: 48,
             width: 120,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                final textValue = ref.watch(idTextFieldProvider);
+                context.push("/chat", extra: textValue);
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.main,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -66,12 +75,13 @@ class JoinDialog extends StatelessWidget {
               child: Text(
                 "参加する",
                 style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.base,
+                  color: ColorConstant.black100,
                 ),
               ),
             ),
           ),
         ),
+        SizedBox(height: 24,)
       ],
     );
   }

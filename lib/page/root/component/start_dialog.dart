@@ -1,17 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
-class StartDialog extends StatelessWidget {
-  const StartDialog({super.key});
-  final String id = "1234567890";
+class StartDialog extends ConsumerWidget {
+  const StartDialog({super.key, required this.roomId});
+  final String roomId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      backgroundColor: ColorConstant.secondary,
+      backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -26,7 +30,7 @@ class StartDialog extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              id,
+              roomId,
               style: TextStyleConstant.normal32,
             ),
             const SizedBox(height: 56),
@@ -40,7 +44,7 @@ class StartDialog extends StatelessWidget {
             width: 120,
             child: ElevatedButton(
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: id));
+                Clipboard.setData(ClipboardData(text: roomId));
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('テキストがクリップボードに保存されました'),
@@ -48,7 +52,7 @@ class StartDialog extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.main,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -68,9 +72,12 @@ class StartDialog extends StatelessWidget {
             height: 48,
             width: 120,
             child: ElevatedButton(
-              onPressed: () => context.push("/chat"),
+              onPressed: () {
+                ref.read(roomRepositoryProvider).makeRoom(roomId);
+                context.push("/chat", extra: roomId);
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -78,12 +85,13 @@ class StartDialog extends StatelessWidget {
               child: Text(
                 "参加する",
                 style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.base,
+                  color: ColorConstant.black0,
                 ),
               ),
             ),
           ),
         ),
+        SizedBox(height: 24),
       ],
     );
   }
