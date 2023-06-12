@@ -6,3 +6,5 @@ final exampleTextFieldProvider = StateProvider<String>((ref) => '');
 final messagesStreamProvider = StreamProvider(
   (ref) => ref.watch(messageRepositoryProvider).getMessageStream("0000"),
 );
+
+final answerRadioValueProvider = StateProvider<String>((ref) => '');

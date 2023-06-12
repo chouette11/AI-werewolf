@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/page/chat/component/join_dialog.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
 import 'package:wordwolf/page/root/component/start_dialog.dart';
 
@@ -11,6 +12,14 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return const AnswerDialog();
+          },
+        );
+      }),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
