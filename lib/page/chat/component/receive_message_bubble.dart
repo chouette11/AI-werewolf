@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 
 class ReceiveMessageBubble extends StatelessWidget {
-  const ReceiveMessageBubble({Key? key, required this.message}) : super(key: key);
+  const ReceiveMessageBubble({Key? key, required this.message})
+      : super(key: key);
   final String message;
 
   @override
@@ -29,7 +31,14 @@ class ReceiveMessageBubble extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(message),
+              child: SizedBox(
+                width: 200,
+                child: Text(
+                  message,
+                  style: TextStyleConstant.normal16,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
             ),
           ),
         ],
