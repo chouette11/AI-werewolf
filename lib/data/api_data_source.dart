@@ -2,8 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/api/gpt_api.dart';
 import 'package:wordwolf/document/message/message_document.dart';
 
-final apiProvider =
-    Provider<ApiDataSource>((ref) => ApiDataSource(ref: ref));
+final apiProvider = Provider<ApiDataSource>((ref) => ApiDataSource(ref: ref));
 
 class ApiDataSource {
   ApiDataSource({required this.ref});
@@ -14,11 +13,11 @@ class ApiDataSource {
   /// Message
   ///
 
-  Future<MessageDocument> fetchMessage(String topic) async {
+  Future<Message> fetchMessage(String topic) async {
     try {
       final api = ref.read(apiClientProvider);
-      final message = await api.fetchMessage(Topic(title: topic));
-      return MessageDocument.fromJson(message.toJson());
+      final message = await api.fetchMessage(Topic(topic: topic));
+      return message;
     } catch (e) {
       print('api_getMessage');
       throw e;
