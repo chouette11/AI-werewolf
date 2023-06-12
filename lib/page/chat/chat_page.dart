@@ -28,7 +28,7 @@ class ChatPage extends ConsumerWidget {
       ),
       appBar: AppBar(
         backgroundColor: ColorConstant.black100,
-        centerTitle: true, 
+        centerTitle: true,
         title: const Text(
           "お題はうどん",
           style: TextStyleConstant.bold14,
@@ -38,21 +38,26 @@ class ChatPage extends ConsumerWidget {
       bottomSheet: BottomTextField(roomId: roomId),
       body: messages.when(
         data: (data) {
-          return ListView.builder(
-            reverse: true,
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              data.sort((a, b) {
-                //sorting in descending order
-                return b.createdAt.compareTo(a.createdAt);
-              });
-              final message = data[index];
-              if (message.userId == "my") {
-                return SendMessageBubble(message: message.content);
-              } else {
-                return ReceiveMessageBubble(message: message.content);
-              }
-            },
+          return SizedBox(
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).viewInsets.bottom -
+                180,
+            child: ListView.builder(
+              reverse: true,
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                data.sort((a, b) {
+                  //sorting in descending order
+                  return b.createdAt.compareTo(a.createdAt);
+                });
+                final message = data[index];
+                if (message.userId == "my") {
+                  return SendMessageBubble(message: message.content);
+                } else {
+                  return ReceiveMessageBubble(message: message.content);
+                }
+              },
+            ),
           );
         },
         error: (error, stackTrace) {
