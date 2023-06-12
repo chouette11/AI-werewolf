@@ -93,12 +93,21 @@ class RootPage extends StatelessWidget {
                         ),
                         actions: <Widget>[
                           Center(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(backgroundColor: ColorConstant.accent),
-                              child: const Text(
-                                "参加する",
-                                style: TextStyleConstant.white24,
+                            child: SizedBox(
+                              height: 48,
+                              width: 120,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorConstant.accent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "参加する",
+                                  style: TextStyleConstant.white16,
+                                ),
                               ),
                             ),
                           ),
