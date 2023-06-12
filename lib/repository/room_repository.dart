@@ -15,6 +15,6 @@ class RoomRepository {
     final firestore = ref.read(firestoreProvider);
     final entity = RoomEntity(id: roomId);
     final roomDoc = entity.toRoomDocument();
-    await firestore.insertRoom(roomDoc);
+    await firestore.createRoom(roomDoc);
   }
 }
