@@ -16,7 +16,7 @@ class BottomTextField extends ConsumerWidget {
         alignment: Alignment.center,
         child: Column(
           children: [
-            Text('あなたはユーザー１（一般人）'),
+            const Text('あなたはユーザー１（一般人）'),
             const SizedBox(height: 8),
             Row(
               children: [
