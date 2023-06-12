@@ -80,7 +80,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'https://test-5uxbsy4xrq-an.a.run.app',
+              'https://wordwolf-5uxbsy4xrq-an.a.run.app',
               queryParameters: queryParameters,
               data: _data,
             )
