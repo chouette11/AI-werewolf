@@ -8,15 +8,25 @@ import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
-class ChatPage extends ConsumerWidget {
-  const ChatPage({
-    super.key,
-    required this.roomId,
-  });
+class ChatPage extends ConsumerStatefulWidget {
+  const ChatPage({super.key, required this.roomId});
   final String roomId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends ConsumerState<ChatPage> {
+  final topic = "うどん";
+
+  @override
+  void initState() {
+    ref.read(messageRepositoryProvider).addMessageFromGpt(topic, widget.roomId);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(roomId));
     return WillPopScope(
       onWillPop: () async => false,
