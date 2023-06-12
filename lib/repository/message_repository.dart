@@ -11,9 +11,10 @@ class MessageRepository {
   final Ref ref;
 
   /// 新規タスク追加
-  Future<void> addMessage(MessageEntity messageEntity, String roomId) async {
+  Future<void> addMessage(String content, String roomId) async {
     final firestore = ref.read(firestoreProvider);
-    final messageDoc = await messageEntity.toMessageDocument();
+    final entity = MessageEntity(content: content, userId: "userId", createdAt: DateTime.now());
+    final messageDoc = await entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
   }
 

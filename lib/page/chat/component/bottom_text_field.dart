@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/message_repository.dart';
 
 class BottomTextField extends ConsumerWidget {
   const BottomTextField({super.key});
@@ -16,7 +17,7 @@ class BottomTextField extends ConsumerWidget {
         alignment: Alignment.center,
         child: Column(
           children: [
-            Text('あなたはユーザー１（一般人）'),
+            const Text('あなたはユーザー１（一般人）'),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -50,7 +51,10 @@ class BottomTextField extends ConsumerWidget {
                 ),
                 const SizedBox(width: 16),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    final content = ref.read(exampleTextFieldProvider);
+                    ref.read(messageRepositoryProvider).addMessage(content, "0000");
+                  },
                   child: const Icon(
                     Icons.send,
                     color: ColorConstant.main,
