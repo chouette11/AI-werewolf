@@ -27,52 +27,55 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final messages = ref.watch(messagesStreamProvider(widget.roomId));
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref
-              .read(messageRepositoryProvider)
-              .addMessageFromGpt("aaaa", widget.roomId);
-          // ref.read(messagesProvider.notifier).addMessage("aaaa");
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        backgroundColor: ColorConstant.black100,
-        centerTitle: true,
-        title: Text(
-          "お題は$topic",
-          style: TextStyleConstant.bold14,
+    final messages = ref.watch(messagesStreamProvider(roomId));
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            ref
+                .read(messageRepositoryProvider)
+                .addMessageFromGpt("aaaa", "0000");
+            // ref.read(messagesProvider.notifier).addMessage("aaaa");
+          },
+          child: const Icon(Icons.add),
         ),
-        automaticallyImplyLeading: false,
-      ),
-      bottomSheet: BottomTextField(roomId: widget.roomId),
-      body: messages.when(
-        data: (data) {
-          return ListView.builder(
-            reverse: true,
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              data.sort((a, b) {
-                //sorting in descending order
-                return b.createdAt.compareTo(a.createdAt);
-              });
-              final message = data[index];
-              if (message.userId == "my") {
-                return SendMessageBubble(message: message.content);
-              } else {
-                return ReceiveMessageBubble(message: message.content);
-              }
-            },
-          );
-        },
-        error: (error, stackTrace) {
-          return Text(error.toString());
-        },
-        loading: () {
-          return const CircularProgressIndicator();
-        },
+        appBar: AppBar(
+          backgroundColor: ColorConstant.main,
+          centerTitle: true,
+          title: const Text(
+            "お題はうどん",
+            style: TextStyle(color: ColorConstant.base, fontSize: 16),
+          ),
+          automaticallyImplyLeading: false,
+        ),
+        bottomSheet: const BottomTextField(),
+        body: messages.when(
+          data: (data) {
+            return ListView.builder(
+              reverse: true,
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                data.sort((a, b) {
+                  //sorting in descending order
+                  return b.createdAt.compareTo(a.createdAt);
+                });
+                final message = data[index];
+                if (message.userId == "my") {
+                  return SendMessageBubble(message: message.content);
+                } else {
+                  return ReceiveMessageBubble(message: message.content);
+                }
+              },
+            );
+          },
+          error: (error, stackTrace) {
+            return Text(error.toString());
+          },
+          loading: () {
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
