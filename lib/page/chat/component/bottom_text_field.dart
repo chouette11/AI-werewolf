@@ -30,7 +30,7 @@ class BottomTextField extends ConsumerWidget {
                   width: 320,
                   child: TextFormField(
                     onChanged: (value) => ref
-                        .watch(exampleTextFieldProvider.notifier)
+                        .watch(messageTextFieldProvider.notifier)
                         .update((state) => value),
                     textAlign: TextAlign.left,
                     autofocus: true,
@@ -56,7 +56,7 @@ class BottomTextField extends ConsumerWidget {
                 const SizedBox(width: 16),
                 GestureDetector(
                   onTap: () {
-                    final content = ref.read(exampleTextFieldProvider);
+                    final content = ref.read(messageTextFieldProvider);
                     ref
                         .read(messageRepositoryProvider)
                         .addMessage(content, roomId);
