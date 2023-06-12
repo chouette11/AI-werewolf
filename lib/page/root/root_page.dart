@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/page/root/component/join_dialog.dart';
+import 'package:wordwolf/page/root/component/start_dialog.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -28,82 +28,7 @@ class RootPage extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (_) {
-                      return AlertDialog(
-                        backgroundColor: ColorConstant.secondary,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16)),
-                        ),
-                        content: SizedBox(
-                          width: 240,
-                          height: 160,
-                          child: Column(
-                            children: [
-                              const Text(
-                                'ID',
-                                style: TextStyleConstant.normal32,
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                id,
-                                style: TextStyleConstant.normal32,
-                              ),
-                              const SizedBox(height: 56),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          Center(
-                            child: SizedBox(
-                              height: 48,
-                              width: 120,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Clipboard.setData(ClipboardData(text: id));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('テキストがクリップボードに保存されました'),
-                                    ),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.accent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: Text(
-                                  "コピー",
-                                  style: TextStyleConstant.normal16.copyWith(
-                                    color: ColorConstant.base,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Center(
-                            child: SizedBox(
-                              height: 48,
-                              width: 120,
-                              child: ElevatedButton(
-                                onPressed: () => context.push("/chat"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.accent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: Text(
-                                  "参加する",
-                                  style: TextStyleConstant.normal16.copyWith(
-                                    color: ColorConstant.base,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
+                      return const StartDialog();
                     },
                   );
                 },
@@ -129,76 +54,7 @@ class RootPage extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (_) {
-                      return AlertDialog(
-                        backgroundColor: ColorConstant.secondary,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16)),
-                        ),
-                        content: const SizedBox(
-                          width: 240,
-                          height: 160,
-                          child: Column(
-                            children: [
-                              Text(
-                                '参加ID',
-                                style: TextStyleConstant.normal32,
-                              ),
-                              SizedBox(height: 56),
-                              SizedBox(
-                                height: 40,
-                                width: 224,
-                                child: TextField(
-                                  textAlign: TextAlign.left,
-                                  autofocus: true,
-                                  cursorColor: ColorConstant.accent,
-                                  decoration: InputDecoration(
-                                    fillColor: ColorConstant.base,
-                                    filled: true,
-                                    hintText: 'IDを入力',
-                                    hintStyle: TextStyle(
-                                        fontSize: 16,
-                                        color: ColorConstant.accent),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(16)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: ColorConstant.accent,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          Center(
-                            child: SizedBox(
-                              height: 48,
-                              width: 120,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.accent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                                child: Text(
-                                  "参加する",
-                                  style: TextStyleConstant.normal16.copyWith(
-                                    color: ColorConstant.base,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
+                      return const JoinDialog();
                     },
                   );
                 },
