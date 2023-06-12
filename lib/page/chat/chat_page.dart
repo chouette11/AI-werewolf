@@ -8,34 +8,46 @@ import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
-class ChatPage extends ConsumerWidget {
-  const ChatPage({
-    super.key,
-    required this.roomId,
-  });
+class ChatPage extends ConsumerStatefulWidget {
+  const ChatPage({super.key, required this.roomId});
   final String roomId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final messages = ref.watch(messagesStreamProvider(roomId));
+  ConsumerState<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends ConsumerState<ChatPage> {
+  final topic = "うどん";
+
+  @override
+  void initState() {
+    ref.read(messageRepositoryProvider).addMessageFromGpt(topic, widget.roomId);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final messages = ref.watch(messagesStreamProvider(widget.roomId));
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(messageRepositoryProvider).addMessageFromGpt("aaaa", roomId);
+          ref
+              .read(messageRepositoryProvider)
+              .addMessageFromGpt("aaaa", widget.roomId);
           // ref.read(messagesProvider.notifier).addMessage("aaaa");
         },
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         backgroundColor: ColorConstant.black100,
-        centerTitle: true, 
-        title: const Text(
-          "お題はうどん",
+        centerTitle: true,
+        title: Text(
+          "お題は$topic",
           style: TextStyleConstant.bold14,
         ),
         automaticallyImplyLeading: false,
       ),
-      bottomSheet: BottomTextField(roomId: roomId),
+      bottomSheet: BottomTextField(roomId: widget.roomId),
       body: messages.when(
         data: (data) {
           return ListView.builder(
