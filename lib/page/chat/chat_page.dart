@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
@@ -23,11 +24,11 @@ class ChatPage extends ConsumerWidget {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        backgroundColor: ColorConstant.main,
+        backgroundColor: ColorConstant.black100,
         centerTitle: true, 
         title: const Text(
           "お題はうどん",
-          style: TextStyle(color: ColorConstant.base, fontSize: 16),
+          style: TextStyleConstant.bold14,
         ),
         automaticallyImplyLeading: false,
       ),

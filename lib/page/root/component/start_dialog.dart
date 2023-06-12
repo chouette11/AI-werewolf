@@ -11,7 +11,7 @@ class StartDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: ColorConstant.secondary,
+      backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -48,7 +48,7 @@ class StartDialog extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.main,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -70,7 +70,7 @@ class StartDialog extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () => context.push("/chat"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.secondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -78,12 +78,13 @@ class StartDialog extends StatelessWidget {
               child: Text(
                 "参加する",
                 style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.base,
+                  color: ColorConstant.black0,
                 ),
               ),
             ),
           ),
         ),
+        SizedBox(height: 24),
       ],
     );
   }
