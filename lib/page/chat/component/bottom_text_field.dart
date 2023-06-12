@@ -6,7 +6,11 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
 class BottomTextField extends ConsumerWidget {
-  const BottomTextField({super.key});
+  const BottomTextField({
+    super.key,
+    required this.roomId,
+  });
+  final String roomId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +34,7 @@ class BottomTextField extends ConsumerWidget {
                   width: 320,
                   child: TextFormField(
                     onChanged: (value) => ref
-                        .watch(exampleTextFieldProvider.notifier)
+                        .watch(messageTextFieldProvider.notifier)
                         .update((state) => value),
                     textAlign: TextAlign.left,
                     autofocus: true,
@@ -56,10 +60,10 @@ class BottomTextField extends ConsumerWidget {
                 const SizedBox(width: 16),
                 GestureDetector(
                   onTap: () {
-                    final content = ref.read(exampleTextFieldProvider);
+                    final content = ref.read(messageTextFieldProvider);
                     ref
                         .read(messageRepositoryProvider)
-                        .addMessage(content, "0000");
+                        .addMessage(content, roomId);
                   },
                   child: const Icon(
                     Icons.send,

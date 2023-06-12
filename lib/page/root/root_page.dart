@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
@@ -7,7 +9,6 @@ import 'package:wordwolf/page/root/component/start_dialog.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
-  final String id = "1234567890";
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +35,12 @@ class RootPage extends StatelessWidget {
               width: 160,
               child: ElevatedButton(
                 onPressed: () {
+                  final rng = Random();
+                  final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
                   showDialog(
                     context: context,
                     builder: (_) {
-                      return const StartDialog();
+                      return StartDialog(roomId: roomId);
                     },
                   );
                 },
