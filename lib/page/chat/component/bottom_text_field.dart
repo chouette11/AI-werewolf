@@ -5,7 +5,11 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
 class BottomTextField extends ConsumerWidget {
-  const BottomTextField({super.key});
+  const BottomTextField({
+    super.key,
+    required this.roomId,
+  });
+  final String roomId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +57,9 @@ class BottomTextField extends ConsumerWidget {
                 GestureDetector(
                   onTap: () {
                     final content = ref.read(exampleTextFieldProvider);
-                    ref.read(messageRepositoryProvider).addMessage(content, "0000");
+                    ref
+                        .read(messageRepositoryProvider)
+                        .addMessage(content, roomId);
                   },
                   child: const Icon(
                     Icons.send,
