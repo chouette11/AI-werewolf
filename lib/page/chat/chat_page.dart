@@ -18,49 +18,54 @@ class ChatPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final messages = ref.watch(messagesStreamProvider(roomId));
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(messageRepositoryProvider).addMessageFromGpt("aaaa", roomId);
-          // ref.read(messagesProvider.notifier).addMessage("aaaa");
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        backgroundColor: ColorConstant.black100,
-        centerTitle: true, 
-        title: const Text(
-          "お題はうどん",
-          style: TextStyleConstant.bold14,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            ref
+                .read(messageRepositoryProvider)
+                .addMessageFromGpt("aaaa", "0000");
+            // ref.read(messagesProvider.notifier).addMessage("aaaa");
+          },
+          child: const Icon(Icons.add),
         ),
-        automaticallyImplyLeading: false,
-      ),
-      bottomSheet: BottomTextField(roomId: roomId),
-      body: messages.when(
-        data: (data) {
-          return ListView.builder(
-            reverse: true,
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              data.sort((a, b) {
-                //sorting in descending order
-                return b.createdAt.compareTo(a.createdAt);
-              });
-              final message = data[index];
-              if (message.userId == "my") {
-                return SendMessageBubble(message: message.content);
-              } else {
-                return ReceiveMessageBubble(message: message.content);
-              }
-            },
-          );
-        },
-        error: (error, stackTrace) {
-          return Text(error.toString());
-        },
-        loading: () {
-          return const CircularProgressIndicator();
-        },
+        appBar: AppBar(
+          backgroundColor: ColorConstant.main,
+          centerTitle: true,
+          title: const Text(
+            "お題はうどん",
+            style: TextStyle(color: ColorConstant.base, fontSize: 16),
+          ),
+          automaticallyImplyLeading: false,
+        ),
+        bottomSheet: const BottomTextField(),
+        body: messages.when(
+          data: (data) {
+            return ListView.builder(
+              reverse: true,
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                data.sort((a, b) {
+                  //sorting in descending order
+                  return b.createdAt.compareTo(a.createdAt);
+                });
+                final message = data[index];
+                if (message.userId == "my") {
+                  return SendMessageBubble(message: message.content);
+                } else {
+                  return ReceiveMessageBubble(message: message.content);
+                }
+              },
+            );
+          },
+          error: (error, stackTrace) {
+            return Text(error.toString());
+          },
+          loading: () {
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }
