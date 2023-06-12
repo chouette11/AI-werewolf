@@ -14,12 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
+  return _MessageEntity.fromJson(json);
+}
+
 /// @nodoc
 mixin _$MessageEntity {
   String get content => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MessageEntityCopyWith<MessageEntity> get copyWith =>
       throw _privateConstructorUsedError;
@@ -112,11 +117,14 @@ class __$$_MessageEntityCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_MessageEntity extends _MessageEntity {
   const _$_MessageEntity(
       {required this.content, required this.userId, required this.createdAt})
       : super._();
+
+  factory _$_MessageEntity.fromJson(Map<String, dynamic> json) =>
+      _$$_MessageEntityFromJson(json);
 
   @override
   final String content;
@@ -141,6 +149,7 @@ class _$_MessageEntity extends _MessageEntity {
                 other.createdAt == createdAt));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, content, userId, createdAt);
 
@@ -149,6 +158,13 @@ class _$_MessageEntity extends _MessageEntity {
   @pragma('vm:prefer-inline')
   _$$_MessageEntityCopyWith<_$_MessageEntity> get copyWith =>
       __$$_MessageEntityCopyWithImpl<_$_MessageEntity>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MessageEntityToJson(
+      this,
+    );
+  }
 }
 
 abstract class _MessageEntity extends MessageEntity {
@@ -157,6 +173,9 @@ abstract class _MessageEntity extends MessageEntity {
       required final String userId,
       required final DateTime createdAt}) = _$_MessageEntity;
   const _MessageEntity._() : super._();
+
+  factory _MessageEntity.fromJson(Map<String, dynamic> json) =
+      _$_MessageEntity.fromJson;
 
   @override
   String get content;
