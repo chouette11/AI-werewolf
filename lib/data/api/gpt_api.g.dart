@@ -9,21 +9,19 @@ part of 'gpt_api.dart';
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       content: json['content'] as String,
       userId: json['userId'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'content': instance.content,
       'userId': instance.userId,
-      'createdAt': instance.createdAt.toIso8601String(),
     };
 
 Topic _$TopicFromJson(Map<String, dynamic> json) => Topic(
-      title: json['title'] as String,
+      topic: json['topic'] as String,
     );
 
 Map<String, dynamic> _$TopicToJson(Topic instance) => <String, dynamic>{
-      'title': instance.title,
+      'topic': instance.topic,
     };
 
 // **************************************************************************
@@ -36,9 +34,7 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'https://5d42a6e2bc64f90014a56ca0.mockapi.io/api/v1/';
-  }
+  });
 
   final Dio _dio;
 
@@ -84,7 +80,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/message',
+              'https://test-5uxbsy4xrq-an.a.run.app',
               queryParameters: queryParameters,
               data: _data,
             )
