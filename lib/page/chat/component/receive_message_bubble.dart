@@ -11,8 +11,8 @@ class ReceiveMessageBubble extends StatelessWidget {
       padding: const EdgeInsets.all(4.0),
       child: Row(
         children: [
-          CircleAvatar(),
-          SizedBox(
+          const CircleAvatar(),
+          const SizedBox(
             width: 16.0,
           ),
           Container(
