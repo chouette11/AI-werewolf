@@ -27,7 +27,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final messages = ref.watch(messagesStreamProvider(roomId));
+    final messages = ref.watch(messagesStreamProvider(widget.roomId));
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -49,7 +49,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           automaticallyImplyLeading: false,
         ),
-        bottomSheet: const BottomTextField(),
+        bottomSheet: BottomTextField(roomId: widget.roomId),
         body: messages.when(
           data: (data) {
             return ListView.builder(
