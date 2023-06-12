@@ -34,13 +34,13 @@ class JoinDialog extends ConsumerWidget {
                     .update((state) => value),
                 textAlign: TextAlign.left,
                 autofocus: true,
-                cursorColor: ColorConstant.accent,
-                decoration: const InputDecoration(
+                cursorColor: ColorConstant.main,
+                decoration: InputDecoration(
                   fillColor: ColorConstant.base,
                   filled: true,
                   hintText: 'IDを入力',
                   hintStyle:
-                      TextStyle(fontSize: 16, color: ColorConstant.accent),
+                      TextStyle(fontSize: 16, color: ColorConstant.black0),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -49,7 +49,7 @@ class JoinDialog extends ConsumerWidget {
                 ),
                 style: const TextStyle(
                   fontSize: 16,
-                  color: ColorConstant.accent,
+                  color: ColorConstant.black0,
                 ),
               ),
             ),
@@ -67,7 +67,7 @@ class JoinDialog extends ConsumerWidget {
                 context.push("/chat", extra: textValue);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.accent,
+                backgroundColor: ColorConstant.main,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -75,12 +75,13 @@ class JoinDialog extends ConsumerWidget {
               child: Text(
                 "参加する",
                 style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.base,
+                  color: ColorConstant.black100,
                 ),
               ),
             ),
           ),
         ),
+        SizedBox(height: 24,)
       ],
     );
   }

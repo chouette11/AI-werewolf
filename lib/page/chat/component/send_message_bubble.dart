@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 
 class SendMessageBubble extends StatelessWidget {
   const SendMessageBubble({Key? key, required this.message}) : super(key: key);
@@ -23,13 +24,15 @@ class SendMessageBubble extends StatelessWidget {
             borderRadius: BorderRadius.all(
               Radius.circular(24),
             ),
-            color: ColorConstant.secondary,
+            color: ColorConstant.main,
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
               message,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyleConstant.normal16.copyWith(
+                color: ColorConstant.black100,
+              )
             ),
           ),
         ),

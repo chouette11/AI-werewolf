@@ -26,7 +26,7 @@ class RootPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "ワードウルフ",
+              "Knock AI",
               style: TextStyleConstant.bold28,
             ),
             const SizedBox(height: 40),
@@ -51,9 +51,11 @@ class RootPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "部屋作成",
-                  style: TextStyleConstant.white24,
+                  style: TextStyleConstant.normal24.copyWith(
+                    color: ColorConstant.black100,
+                  ),
                 ),
               ),
             ),

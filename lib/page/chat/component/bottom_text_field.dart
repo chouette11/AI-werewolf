@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
@@ -21,7 +22,10 @@ class BottomTextField extends ConsumerWidget {
         alignment: Alignment.center,
         child: Column(
           children: [
-            const Text('あなたはユーザー１（一般人）'),
+            const Text(
+              'あなたはユーザー１（一般人）',
+              style: TextStyleConstant.bold12,
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -34,13 +38,13 @@ class BottomTextField extends ConsumerWidget {
                         .update((state) => value),
                     textAlign: TextAlign.left,
                     autofocus: true,
-                    cursorColor: ColorConstant.accent,
+                    cursorColor: ColorConstant.main,
                     decoration: const InputDecoration(
-                      fillColor: ColorConstant.base,
+                      fillColor: ColorConstant.black100,
                       filled: true,
                       hintText: '解答を入力',
                       hintStyle:
-                          TextStyle(fontSize: 16, color: ColorConstant.accent),
+                          TextStyle(fontSize: 16, color: ColorConstant.main),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -49,7 +53,7 @@ class BottomTextField extends ConsumerWidget {
                     ),
                     style: const TextStyle(
                       fontSize: 16,
-                      color: ColorConstant.accent,
+                      color: ColorConstant.black0,
                     ),
                   ),
                 ),
