@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/entity/message/message_entity.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 
 class ReceiveMessageBubble extends ConsumerWidget {
   const ReceiveMessageBubble({
@@ -47,7 +48,14 @@ class ReceiveMessageBubble extends ConsumerWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(messageEntity.content),
+              child: SizedBox(
+                width: 200,
+                child: Text(
+                  messageEntity.content,
+                  style: TextStyleConstant.normal16,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
             ),
           ),
         ],

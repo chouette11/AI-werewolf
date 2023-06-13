@@ -28,11 +28,15 @@ class SendMessageBubble extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              message,
-              style: TextStyleConstant.normal16.copyWith(
-                color: ColorConstant.black100,
-              )
+            child: SizedBox(
+              width: 200,
+              child: Text(
+                message,
+                style: TextStyleConstant.normal16.copyWith(
+                  color: ColorConstant.black100,
+                ),
+                overflow: TextOverflow.visible,
+              ),
             ),
           ),
         ),
