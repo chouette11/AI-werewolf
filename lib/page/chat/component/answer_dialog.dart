@@ -4,17 +4,36 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/page/chat/component/correct_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
-final userList = [
-  'Lafayette',
-  'Thomas Jefferson',
-];
-
 class AnswerDialog extends ConsumerWidget {
-  const AnswerDialog({super.key});
+  const AnswerDialog({super.key, required this.memberMap});
+  final Map<String, int> memberMap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(answerRadioValueProvider);
+
+    List<Widget> listTiles() {
+      final List<Widget> tiles = [];
+      final nameList = memberMap.values.toList();
+      for (var name in nameList) {
+        tiles.add(ListTile(
+          title: Text(name.toString()),
+          leading: Radio<String>(
+            activeColor: ColorConstant.main,
+            value: name.toString(),
+            groupValue: value,
+            onChanged: (String? value) {
+              if (value != null) {
+                ref
+                    .read(answerRadioValueProvider.notifier)
+                    .update((state) => value);
+              }
+            },
+          ),
+        ));
+      }
+      return tiles;
+    }
 
     return AlertDialog(
       backgroundColor: ColorConstant.black100,
@@ -27,48 +46,22 @@ class AnswerDialog extends ConsumerWidget {
         child: Column(
           children: [
             const Text('誰がAI？'),
-            ListTile(
-              title: const Text('Lafayette'),
-              leading: Radio<String>(
-                activeColor: ColorConstant.main,
-                value: userList[0],
-                groupValue: value,
-                onChanged: (String? value) {
-                  if (value != null) {
-                    ref
-                        .read(answerRadioValueProvider.notifier)
-                        .update((state) => value);
-                  }
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text('Thomas Jefferson'),
-              leading: Radio<String>(
-                activeColor: ColorConstant.main,
-                value: userList[1],
-                groupValue: value,
-                onChanged: (String? value) {
-                  if (value != null) {
-                    ref
-                        .read(answerRadioValueProvider.notifier)
-                        .update((state) => value);
-                  }
-                },
-              ),
-            ),
+            ...listTiles(),
             ElevatedButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (_) {
-                    return const CorrectDialog();
+                    return CorrectDialog(
+                      answerName: memberMap['gpt'].toString(),
+                      isCorrect: value == memberMap['gpt'].toString(),
+                    );
                   },
                 );
               },
-              child: const Text('決定'),
               style:
                   ElevatedButton.styleFrom(backgroundColor: ColorConstant.main),
+              child: const Text('決定'),
             ),
           ],
         ),
