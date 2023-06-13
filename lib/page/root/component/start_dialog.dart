@@ -75,7 +75,7 @@ class StartDialog extends ConsumerWidget {
               onPressed: () {
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
-                ref.read(roomRepositoryProvider).makeRoom(roomId);
+                ref.read(roomRepositoryProvider).makeRoom(roomId, 5);
                 ref.read(roomRepositoryProvider).joinRoom(roomId);
                 context.push("/chat", extra: roomId);
               },
