@@ -49,4 +49,13 @@ class FirestoreDataSource {
     final collection = db.collection('rooms');
     await collection.add(roomDocument.copyWith.call().toJson());
   }
+
+  /// ルームに参加
+  Future<void> addMemberToRoom(String roomId, String userId) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final collection = db.collection('rooms/$roomId/members/$userId');
+    await collection.add({
+      'userId': userId,
+    });
+  }
 }
