@@ -15,7 +15,7 @@ abstract class RestClient {
   @GET("/messages")
   Future<List<MessageDocument>> getMessages();
 
-  @POST("https://test-5uxbsy4xrq-an.a.run.app")
+  @POST("https://wordwolf-5uxbsy4xrq-an.a.run.app")
   Future<Message> fetchMessage(@Body() Topic topic);
 }
 

@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wordwolf/page/chat/chat_page.dart';
 import 'package:wordwolf/page/root/root_page.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
+
+final uuidProvider = Provider((_) => const Uuid());
 
 /// ページ遷移のプロバイダ
 final routerProvider = Provider<GoRouter>(
