@@ -38,4 +38,12 @@ class RoomRepository {
           (event) => RoomEntity.fromDoc(event).members,
         );
   }
+
+  ///　ルームが存在するか確認
+  Future<bool> isRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final rooms = await firestore.fetchRooms();
+    final roomIds = rooms.map((e) => e.id).toList();
+    return roomIds.contains(roomId);
+  }
 }
