@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
@@ -28,6 +27,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
+    final uid = ref.watch(uidProvider);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -61,10 +61,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   return b.createdAt.compareTo(a.createdAt);
                 });
                 final message = data[index];
-                if (message.userId == "my") {
+                if (message.userId == uid) {
                   return SendMessageBubble(message: message.content);
                 } else {
-                  return ReceiveMessageBubble(message: message.content);
+                  return ReceiveMessageBubble(
+                    messageEntity: message,
+                    roomId: widget.roomId,
+                  );
                 }
               },
             );
