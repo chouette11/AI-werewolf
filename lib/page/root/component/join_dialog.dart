@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +14,7 @@ class JoinDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final error = ref.watch(errorTextProvider);
     return AlertDialog(
       backgroundColor: ColorConstant.secondary,
       shape: const RoundedRectangleBorder(
@@ -26,7 +29,12 @@ class JoinDialog extends ConsumerWidget {
               '参加ID',
               style: TextStyleConstant.normal32,
             ),
-            const SizedBox(height: 56),
+            const SizedBox(height: 24),
+            Text(
+              error,
+              style: TextStyleConstant.bold14.copyWith(color: Colors.redAccent),
+            ),
+            const SizedBox(height: 24),
             SizedBox(
               height: 40,
               width: 224,
@@ -64,8 +72,19 @@ class JoinDialog extends ConsumerWidget {
             height: 48,
             width: 120,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final textValue = ref.watch(idTextFieldProvider);
+                final isRoom =
+                    await ref.read(roomRepositoryProvider).isRoom(textValue);
+                if (!isRoom) {
+                  ref
+                      .read(errorTextProvider.notifier)
+                      .update((state) => 'ルームが見つかりません');
+                  Timer(const Duration(seconds: 2), () {
+                    ref.refresh(errorTextProvider);
+                  });
+                  return;
+                }
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
                 ref.read(roomRepositoryProvider).joinRoom(textValue);

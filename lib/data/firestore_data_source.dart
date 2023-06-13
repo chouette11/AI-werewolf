@@ -68,5 +68,16 @@ class FirestoreDataSource {
       throw e;
     }
   }
-  
+
+  /// ルームの一覧を取得
+  Future<List<RoomDocument>> fetchRooms() async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final rooms = await db.collection('rooms').get();
+      return rooms.docs.map((e) => RoomDocument.fromJson(e.data())).toList();
+    } catch (e) {
+      print('firestore_getStream');
+      throw e;
+    }
+  }
 }
