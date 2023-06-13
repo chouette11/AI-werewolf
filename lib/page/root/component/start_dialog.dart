@@ -1,11 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class StartDialog extends ConsumerWidget {
@@ -73,7 +73,10 @@ class StartDialog extends ConsumerWidget {
             width: 120,
             child: ElevatedButton(
               onPressed: () {
-                ref.read(roomRepositoryProvider).makeRoom(roomId);
+                final uuid = const Uuid().v4();
+                ref.read(uidProvider.notifier).update((state) => uuid);
+                ref.read(roomRepositoryProvider).makeRoom(roomId, 5);
+                ref.read(roomRepositoryProvider).joinRoom(roomId);
                 context.push("/chat", extra: roomId);
               },
               style: ElevatedButton.styleFrom(

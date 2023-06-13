@@ -20,13 +20,10 @@ MessageDocument _$MessageDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageDocument {
-// ignore: invalid_annotation_target
   @JsonKey(name: 'content')
-  String get content =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  String get content => throw _privateConstructorUsedError;
   @JsonKey(name: 'userId')
-  String get userId =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'createdAt')
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -145,15 +142,12 @@ class _$_MessageDocument extends _MessageDocument {
   factory _$_MessageDocument.fromJson(Map<String, dynamic> json) =>
       _$$_MessageDocumentFromJson(json);
 
-// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'content')
   final String content;
-// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'userId')
   final String userId;
-// ignore: invalid_annotation_target
   @override
   @TimestampConverter()
   @JsonKey(name: 'createdAt')
@@ -207,13 +201,13 @@ abstract class _MessageDocument extends MessageDocument {
   factory _MessageDocument.fromJson(Map<String, dynamic> json) =
       _$_MessageDocument.fromJson;
 
-  @override // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'content')
   String get content;
-  @override // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'userId')
   String get userId;
-  @override // ignore: invalid_annotation_target
+  @override
   @TimestampConverter()
   @JsonKey(name: 'createdAt')
   DateTime get createdAt;

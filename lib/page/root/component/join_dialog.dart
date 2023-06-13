@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
 class JoinDialog extends ConsumerWidget {
   const JoinDialog({super.key});
@@ -35,7 +37,7 @@ class JoinDialog extends ConsumerWidget {
                 textAlign: TextAlign.left,
                 autofocus: true,
                 cursorColor: ColorConstant.main,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   fillColor: ColorConstant.base,
                   filled: true,
                   hintText: 'IDを入力',
@@ -64,6 +66,9 @@ class JoinDialog extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () {
                 final textValue = ref.watch(idTextFieldProvider);
+                final uuid = const Uuid().v4();
+                ref.read(uidProvider.notifier).update((state) => uuid);
+                ref.read(roomRepositoryProvider).joinRoom(textValue);
                 context.push("/chat", extra: textValue);
               },
               style: ElevatedButton.styleFrom(
@@ -81,7 +86,7 @@ class JoinDialog extends ConsumerWidget {
             ),
           ),
         ),
-        SizedBox(height: 24,)
+        const SizedBox(height: 24)
       ],
     );
   }
