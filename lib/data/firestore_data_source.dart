@@ -80,4 +80,15 @@ class FirestoreDataSource {
       throw e;
     }
   }
+
+  /// ルームを削除
+  Future<void> deleteRoom(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).delete();
+    } catch (e) {
+      print('delete_room');
+      throw e;
+    }
+  }
 }
