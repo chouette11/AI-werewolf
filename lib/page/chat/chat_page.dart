@@ -64,7 +64,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 if (message.userId == uid) {
                   return SendMessageBubble(message: message.content);
                 } else {
-                  return ReceiveMessageBubble(message: message.content);
+                  return ReceiveMessageBubble(
+                    messageEntity: message,
+                    roomId: widget.roomId,
+                  );
                 }
               },
             );
