@@ -5,9 +5,42 @@ import 'package:wordwolf/constant/text_style_constant.dart';
 class SendMessageBubble extends StatelessWidget {
   const SendMessageBubble({Key? key, required this.message}) : super(key: key);
   final String message;
+  Size _textSize(String text) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text),
+        maxLines: 1,
+        textDirection: TextDirection.ltr)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    return textPainter.size;
+  }
 
   @override
   Widget build(BuildContext context) {
+    dotHeight() {
+      final textWidth = _textSize(message).width;
+      if (textWidth < MediaQuery.of(context).size.width * 0.5) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            message,
+            style: TextStyleConstant.normal16,
+          ),
+        );
+      } else {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Text(
+              message,
+              style: TextStyleConstant.normal16,
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        );
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Align(
@@ -26,19 +59,7 @@ class SendMessageBubble extends StatelessWidget {
             ),
             color: ColorConstant.main,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: 200,
-              child: Text(
-                message,
-                style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.black100,
-                ),
-                overflow: TextOverflow.visible,
-              ),
-            ),
-          ),
+          child: dotHeight(),
         ),
       ),
     );
