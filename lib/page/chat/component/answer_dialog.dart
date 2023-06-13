@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/page/chat/component/correct_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 final userList = [
@@ -22,7 +23,7 @@ class AnswerDialog extends ConsumerWidget {
       ),
       content: SizedBox(
         width: 240,
-        height: 160,
+        height: 400,
         child: Column(
           children: [
             const Text('誰がAI？'),
@@ -57,7 +58,14 @@ class AnswerDialog extends ConsumerWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return const CorrectDialog();
+                  },
+                );
+              },
               child: const Text('決定'),
               style:
                   ElevatedButton.styleFrom(backgroundColor: ColorConstant.main),
