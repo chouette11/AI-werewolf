@@ -8,6 +8,8 @@ final idTextFieldProvider = StateProvider<String>((ref) => '');
 
 final uidProvider = StateProvider<String>((ref) => '');
 
+final errorTextProvider = StateProvider((ref) => '');
+
 final messagesStreamProvider = StreamProvider.family(
   (ref, String roomId) =>
       ref.watch(messageRepositoryProvider).getMessageStream(roomId),
