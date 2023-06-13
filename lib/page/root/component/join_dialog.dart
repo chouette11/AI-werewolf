@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
 class JoinDialog extends ConsumerWidget {
   const JoinDialog({super.key});
@@ -67,6 +68,7 @@ class JoinDialog extends ConsumerWidget {
                 final textValue = ref.watch(idTextFieldProvider);
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
+                ref.read(roomRepositoryProvider).joinRoom(textValue);
                 context.push("/chat", extra: textValue);
               },
               style: ElevatedButton.styleFrom(
