@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
@@ -39,31 +40,59 @@ class StartDialog extends ConsumerWidget {
       ),
       actions: <Widget>[
         Center(
-          child: SizedBox(
-            height: 48,
-            width: 120,
-            child: ElevatedButton(
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: roomId));
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('テキストがクリップボードに保存されました'),
+          child: Row(
+            children: [
+              const Spacer(),
+              SizedBox(
+                height: 48,
+                width: 120,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: roomId));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('テキストがクリップボードに保存されました'),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorConstant.main,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.main,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  child: Text(
+                    "コピー",
+                    style: TextStyleConstant.normal16.copyWith(
+                      color: ColorConstant.base,
+                    ),
+                  ),
                 ),
               ),
-              child: Text(
-                "コピー",
-                style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.base,
+              const Spacer(),
+              SizedBox(
+                height: 48,
+                width: 120,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Share.share(roomId);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorConstant.main,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Text(
+                    "共有", 
+                    style: TextStyleConstant.normal16.copyWith(
+                      color: ColorConstant.base,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const Spacer(),
+            ],
           ),
         ),
         const SizedBox(height: 24),
