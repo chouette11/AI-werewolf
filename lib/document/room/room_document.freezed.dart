@@ -20,7 +20,6 @@ RoomDocument _$RoomDocumentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RoomDocument {
-// ignore: invalid_annotation_target
   @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'maxNum')
@@ -139,7 +138,6 @@ class _$_RoomDocument extends _RoomDocument {
   factory _$_RoomDocument.fromJson(Map<String, dynamic> json) =>
       _$$_RoomDocumentFromJson(json);
 
-// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'id')
   final String id;
@@ -200,7 +198,7 @@ abstract class _RoomDocument extends RoomDocument {
   factory _RoomDocument.fromJson(Map<String, dynamic> json) =
       _$_RoomDocument.fromJson;
 
-  @override // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'id')
   String get id;
   @override

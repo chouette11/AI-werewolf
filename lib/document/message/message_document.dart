@@ -11,11 +11,8 @@ class MessageDocument with _$MessageDocument {
   const MessageDocument._();
 
   const factory MessageDocument({
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'content') required String content,
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'userId') required String userId,
-    // ignore: invalid_annotation_target
     @TimestampConverter() @JsonKey(name: 'createdAt') required DateTime createdAt,
   }) = _MessageDocument;
 

@@ -9,7 +9,6 @@ class RoomDocument with _$RoomDocument {
   const RoomDocument._();
 
   const factory RoomDocument({
-    // ignore: invalid_annotation_target
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'maxNum') required int maxNum,
     @JsonKey(name: 'members') required Map<String, int> members,

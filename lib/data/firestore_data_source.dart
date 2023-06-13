@@ -47,15 +47,26 @@ class FirestoreDataSource {
   Future<void> createRoom(RoomDocument roomDocument) async {
     final db = ref.read(firebaseFirestoreProvider);
     final collection = db.collection('rooms');
-    await collection.add(roomDocument.copyWith.call().toJson());
+    await collection.doc(roomDocument.id).set(roomDocument.copyWith.call().toJson());
   }
 
   /// ルームに参加
   Future<void> addMemberToRoom(String roomId, String userId) async {
     final db = ref.read(firebaseFirestoreProvider);
-    final collection = db.collection('rooms/$roomId/members/$userId');
-    await collection.add({
-      'userId': userId,
-    });
+    final collection = db.collection('rooms/$roomId/members');
+    await collection.doc(userId).set({'userId': userId});
   }
+
+  /// ルームののストリームを取得
+  Stream<RoomDocument> fetchRoomStream(String roomId) {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final stream = db.collection('rooms').doc(roomId).snapshots();
+      return stream.map((event) => RoomDocument.fromJson(event.data()!));
+    } catch (e) {
+      print('firestore_getMemberStream');
+      throw e;
+    }
+  }
+  
 }
