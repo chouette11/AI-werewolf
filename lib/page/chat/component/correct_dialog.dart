@@ -45,7 +45,7 @@ class CorrectDialog extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorConstant.main),
                 onPressed: () async {
-                  await ref.read(roomRepositoryProvider).deleteRoom(roomId);
+                  await ref.read(roomRepositoryProvider).leaveRoom(roomId);
                   context.push('/');
                 },
                 child: Text(
