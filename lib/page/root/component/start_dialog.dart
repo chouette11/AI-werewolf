@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
@@ -15,6 +16,7 @@ class StartDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(maxMemberProvder);
     return AlertDialog(
       backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
@@ -22,7 +24,7 @@ class StartDialog extends ConsumerWidget {
       ),
       content: SizedBox(
         width: 240,
-        height: 160,
+        height: 200,
         child: Column(
           children: [
             const Text(
@@ -34,7 +36,31 @@ class StartDialog extends ConsumerWidget {
               roomId,
               style: TextStyleConstant.normal32,
             ),
-            const SizedBox(height: 56),
+            SizedBox(height: 24),
+            Row(
+              children: [
+                const Spacer(),
+                Text('参加人数：', style: TextStyleConstant.normal16),
+                SizedBox(
+                  height: 72,
+                  child: NumberPicker(
+                    textStyle: TextStyleConstant.normal12,
+                    selectedTextStyle: TextStyleConstant.normal16,
+                    itemHeight: 24,
+                    itemWidth: 48,
+                    maxValue: 5,
+                    minValue: 2,
+                    step: 1,
+                    onChanged: (int value) => ref
+                        .read(maxMemberProvder.notifier)
+                        .update((state) => value),
+                    value: value,
+                  ),
+                ),
+                Text('人', style: TextStyleConstant.normal16),
+                const Spacer(),
+              ],
+            ),
           ],
         ),
       ),
@@ -84,7 +110,7 @@ class StartDialog extends ConsumerWidget {
                     ),
                   ),
                   child: Text(
-                    "共有", 
+                    "共有",
                     style: TextStyleConstant.normal16.copyWith(
                       color: ColorConstant.base,
                     ),
@@ -104,7 +130,7 @@ class StartDialog extends ConsumerWidget {
               onPressed: () {
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
-                ref.read(roomRepositoryProvider).makeRoom(roomId, 5);
+                ref.read(roomRepositoryProvider).makeRoom(roomId, value);
                 ref.read(roomRepositoryProvider).joinRoom(roomId);
                 context.push("/chat", extra: roomId);
               },
