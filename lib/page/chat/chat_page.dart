@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
@@ -28,18 +29,27 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
+    final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            ref
-                .read(messageRepositoryProvider)
-                .addMessageFromGpt("aaaa", "0000");
-            // ref.read(messagesProvider.notifier).addMessage("aaaa");
+        floatingActionButton: members.when(
+          data: (data) {
+            return FloatingActionButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AnswerDialog(
+                    memberMap: data,
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+            );
           },
-          child: const Icon(Icons.add),
+          error: (_, __) => FloatingActionButton(onPressed: (){}),
+          loading: () => FloatingActionButton(onPressed: (){}),
         ),
         appBar: AppBar(
           backgroundColor: ColorConstant.main,

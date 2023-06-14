@@ -4,12 +4,16 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 
 class CorrectDialog extends StatelessWidget {
-  const CorrectDialog({super.key});
+  const CorrectDialog({
+    super.key,
+    required this.answerName,
+    required this.isCorrect,
+  });
+  final String answerName;
+  final bool isCorrect;
 
   @override
   Widget build(BuildContext context) {
-    String correct = '正解';
-    String answer = 'ユーザー１';
     return AlertDialog(
       backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
@@ -22,7 +26,7 @@ class CorrectDialog extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                correct,
+                isCorrect ? '正解' : '不正解',
                 style: TextStyleConstant.bold28,
               ),
               const SizedBox(height: 40),
@@ -30,7 +34,7 @@ class CorrectDialog extends StatelessWidget {
                 'AIなのは',
                 style: TextStyleConstant.normal24,
               ),
-              Text(answer, style: TextStyleConstant.normal24),
+              Text(answerName, style: TextStyleConstant.normal24),
               const SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
