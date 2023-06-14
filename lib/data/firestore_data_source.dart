@@ -57,6 +57,13 @@ class FirestoreDataSource {
     await collection.doc(userId).set({'userId': userId});
   }
 
+  /// ルームを取得
+  Future<RoomDocument> fetchRoom(String roomId) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final room = await db.collection('rooms').doc(roomId).get();
+    return RoomDocument.fromJson(room.data()!);
+  }
+
   /// ルームののストリームを取得
   Stream<RoomDocument> fetchRoomStream(String roomId) {
     try {
