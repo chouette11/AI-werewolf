@@ -19,7 +19,7 @@ class RoomRepository {
     //gptの分を追加する
     final newMaxNum = maxNum + 1;
     final rng = Random();
-    final memberId = rng.nextInt(newMaxNum);
+    final memberId = rng.nextInt(newMaxNum) + 1;
     final entity =
         RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: newMaxNum);
     final roomDoc = entity.toRoomDocument();
