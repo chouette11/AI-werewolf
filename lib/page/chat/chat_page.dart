@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
@@ -19,39 +21,41 @@ class ChatPage extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage> {
   final topic = "うどん";
+  int _counter = 10;
+  bool isDialog = false;
 
   @override
   void initState() {
     ref.read(messageRepositoryProvider).addMessageFromGpt(topic, widget.roomId);
     super.initState();
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        _counter--;
+        setState(() {});
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
-    final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
+
+    if (_counter == 0 && !isDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (context) => AnswerDialog(
+          roomId: widget.roomId,
+        ),
+      );
+      isDialog = true;
+      });
+    }
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        floatingActionButton: members.when(
-          data: (data) {
-            return FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AnswerDialog(
-                    memberMap: data,
-                    roomId: widget.roomId,
-                  ),
-                );
-              },
-              child: const Icon(Icons.add),
-            );
-          },
-          error: (_, __) => FloatingActionButton(onPressed: (){}),
-          loading: () => FloatingActionButton(onPressed: (){}),
-        ),
         appBar: AppBar(
           backgroundColor: ColorConstant.main,
           centerTitle: true,
@@ -61,7 +65,20 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   style: TextStyleConstant.bold16.copyWith(
                     color: ColorConstant.black100,
                   )),
-                  SizedBox(width: 160),
+              const Spacer(),
+              Text('残り',
+                  style: TextStyleConstant.normal12.copyWith(
+                    color: ColorConstant.base,
+                  )),
+              Text(_counter >= 0 ? _counter.toString() : '0',
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              Text('秒',
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              const Spacer(),
               Text(
                 'ID:',
                 style: TextStyleConstant.normal12.copyWith(
