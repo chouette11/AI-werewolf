@@ -16,7 +16,7 @@ class SendMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dotHeight() {
+    Widget bubbleHeight() {
       final textWidth = _textSize(message).width;
       if (textWidth < MediaQuery.of(context).size.width * 0.5) {
         return Padding(
@@ -59,7 +59,7 @@ class SendMessageBubble extends StatelessWidget {
             ),
             color: ColorConstant.main,
           ),
-          child: dotHeight(),
+          child: bubbleHeight(),
         ),
       ),
     );

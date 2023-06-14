@@ -24,7 +24,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    dotHeight() {
+    Widget bubbleHeight() {
       final textWidth = _textSize(messageEntity.content).width;
       if (textWidth < MediaQuery.of(context).size.width * 0.5) {
         return Padding(
@@ -79,7 +79,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
               borderRadius: BorderRadius.circular(24),
               color: ColorConstant.secondary,
             ),
-            child: dotHeight(),
+            child: bubbleHeight(),
           ),
         ],
       ),
