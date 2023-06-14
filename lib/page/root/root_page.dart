@@ -11,72 +11,75 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Knock AI",
-              style: TextStyleConstant.bold28,
-            ),
-            const SizedBox(height: 40),
-            SizedBox(
-              height: 48,
-              width: 160,
-              child: ElevatedButton(
-                onPressed: () {
-                  final rng = Random();
-                  final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
-                  showDialog(
-                    context: context,
-                    builder: (_) {
-                      return StartDialog(roomId: roomId);
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: ColorConstant.main,
-                  backgroundColor: ColorConstant.main,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Knock AI",
+                style: TextStyleConstant.bold28,
+              ),
+              const SizedBox(height: 40),
+              SizedBox(
+                height: 48,
+                width: 160,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final rng = Random();
+                    final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return StartDialog(roomId: roomId);
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ColorConstant.main,
+                    backgroundColor: ColorConstant.main,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
-                ),
-                child: Text(
-                  "部屋作成",
-                  style: TextStyleConstant.normal24.copyWith(
-                    color: ColorConstant.black100,
+                  child: Text(
+                    "部屋作成",
+                    style: TextStyleConstant.normal24.copyWith(
+                      color: ColorConstant.black100,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 48,
-              width: 160,
-              child: ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) {
-                      return const JoinDialog();
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: ColorConstant.secondary,
-                  backgroundColor: ColorConstant.secondary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 48,
+                width: 160,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return const JoinDialog();
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ColorConstant.secondary,
+                    backgroundColor: ColorConstant.secondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    "参加する",
+                    style: TextStyleConstant.normal24,
                   ),
                 ),
-                child: const Text(
-                  "参加する",
-                  style: TextStyleConstant.normal24,
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
