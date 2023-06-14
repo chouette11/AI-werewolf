@@ -6,16 +6,49 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 
 class ReceiveMessageBubble extends ConsumerWidget {
-  const ReceiveMessageBubble({
+  ReceiveMessageBubble({
     Key? key,
     required this.messageEntity,
     required this.roomId,
   }) : super(key: key);
   final MessageEntity messageEntity;
   final String roomId;
+  Size _textSize(String text) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text),
+        maxLines: 1,
+        textDirection: TextDirection.ltr)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    return textPainter.size;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget bubbleSize() {
+      final textWidth = _textSize(messageEntity.content).width;
+      if (textWidth < MediaQuery.of(context).size.width * 0.5) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            messageEntity.content,
+            style: TextStyleConstant.normal16,
+          ),
+        );
+      } else {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Text(
+              messageEntity.content,
+              style: TextStyleConstant.normal16,
+              overflow: TextOverflow.visible,
+            ),
+          ),
+        );
+      }
+    }
+
     final members = ref.watch(membersStreamProvider(roomId));
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -46,17 +79,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
               borderRadius: BorderRadius.circular(24),
               color: ColorConstant.secondary,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
-                width: 200,
-                child: Text(
-                  messageEntity.content,
-                  style: TextStyleConstant.normal16,
-                  overflow: TextOverflow.visible,
-                ),
-              ),
-            ),
+            child: bubbleSize(),
           ),
         ],
       ),
