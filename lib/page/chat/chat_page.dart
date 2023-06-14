@@ -95,7 +95,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           automaticallyImplyLeading: false,
         ),
-        bottomSheet: _counter <= 0 ? BottomField() : BottomTextField(roomId: widget.roomId),
+        bottomSheet: _counter <= 0
+            ? BottomField(roomId: widget.roomId)
+            : BottomTextField(roomId: widget.roomId),
         body: messages.when(
           data: (data) {
             return SizedBox(
