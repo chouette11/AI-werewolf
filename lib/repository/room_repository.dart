@@ -50,6 +50,12 @@ class RoomRepository {
     return roomIds.contains(roomId);
   }
 
+  Future<RoomEntity> getRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final roomDoc = await firestore.fetchRoom(roomId);
+    return RoomEntity.fromDoc(roomDoc);
+  }
+
   /// ルームから退出
   Future<void> leaveRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
