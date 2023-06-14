@@ -9,6 +9,7 @@ import 'package:wordwolf/page/chat/component/bottom_field.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
+import 'package:wordwolf/page/chat/component/theme_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
@@ -25,6 +26,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   int _counter = 10;
   bool isDialog = false;
 
+  Future<void> _showStartDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return const ThemeDialog();
+      },
+    );
+  }
+
   @override
   void initState() {
     ref.read(messageRepositoryProvider).addMessageFromGpt(topic, widget.roomId);
@@ -36,6 +46,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         setState(() {});
       },
     );
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
   }
 
   @override
