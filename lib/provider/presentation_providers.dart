@@ -21,3 +21,5 @@ final membersStreamProvider = StreamProvider.family(
 );
 
 final answerRadioValueProvider = StateProvider<String>((ref) => '');
+
+final maxMemberProvder = StateProvider<int>((ref) => 3);
