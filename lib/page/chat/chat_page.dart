@@ -12,6 +12,7 @@ import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/theme_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key, required this.roomId});
@@ -27,10 +28,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
 
   Future<void> _showStartDialog() async {
+    final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return const ThemeDialog();
+        return ThemeDialog(widget.roomId, room.maxNum);
       },
     );
   }
