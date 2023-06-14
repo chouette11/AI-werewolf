@@ -16,10 +16,12 @@ class RoomRepository {
   /// 新規ルーム追加
   Future<void> makeRoom(String roomId, int maxNum) async {
     final firestore = ref.read(firestoreProvider);
+    //gptの分を追加する
+    final newMaxNum = maxNum + 1;
     final rng = Random();
-    final memberId = rng.nextInt(maxNum);
+    final memberId = rng.nextInt(newMaxNum);
     final entity =
-        RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: maxNum);
+        RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: newMaxNum);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
   }
