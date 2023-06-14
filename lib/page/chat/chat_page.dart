@@ -42,6 +42,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   context: context,
                   builder: (context) => AnswerDialog(
                     memberMap: data,
+                    roomId: widget.roomId,
                   ),
                 );
               },

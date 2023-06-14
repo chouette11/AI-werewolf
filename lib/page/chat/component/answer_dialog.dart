@@ -5,8 +5,14 @@ import 'package:wordwolf/page/chat/component/correct_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 class AnswerDialog extends ConsumerWidget {
-  const AnswerDialog({super.key, required this.memberMap});
+  const AnswerDialog({
+    super.key,
+    required this.memberMap,
+    required this.roomId,
+  });
+
   final Map<String, int> memberMap;
+  final String roomId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,6 +61,7 @@ class AnswerDialog extends ConsumerWidget {
                     return CorrectDialog(
                       answerName: memberMap['gpt'].toString(),
                       isCorrect: value == memberMap['gpt'].toString(),
+                      roomId: roomId,
                     );
                   },
                 );

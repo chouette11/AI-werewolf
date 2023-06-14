@@ -80,4 +80,40 @@ class FirestoreDataSource {
       throw e;
     }
   }
+
+  /// ルームを削除
+  Future<void> deleteRoom(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).delete();
+    } catch (e) {
+      print('delete_room');
+      throw e;
+    }
+  }
+
+  ///Member
+
+  /// メンバーの取得
+  Future<List<String>> fetchMembers(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final members = await db.collection('rooms/$roomId/members').get();
+      return members.docs.map((e) => e.id).toList();
+    } catch (e) {
+      print('fetch_members');
+      throw e;
+    }
+  }
+
+  /// メンバーの削除
+  Future<void> deleteMember(String roomId, String uid) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms/$roomId/members').doc(uid).delete();
+    } catch (e) {
+      print('delete_member');
+      throw e;
+    }
+  }
 }

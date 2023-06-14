@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
-class CorrectDialog extends StatelessWidget {
+class CorrectDialog extends ConsumerWidget {
   const CorrectDialog({
     super.key,
     required this.answerName,
     required this.isCorrect,
+    required this.roomId,
   });
+
   final String answerName;
   final bool isCorrect;
+  final String roomId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
@@ -39,7 +44,10 @@ class CorrectDialog extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorConstant.main),
-                onPressed: () => context.push('/'),
+                onPressed: () async {
+                  await ref.read(roomRepositoryProvider).leaveRoom(roomId);
+                  context.push('/');
+                },
                 child: Text(
                   '終了',
                   style: TextStyleConstant.bold16

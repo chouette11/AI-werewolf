@@ -46,4 +46,15 @@ class RoomRepository {
     final roomIds = rooms.map((e) => e.id).toList();
     return roomIds.contains(roomId);
   }
+
+  /// ルームから退出
+  Future<void> leaveRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final uid = ref.read(uidProvider);
+    await firestore.deleteMember(roomId, uid);
+    final members = await firestore.fetchMembers(roomId);
+    if (members.isEmpty) {
+      firestore.deleteRoom(roomId);
+    }
+  }
 }
