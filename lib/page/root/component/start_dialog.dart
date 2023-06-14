@@ -16,7 +16,7 @@ class StartDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(maxMemberProvder);
+    final value = ref.watch(maxMemberProvider);
     return AlertDialog(
       backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
@@ -52,7 +52,7 @@ class StartDialog extends ConsumerWidget {
                     minValue: 2,
                     step: 1,
                     onChanged: (int value) => ref
-                        .read(maxMemberProvder.notifier)
+                        .read(maxMemberProvider.notifier)
                         .update((state) => value),
                     value: value,
                   ),

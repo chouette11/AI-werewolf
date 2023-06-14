@@ -16,10 +16,13 @@ class RoomRepository {
   /// 新規ルーム追加
   Future<void> makeRoom(String roomId, int maxNum) async {
     final firestore = ref.read(firestoreProvider);
+    //gptの分を追加する
+    final newMaxNum = maxNum + 1;
     final rng = Random();
-    final memberId = rng.nextInt(maxNum);
+    // 割り当てるidから0を取り除く
+    final memberId = rng.nextInt(newMaxNum) + 1;
     final entity =
-        RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: maxNum);
+        RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: newMaxNum);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
   }
@@ -45,6 +48,12 @@ class RoomRepository {
     final rooms = await firestore.fetchRooms();
     final roomIds = rooms.map((e) => e.id).toList();
     return roomIds.contains(roomId);
+  }
+
+  Future<RoomEntity> getRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final roomDoc = await firestore.fetchRoom(roomId);
+    return RoomEntity.fromDoc(roomDoc);
   }
 
   /// ルームから退出

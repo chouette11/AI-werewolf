@@ -29,7 +29,7 @@ class RoomEntity with _$RoomEntity {
   RoomDocument toRoomDocument() {
     return RoomDocument(
       id: id, 
-      maxNum: 4, 
+      maxNum: maxNum,
       members: members,
     );
   }

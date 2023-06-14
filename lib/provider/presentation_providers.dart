@@ -6,6 +6,8 @@ final messageTextFieldProvider = StateProvider<String>((ref) => '');
 
 final idTextFieldProvider = StateProvider<String>((ref) => '');
 
+final startTextFieldProvider = StateProvider((ref) => '');
+
 final uidProvider = StateProvider<String>((ref) => '');
 
 final errorTextProvider = StateProvider((ref) => '');
@@ -22,4 +24,4 @@ final membersStreamProvider = StreamProvider.family(
 
 final answerRadioValueProvider = StateProvider<String>((ref) => '');
 
-final maxMemberProvder = StateProvider<int>((ref) => 3);
+final maxMemberProvider = StateProvider<int>((ref) => 3);
