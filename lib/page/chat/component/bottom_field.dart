@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 
 class BottomField extends StatelessWidget {
-  const BottomField({super.key});
+  const BottomField({super.key, required this.roomId});
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,14 @@ class BottomField extends StatelessWidget {
             width: 80,
             height: 32,
             child: ElevatedButton(
-              onPressed: () {context.push('/correct');},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AnswerDialog(roomId: roomId);
+                  },
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstant.main,
               ),
