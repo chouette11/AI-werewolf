@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
@@ -53,9 +54,25 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         appBar: AppBar(
           backgroundColor: ColorConstant.main,
           centerTitle: true,
-          title: const Text(
-            "お題はうどん",
-            style: TextStyle(color: ColorConstant.base, fontSize: 16),
+          title: Row(
+            children: [
+              Text("お題はうどん",
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+                  SizedBox(width: 160),
+              Text(
+                'ID:',
+                style: TextStyleConstant.normal12.copyWith(
+                  color: ColorConstant.base,
+                ),
+              ),
+              Text(
+                widget.roomId,
+                style: TextStyleConstant.normal14
+                    .copyWith(color: ColorConstant.black100),
+              ),
+            ],
           ),
           automaticallyImplyLeading: false,
         ),
