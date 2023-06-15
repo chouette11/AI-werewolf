@@ -17,7 +17,13 @@ class BottomTextField extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       height: 96,
-      color: ColorConstant.secondary,
+      color: ColorConstant.black100,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       child: Align(
         alignment: Alignment.center,
         child: Column(
@@ -40,7 +46,7 @@ class BottomTextField extends ConsumerWidget {
                     autofocus: true,
                     cursorColor: ColorConstant.main,
                     decoration: const InputDecoration(
-                      fillColor: ColorConstant.black100,
+                      fillColor: ColorConstant.black90,
                       filled: true,
                       hintText: '解答を入力',
                       hintStyle:
