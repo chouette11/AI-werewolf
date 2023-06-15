@@ -97,7 +97,7 @@ class JoinDialog extends ConsumerWidget {
                 ),
               ),
               child: Text(
-                "参加する",
+                "入室する",
                 style: TextStyleConstant.normal16.copyWith(
                   color: ColorConstant.black100,
                 ),
