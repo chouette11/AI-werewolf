@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
@@ -31,6 +32,12 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
         child: Center(
           child: messages.when(
             data: (data) {
+              if (data.length == widget.maxNum) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ref.read(limitTimeProvider.notifier).startTimer();
+                });
+                context.pop();
+              }
               return Column(
                 children: [
                   const Text('あなたは', style: TextStyleConstant.normal16),
