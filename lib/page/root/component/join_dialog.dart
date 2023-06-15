@@ -16,7 +16,7 @@ class JoinDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final error = ref.watch(errorTextProvider);
     return AlertDialog(
-      backgroundColor: ColorConstant.secondary,
+      backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -29,7 +29,7 @@ class JoinDialog extends ConsumerWidget {
               '参加ID',
               style: TextStyleConstant.normal32,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Text(
               error,
               style: TextStyleConstant.bold14.copyWith(color: Colors.redAccent),
@@ -46,11 +46,11 @@ class JoinDialog extends ConsumerWidget {
                 autofocus: true,
                 cursorColor: ColorConstant.main,
                 decoration: const InputDecoration(
-                  fillColor: ColorConstant.black100,
+                  fillColor: ColorConstant.black90,
                   filled: true,
                   hintText: 'IDを入力',
                   hintStyle:
-                      TextStyle(fontSize: 16, color: ColorConstant.black0),
+                      TextStyle(fontSize: 16, color: ColorConstant.black50),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
