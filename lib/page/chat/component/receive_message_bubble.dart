@@ -74,16 +74,25 @@ class ReceiveMessageBubble extends ConsumerWidget {
         data: (data) {
           return Row(
             children: [
-              Text(
-                /// Todo nullになぜなるか
-                data[messageEntity.userId] == null
-                    ? ''
-                    : data[messageEntity.userId]!.toString(),
-                style: const TextStyle(fontSize: 32),
+              const SizedBox(width: 8),
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: borderColor(data[messageEntity.userId] ?? 0),
+                ),
+                child: Center(
+                  child: Text(
+                    /// Todo nullになぜなるか
+                    data[messageEntity.userId] == null
+                        ? ''
+                        : data[messageEntity.userId]!.toString(),
+                    style: TextStyleConstant.normal24,
+                  ),
+                ),
               ),
-              const SizedBox(
-                width: 16.0,
-              ),
+              const SizedBox(width: 8),
               Container(
                 decoration: BoxDecoration(
                   boxShadow: const [
