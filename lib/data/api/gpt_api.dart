@@ -17,6 +17,9 @@ abstract class RestClient {
 
   @POST('/make_topic_answer')
   Future<Message> fetchTopicAnswerMessage(@Body() Topic topic);
+
+  @POST('/make_question_answer')
+  Future<Message> fetchQuestionAnswerMessage(@Body() Message message);
 }
 
 @JsonSerializable()
