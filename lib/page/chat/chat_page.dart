@@ -31,6 +31,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
     maxNum = room.maxNum;
     return showDialog<void>(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return ThemeDialog(widget.roomId, maxNum);
