@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/api_data_source.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
@@ -28,10 +30,12 @@ class MessageRepository {
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
     final message = await api.fetchTopicAnswerMessage(topic);
+    final delayList = [-500, -5, -1, 0,  5, 6];
+    final random = Random().nextInt(delayList.length);
     final entity = MessageEntity(
         content: message.content,
         userId: message.userId,
-        createdAt: DateTime.now());
+        createdAt: DateTime.now().add(Duration(seconds: delayList[random])));
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
   }

@@ -38,8 +38,14 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
           child: Center(
             child: messages.when(
               data: (data) {
-                if (data.length == widget.maxNum) {
+                if (data.length == widget.maxNum - 1) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    final topic = ref.read(topicProvider);
+                    final isMakeRoom = ref.read(isMakeRoomProvider);
+                    if (isMakeRoom) {
+                      ref.read(messageRepositoryProvider).addMessageFromGptToTopic(
+                          topic, widget.roomId);
+                    }
                     ref.read(limitTimeProvider.notifier).startTimer();
                   });
                   context.pop();

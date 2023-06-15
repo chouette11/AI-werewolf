@@ -11,7 +11,6 @@ import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/theme_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
@@ -40,12 +39,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   void initState() {
-    final topic = ref.read(topicProvider);
-    final isMakeRoom = ref.read(isMakeRoomProvider);
-    if (isMakeRoom) {
-      ref.read(messageRepositoryProvider).addMessageFromGptToTopic(
-          topic, widget.roomId);
-    }
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
   }
@@ -119,6 +112,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).viewInsets.bottom -
                     180,
+                child: const Center(child: Text('それではゲームを開始します！'),),
               );
             }
             return SizedBox(
