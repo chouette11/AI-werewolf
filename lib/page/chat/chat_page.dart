@@ -23,7 +23,6 @@ class ChatPage extends ConsumerStatefulWidget {
 }
 
 class _ChatPageState extends ConsumerState<ChatPage> {
-  final topic = "うどん";
   int maxNum = 100;
   bool isDialog = false;
 
@@ -41,6 +40,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   void initState() {
+    final topic = ref.read(topicProvider);
     ref.read(messageRepositoryProvider).addMessageFromGptToTopic(topic, widget.roomId);
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
@@ -48,6 +48,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final topic = ref.watch(topicProvider);
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
     final counter = ref.watch(limitTimeProvider);
     final uid = ref.watch(uidProvider);
@@ -71,7 +72,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           centerTitle: true,
           title: Row(
             children: [
-              Text("お題はうどん",
+              Text("お題は$topic",
                   style: TextStyleConstant.bold16.copyWith(
                     color: ColorConstant.black100,
                   )),

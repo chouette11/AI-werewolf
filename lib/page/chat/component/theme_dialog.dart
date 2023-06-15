@@ -21,6 +21,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final topic = ref.watch(topicProvider);
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
     final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
@@ -60,13 +61,13 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                           style: TextStyleConstant.bold24,
                         ),
                         const SizedBox(height: 16),
-                        const Row(
+                        Row(
                           children: [
-                            Spacer(),
-                            Text('お題', style: TextStyleConstant.normal18),
-                            Spacer(),
-                            Text('うどん', style: TextStyleConstant.bold28),
-                            Spacer(),
+                            const Spacer(),
+                            const Text('お題', style: TextStyleConstant.normal18),
+                            const Spacer(),
+                            Text(topic, style: TextStyleConstant.bold28),
+                            const Spacer(),
                           ],
                         ),
                         const SizedBox(height: 32),
