@@ -82,7 +82,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               const Spacer(),
               Text('残り',
                   style: TextStyleConstant.normal12.copyWith(
-                    color: ColorConstant.base,
+                    color: ColorConstant.black100,
                   )),
               Text(_counter >= 0 ? _counter.toString() : '0',
                   style: TextStyleConstant.bold16.copyWith(
@@ -96,7 +96,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               Text(
                 'ID:',
                 style: TextStyleConstant.normal12.copyWith(
-                  color: ColorConstant.base,
+                  color: ColorConstant.black100,
                 ),
               ),
               Text(

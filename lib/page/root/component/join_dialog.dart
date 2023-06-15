@@ -46,7 +46,7 @@ class JoinDialog extends ConsumerWidget {
                 autofocus: true,
                 cursorColor: ColorConstant.main,
                 decoration: const InputDecoration(
-                  fillColor: ColorConstant.base,
+                  fillColor: ColorConstant.black100,
                   filled: true,
                   hintText: 'IDを入力',
                   hintStyle:

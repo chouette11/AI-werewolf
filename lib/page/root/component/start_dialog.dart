@@ -90,7 +90,7 @@ class StartDialog extends ConsumerWidget {
                   child: Text(
                     "コピー",
                     style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.base,
+                      color: ColorConstant.black100,
                     ),
                   ),
                 ),
@@ -112,7 +112,7 @@ class StartDialog extends ConsumerWidget {
                   child: Text(
                     "共有",
                     style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.base,
+                      color: ColorConstant.black100,
                     ),
                   ),
                 ),

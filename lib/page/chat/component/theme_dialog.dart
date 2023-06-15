@@ -21,7 +21,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
     return AlertDialog(
-      backgroundColor: ColorConstant.base,
+      backgroundColor: ColorConstant.black100,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
