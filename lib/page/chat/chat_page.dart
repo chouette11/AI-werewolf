@@ -41,7 +41,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   void initState() {
     final topic = ref.read(topicProvider);
-    ref.read(messageRepositoryProvider).addMessageFromGptToTopic(topic, widget.roomId);
+    final isMakeRoom = ref.read(isMakeRoomProvider);
+    if (isMakeRoom) {
+      ref.read(messageRepositoryProvider).addMessageFromGptToTopic(
+          topic, widget.roomId);
+    }
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
   }
