@@ -24,15 +24,16 @@ class ChatPage extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage> {
   final topic = "うどん";
-  int _counter = 10;
+  int maxNum = 100;
   bool isDialog = false;
 
   Future<void> _showStartDialog() async {
     final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
+    maxNum = room.maxNum;
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return ThemeDialog(widget.roomId, room.maxNum);
+        return ThemeDialog(widget.roomId, maxNum);
       },
     );
   }
@@ -41,22 +42,16 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   void initState() {
     ref.read(messageRepositoryProvider).addMessageFromGpt(topic, widget.roomId);
     super.initState();
-    Timer.periodic(
-      const Duration(seconds: 1),
-      (Timer timer) {
-        _counter--;
-        setState(() {});
-      },
-    );
     WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
   }
 
   @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
+    final counter = ref.watch(limitTimeProvider);
     final uid = ref.watch(uidProvider);
 
-    if (_counter == 0 && !isDialog) {
+    if (counter == 0 && !isDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
@@ -84,7 +79,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   style: TextStyleConstant.normal12.copyWith(
                     color: ColorConstant.base,
                   )),
-              Text(_counter >= 0 ? _counter.toString() : '0',
+              Text(counter >= 0 ? counter.toString() : '0',
                   style: TextStyleConstant.bold16.copyWith(
                     color: ColorConstant.black100,
                   )),
@@ -108,11 +103,18 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           automaticallyImplyLeading: false,
         ),
-        bottomSheet: _counter <= 0
+        bottomSheet: counter <= 0
             ? BottomField(roomId: widget.roomId)
             : BottomTextField(roomId: widget.roomId),
         body: messages.when(
           data: (data) {
+            if (data.length < maxNum) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).viewInsets.bottom -
+                    180,
+              );
+            }
             return SizedBox(
               height: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).viewInsets.bottom -
