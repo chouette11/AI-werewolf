@@ -23,6 +23,23 @@ class ReceiveMessageBubble extends ConsumerWidget {
     return textPainter.size;
   }
 
+  Color borderColor(int assignedUserId) {
+    switch (assignedUserId) {
+      case 1:
+        return ColorConstant.chat1;
+      case 2:
+        return ColorConstant.chat2;
+      case 3:
+        return ColorConstant.chat3;
+      case 4:
+        return ColorConstant.chat4;
+      case 5:
+        return ColorConstant.chat5;
+      default:
+        return ColorConstant.black100;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget bubbleSize() {
@@ -53,43 +70,43 @@ class ReceiveMessageBubble extends ConsumerWidget {
     final members = ref.watch(membersStreamProvider(roomId));
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Row(
-        children: [
-          members.when(
-            data: (data) {
-              return Text(
+      child: members.when(
+        data: (data) {
+          return Row(
+            children: [
+              Text(
                 /// Todo nullになぜなるか
                 data[messageEntity.userId] == null
                     ? ''
                     : data[messageEntity.userId]!.toString(),
                 style: const TextStyle(fontSize: 32),
-              );
-            },
-            loading: () => const Text('loading'),
-            error: (error, stackTrace) => Text(error.toString()),
-          ),
-          const SizedBox(
-            width: 16.0,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: ColorConstant.black70,
-                  spreadRadius: 0.1,
-                  blurRadius: 1,
-                )
-              ],
-              borderRadius: BorderRadius.circular(24),
-              color: ColorConstant.black100,
-              border: Border.all(
-                color: ColorConstant.main,
-                width: 2,
               ),
-            ),
-            child: bubbleSize(),
-          ),
-        ],
+              const SizedBox(
+                width: 16.0,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      color: ColorConstant.black70,
+                      spreadRadius: 0.1,
+                      blurRadius: 1,
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(24),
+                  color: ColorConstant.black100,
+                  border: Border.all(
+                    color: borderColor(data[messageEntity.userId] ?? 0),
+                    width: 2,
+                  ),
+                ),
+                child: bubbleSize(),
+              ),
+            ],
+          );
+        },
+        loading: () => const Text('loading'),
+        error: (error, stackTrace) => Text(error.toString()),
       ),
     );
   }
