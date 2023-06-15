@@ -24,10 +24,11 @@ abstract class RestClient {
 
 @JsonSerializable()
 class Message {
+  String? topic;
   String content;
   String userId;
 
-  Message({required this.content, required this.userId});
+  Message({required this.topic, required this.content, required this.userId});
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);

@@ -7,11 +7,13 @@ part of 'gpt_api.dart';
 // **************************************************************************
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
+      topic: json['topic'] as String?,
       content: json['content'] as String,
       userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
+      'topic': instance.topic,
       'content': instance.content,
       'userId': instance.userId,
     };
@@ -64,30 +66,6 @@ class _RestClient implements RestClient {
     var value = _result.data!
         .map((dynamic i) => MessageDocument.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
-  }
-
-  @override
-  Future<Message> fetchMessage(Topic topic) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(topic.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Message>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'https://wordwolf-5uxbsy4xrq-an.a.run.app',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Message.fromJson(_result.data!);
     return value;
   }
 
