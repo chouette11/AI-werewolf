@@ -36,11 +36,11 @@ class StartDialog extends ConsumerWidget {
               roomId,
               style: TextStyleConstant.normal32,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               children: [
                 const Spacer(),
-                Text('参加人数：', style: TextStyleConstant.normal16),
+                const Text('参加人数：', style: TextStyleConstant.normal16),
                 SizedBox(
                   height: 72,
                   child: NumberPicker(
@@ -57,7 +57,7 @@ class StartDialog extends ConsumerWidget {
                     value: value,
                   ),
                 ),
-                Text('人', style: TextStyleConstant.normal16),
+                const Text('人', style: TextStyleConstant.normal16),
                 const Spacer(),
               ],
             ),
@@ -149,7 +149,7 @@ class StartDialog extends ConsumerWidget {
             ),
           ),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
       ],
     );
   }
