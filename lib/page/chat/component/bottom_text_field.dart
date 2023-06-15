@@ -20,12 +20,19 @@ class BottomTextField extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       height: 96,
-      color: ColorConstant.black100,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
         ),
+        color: ColorConstant.black100,
+        boxShadow: [
+          BoxShadow(
+            color: ColorConstant.black90,
+            offset: Offset(0, -0.25),
+            blurRadius: 0.5,
+          ),
+        ],
       ),
       child: Align(
         alignment: Alignment.center,
@@ -53,6 +60,7 @@ class BottomTextField extends ConsumerWidget {
             const SizedBox(height: 8),
             Row(
               children: [
+                const Spacer(),
                 SizedBox(
                   height: 40,
                   width: 320,
@@ -68,7 +76,7 @@ class BottomTextField extends ConsumerWidget {
                       filled: true,
                       hintText: '解答を入力',
                       hintStyle:
-                          TextStyle(fontSize: 16, color: ColorConstant.main),
+                          TextStyle(fontSize: 16, color: ColorConstant.black50),
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -94,6 +102,7 @@ class BottomTextField extends ConsumerWidget {
                     color: ColorConstant.main,
                   ),
                 ),
+                const Spacer(),
               ],
             ),
           ],
