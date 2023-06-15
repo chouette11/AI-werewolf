@@ -71,13 +71,17 @@ class ReceiveMessageBubble extends ConsumerWidget {
             decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
-                  color: ColorConstant.secondary,
+                  color: ColorConstant.black70,
                   spreadRadius: 0.1,
                   blurRadius: 1,
                 )
               ],
               borderRadius: BorderRadius.circular(24),
-              color: ColorConstant.secondary,
+              color: ColorConstant.black100,
+              border: Border.all(
+                color: ColorConstant.main,
+                width: 2,
+              ),
             ),
             child: bubbleSize(),
           ),
