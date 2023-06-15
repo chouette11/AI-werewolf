@@ -34,7 +34,9 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/';
+  }
 
   final Dio _dio;
 
@@ -81,6 +83,54 @@ class _RestClient implements RestClient {
             .compose(
               _dio.options,
               'https://wordwolf-5uxbsy4xrq-an.a.run.app',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Message.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Message> fetchTopicAnswerMessage(Topic topic) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(topic.toJson());
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Message>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/make_topic_answer',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Message.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Message> fetchQuestionAnswerMessage(Message message) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(message.toJson());
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Message>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/make_question_answer',
               queryParameters: queryParameters,
               data: _data,
             )
