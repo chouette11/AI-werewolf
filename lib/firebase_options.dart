@@ -71,6 +71,6 @@ class DefaultFirebaseOptions {
     projectId: 'wordwolf-1f53d',
     storageBucket: 'wordwolf-1f53d.appspot.com',
     iosClientId: '632237526803-pk47ifbshkicepc9v68g5qvc1uqit80p.apps.googleusercontent.com',
-    iosBundleId: 'com.example.wordwolf',
+    iosBundleId: 'com.knockAI',
   );
 }
