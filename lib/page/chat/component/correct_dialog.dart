@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class CorrectDialog extends ConsumerWidget {
@@ -46,6 +47,7 @@ class CorrectDialog extends ConsumerWidget {
                     backgroundColor: ColorConstant.main),
                 onPressed: () async {
                   await ref.read(roomRepositoryProvider).leaveRoom(roomId);
+                  ref.read(isMakeRoomProvider.notifier).update((state) => false);
                   context.push('/');
                 },
                 child: Text(
