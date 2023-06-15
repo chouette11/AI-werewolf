@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
+
+part 'presentation_providers.g.dart';
 
 final messageTextFieldProvider = StateProvider<String>((ref) => '');
 
@@ -25,3 +30,17 @@ final membersStreamProvider = StreamProvider.family(
 final answerRadioValueProvider = StateProvider<String>((ref) => '');
 
 final maxMemberProvider = StateProvider<int>((ref) => 3);
+
+@riverpod
+class LimitTime extends _$LimitTime {
+  @override
+  int build() {
+    return 90;
+  }
+
+  void startTimer() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      state = state - 1;
+    });
+  }
+}

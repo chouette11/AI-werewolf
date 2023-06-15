@@ -6,13 +6,14 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 
 class ReceiveMessageBubble extends ConsumerWidget {
-  ReceiveMessageBubble({
+  const ReceiveMessageBubble({
     Key? key,
     required this.messageEntity,
     required this.roomId,
   }) : super(key: key);
   final MessageEntity messageEntity;
   final String roomId;
+
   Size _textSize(String text) {
     final TextPainter textPainter = TextPainter(
         text: TextSpan(text: text),
@@ -57,7 +58,10 @@ class ReceiveMessageBubble extends ConsumerWidget {
           members.when(
             data: (data) {
               return Text(
-                data[messageEntity.userId]!.toString(),
+                /// Todo nullになぜなるか
+                data[messageEntity.userId] == null
+                    ? ''
+                    : data[messageEntity.userId]!.toString(),
                 style: const TextStyle(fontSize: 32),
               );
             },

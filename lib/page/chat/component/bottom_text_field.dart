@@ -14,6 +14,9 @@ class BottomTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final members = ref.watch(membersStreamProvider(roomId));
+    final uid = ref.watch(uidProvider);
+
     return Container(
       padding: const EdgeInsets.all(8),
       height: 96,
@@ -28,9 +31,24 @@ class BottomTextField extends ConsumerWidget {
         alignment: Alignment.center,
         child: Column(
           children: [
-            const Text(
-              'あなたはユーザー１（一般人）',
-              style: TextStyleConstant.bold12,
+            members.when(
+              data: (data) {
+                if (data[uid] == null) {
+                  return const Text(
+                    'loading',
+                    style: TextStyleConstant.normal12,
+                  );
+                }
+                return Text(
+                  'あなたはユーザー${data[uid]}（一般人）',
+                  style: TextStyleConstant.bold12,
+                );
+              },
+              error: (_, __) => const Text('error'),
+              loading: () => const Text(
+                'loading',
+                style: TextStyleConstant.normal12,
+              ),
             ),
             const SizedBox(height: 8),
             Row(

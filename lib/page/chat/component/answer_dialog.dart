@@ -34,10 +34,10 @@ class AnswerDialog extends ConsumerWidget {
                 ...nameList
                     .map(
                       (name) => ListTile(
-                        title: Text(name.toString()),
+                        title: Text('プレイヤー${name.toString()}'),
                         leading: Radio<String>(
                           activeColor: ColorConstant.main,
-                          value: name.toString(),
+                          value: 'プレイヤー${name.toString()}',
                           groupValue: value,
                           onChanged: (String? value) {
                             if (value != null) {
@@ -57,7 +57,7 @@ class AnswerDialog extends ConsumerWidget {
                       builder: (_) {
                         return CorrectDialog(
                           answerName: data['gpt'].toString(),
-                          isCorrect: value == data['gpt'].toString(),
+                          isCorrect: value[value.length - 1] == data['gpt'].toString(),
                           roomId: roomId,
                         );
                       },
