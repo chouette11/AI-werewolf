@@ -12,13 +12,13 @@ class ApiDataSource {
   /// Message
   ///
 
-  Future<Message> fetchMessage(String topic) async {
+  Future<Message> fetchTopicAnswerMessage(String topic) async {
     try {
       final api = ref.read(apiClientProvider);
-      final message = await api.fetchMessage(Topic(topic: topic));
+      final message = await api.fetchTopicAnswerMessage(Topic(topic: topic));
       return message;
     } catch (e) {
-      print('api_getMessage');
+      print('api_getMessageWithPrompt');
       throw e;
     }
   }

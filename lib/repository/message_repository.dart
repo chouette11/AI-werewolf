@@ -21,10 +21,11 @@ class MessageRepository {
     await firestore.insertMessage(messageDoc, roomId);
   }
 
-  Future<void> addMessageFromGpt(String topic, String roomId) async {
+  /// topicに対するAIの返答
+  Future<void> addMessageFromGptToTopic(String topic, String roomId) async {
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
-    final message = await api.fetchMessage(topic);
+    final message = await api.fetchTopicAnswerMessage(topic);
     final entity = MessageEntity(content: message.content, userId: message.userId, createdAt: DateTime.now());
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId); 
