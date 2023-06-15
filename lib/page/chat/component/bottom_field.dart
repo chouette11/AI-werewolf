@@ -10,41 +10,44 @@ class BottomField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
+      height: 56,
       color: ColorConstant.secondary,
-      child: Row(
-        children: [
-          const Spacer(),
-          const Text(
-            'あなたはユーザー１（一般人）',
-            style: TextStyleConstant.bold12,
-          ),
-          const Spacer(),
-          SizedBox(
-            width: 80,
-            height: 32,
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) {
-                    return AnswerDialog(roomId: roomId);
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.main,
-              ),
-              child: Text(
-                '解答',
-                style: TextStyleConstant.bold12.copyWith(
-                  color: ColorConstant.black100,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            const Spacer(),
+            const Text(
+              'あなたはユーザー１（一般人）',
+              style: TextStyleConstant.bold12,
+            ),
+            const Spacer(),
+            SizedBox(
+              width: 80,
+              height: 32,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AnswerDialog(roomId: roomId);
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorConstant.main,
+                ),
+                child: Text(
+                  '解答',
+                  style: TextStyleConstant.bold12.copyWith(
+                    color: ColorConstant.black100,
+                  ),
                 ),
               ),
             ),
-          ),
-          const Spacer(),
-        ],
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
