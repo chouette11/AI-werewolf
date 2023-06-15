@@ -36,10 +36,10 @@ class CorrectDialog extends ConsumerWidget {
               ),
               const SizedBox(height: 40),
               const Text(
-                'AIなのは',
+                'AIは',
                 style: TextStyleConstant.normal24,
               ),
-              Text(answerName, style: TextStyleConstant.normal24),
+              Text('プレイヤー$answerName', style: TextStyleConstant.normal24),
               const SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
