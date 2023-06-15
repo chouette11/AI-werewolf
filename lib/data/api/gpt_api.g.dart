@@ -7,11 +7,13 @@ part of 'gpt_api.dart';
 // **************************************************************************
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
+      topic: json['topic'] as String?,
       content: json['content'] as String,
       userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
+      'topic': instance.topic,
       'content': instance.content,
       'userId': instance.userId,
     };
@@ -34,7 +36,9 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/';
+  }
 
   final Dio _dio;
 
@@ -66,7 +70,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Message> fetchMessage(Topic topic) async {
+  Future<Message> fetchTopicAnswerMessage(Topic topic) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -80,7 +84,31 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'https://wordwolf-5uxbsy4xrq-an.a.run.app',
+              '/make_topic_answer',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Message.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Message> fetchQuestionAnswerMessage(Message message) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(message.toJson());
+    final _result =
+        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Message>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/make_question_answer',
               queryParameters: queryParameters,
               data: _data,
             )

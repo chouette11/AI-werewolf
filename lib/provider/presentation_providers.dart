@@ -31,6 +31,8 @@ final answerRadioValueProvider = StateProvider<String>((ref) => '');
 
 final maxMemberProvider = StateProvider<int>((ref) => 3);
 
+final topicProvider = StateProvider((ref) => 'うどん');
+
 @riverpod
 class LimitTime extends _$LimitTime {
   @override

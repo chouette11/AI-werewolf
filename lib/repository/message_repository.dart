@@ -12,22 +12,49 @@ class MessageRepository {
 
   final Ref ref;
 
-  /// 新規タスク追加
+  /// 新規メッセージ追加
   Future<void> addMessage(String content, String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
-    final entity = MessageEntity(content: content, userId: uid, createdAt: DateTime.now());
+    final entity =
+        MessageEntity(content: content, userId: uid, createdAt: DateTime.now());
+    final messageDoc = entity.toMessageDocument();
+    await firestore.insertMessage(messageDoc, roomId);
+    addMessageFromGptToQuestion(entity, roomId);
+  }
+
+  /// topicに対するAIの返答
+  Future<void> addMessageFromGptToTopic(String topic, String roomId) async {
+    final api = ref.read(apiProvider);
+    final firestore = ref.read(firestoreProvider);
+    final message = await api.fetchTopicAnswerMessage(topic);
+    final entity = MessageEntity(
+        content: message.content,
+        userId: message.userId,
+        createdAt: DateTime.now());
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
   }
 
-  Future<void> addMessageFromGpt(String topic, String roomId) async {
+  /// 他のユーザーが疑問文で送ったときに対するAIの返答
+  Future<void> addMessageFromGptToQuestion(
+      MessageEntity message, String roomId) async {
+    print('send_api');
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
-    final message = await api.fetchMessage(topic);
-    final entity = MessageEntity(content: message.content, userId: message.userId, createdAt: DateTime.now());
-    final messageDoc = entity.toMessageDocument();
-    await firestore.insertMessage(messageDoc, roomId); 
+    final topic = ref.read(topicProvider);
+    final resMessage = await api.fetchQuestionAnswerMessage(message, topic);
+    final resEntity = MessageEntity(
+      content: resMessage.content,
+      userId: resMessage.userId,
+      createdAt: DateTime.now(),
+    );
+    // 疑問文でない場合何も保存しない
+    if (resEntity.content == '') {
+      return;
+    }
+    final messageDoc = resEntity.toMessageDocument();
+    await firestore.insertMessage(messageDoc, roomId);
   }
 
   /// タスクのストリームを取得
