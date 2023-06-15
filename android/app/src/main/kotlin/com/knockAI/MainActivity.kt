@@ -1,4 +1,4 @@
-package com.example.wordwolf
+package com.knockAI
 
 import io.flutter.embedding.android.FlutterActivity
 
