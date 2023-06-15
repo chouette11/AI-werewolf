@@ -28,7 +28,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
     return WillPopScope(
       onWillPop: () async => false,
       child: AlertDialog(
-        backgroundColor: ColorConstant.base,
+        backgroundColor: ColorConstant.black100,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),

@@ -36,11 +36,11 @@ class StartDialog extends ConsumerWidget {
               roomId,
               style: TextStyleConstant.normal32,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
               children: [
                 const Spacer(),
-                Text('参加人数：', style: TextStyleConstant.normal16),
+                const Text('参加人数：', style: TextStyleConstant.normal16),
                 SizedBox(
                   height: 72,
                   child: NumberPicker(
@@ -57,7 +57,7 @@ class StartDialog extends ConsumerWidget {
                     value: value,
                   ),
                 ),
-                Text('人', style: TextStyleConstant.normal16),
+                const Text('人', style: TextStyleConstant.normal16),
                 const Spacer(),
               ],
             ),
@@ -90,7 +90,7 @@ class StartDialog extends ConsumerWidget {
                   child: Text(
                     "コピー",
                     style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.base,
+                      color: ColorConstant.black100,
                     ),
                   ),
                 ),
@@ -112,7 +112,7 @@ class StartDialog extends ConsumerWidget {
                   child: Text(
                     "共有",
                     style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.base,
+                      color: ColorConstant.black100,
                     ),
                   ),
                 ),
@@ -141,7 +141,7 @@ class StartDialog extends ConsumerWidget {
                 ),
               ),
               child: Text(
-                "参加する",
+                "入室する",
                 style: TextStyleConstant.normal16.copyWith(
                   color: ColorConstant.black0,
                 ),
@@ -149,7 +149,7 @@ class StartDialog extends ConsumerWidget {
             ),
           ),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
       ],
     );
   }
