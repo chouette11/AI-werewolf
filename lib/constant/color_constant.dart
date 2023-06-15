@@ -5,6 +5,11 @@ class ColorConstant {
 
   static const secondary = Color(0xFFE1EDE8);
   static const main = Color(0xFF397756);
+  static const chat1 = Color(0xFFD97F6B);
+  static const chat2 = Color(0xFF75A893);
+  static const chat3 = Color(0xFFD7975A);
+  static const chat4 = Color(0xFF32436B);
+  static const chat5 = Color(0xFF9E67B1);
 
   static const black100 = Color(0xFFFFFFFF);
   static const black99 = Color(0xFFFAFAFA);
