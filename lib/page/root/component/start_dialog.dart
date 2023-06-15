@@ -70,8 +70,8 @@ class StartDialog extends ConsumerWidget {
             children: [
               const Spacer(),
               SizedBox(
-                height: 48,
-                width: 120,
+                height: 40,
+                width: 96,
                 child: ElevatedButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: roomId));
@@ -82,38 +82,66 @@ class StartDialog extends ConsumerWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.main,
+                    backgroundColor: ColorConstant.black100,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(
+                        color: ColorConstant.main,
+                        width: 1,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    "コピー",
-                    style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.black100,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "コピー",
+                        style: TextStyleConstant.normal16.copyWith(
+                          color: ColorConstant.main,
+                        ),
+                      ),
+                      Icon(
+                        Icons.content_copy,
+                        color: ColorConstant.main,
+                        size: 16,
+                      )
+                    ],
                   ),
                 ),
               ),
               const Spacer(),
               SizedBox(
-                height: 48,
-                width: 120,
+                height:40,
+                width: 96,
                 child: ElevatedButton(
                   onPressed: () {
                     Share.share(roomId);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.main,
+                    backgroundColor: ColorConstant.black100,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                  child: Text(
-                    "共有",
-                    style: TextStyleConstant.normal16.copyWith(
-                      color: ColorConstant.black100,
+                    side: BorderSide(
+                      color: ColorConstant.main,
+                      width: 1,
                     ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "共有",
+                        style: TextStyleConstant.normal16.copyWith(
+                          color: ColorConstant.main,
+                        ),
+                      ),
+                      Icon(
+                        Icons.share,
+                        color: ColorConstant.main,
+                        size: 16,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -136,7 +164,7 @@ class StartDialog extends ConsumerWidget {
                 context.push("/chat", extra: roomId);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.secondary,
+                backgroundColor: ColorConstant.main,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -144,7 +172,7 @@ class StartDialog extends ConsumerWidget {
               child: Text(
                 "入室する",
                 style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.black0,
+                  color: ColorConstant.black100,
                 ),
               ),
             ),
