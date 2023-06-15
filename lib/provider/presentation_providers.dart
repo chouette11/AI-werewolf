@@ -33,6 +33,8 @@ final maxMemberProvider = StateProvider<int>((ref) => 3);
 
 final topicProvider = StateProvider((ref) => 'うどん');
 
+final isMakeRoomProvider = StateProvider<bool>((ref) => false);
+
 @riverpod
 class LimitTime extends _$LimitTime {
   @override
