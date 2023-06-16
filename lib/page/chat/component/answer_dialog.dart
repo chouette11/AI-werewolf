@@ -6,22 +6,28 @@ import 'package:wordwolf/page/chat/component/executed_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
-class AnswerDialog extends ConsumerWidget {
-  const AnswerDialog({
-    super.key,
-    required this.roomId,
-  });
+class AnswerDialog extends ConsumerStatefulWidget {
+  const AnswerDialog({super.key, required this.roomId});
 
   final String roomId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AnswerDialog> createState() => _AnswerDialogState();
+}
+
+class _AnswerDialogState extends ConsumerState<AnswerDialog> {
+  bool isSend = false;
+
+  @override
+  Widget build(BuildContext context) {
     final value = ref.watch(answerRadioValueProvider);
-    final members = ref.watch(membersStreamProvider(roomId));
-    final room = ref.watch(roomStreamProvider(roomId));
+    final members = ref.watch(membersStreamProvider(widget.roomId));
+    final room = ref.watch(roomStreamProvider(widget.roomId));
 
     return members.when(
       data: (data) {
+        // プレイヤーxのxでソート
+        data.sort((a, b) => a.assignedId.compareTo(b.assignedId));
         return room.when(
           data: (room) {
             // 全員等表示遷移
@@ -32,7 +38,7 @@ class AnswerDialog extends ConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (context) => ExecutedDialog(
-                    roomId: roomId,
+                    roomId: widget.roomId,
                   ),
                 );
               });
@@ -68,12 +74,15 @@ class AnswerDialog extends ConsumerWidget {
                         )
                         .toList(),
                     ElevatedButton(
-                      onPressed: value == ''
+                      onPressed: value == '' || isSend
                           ? null
                           : () {
-                              ref
-                                  .read(roomRepositoryProvider)
-                                  .voteForMember(roomId, value[value.length-1]);
+                              ref.read(roomRepositoryProvider).voteForMember(
+                                  widget.roomId, value[value.length - 1]);
+                              isSend = true;
+                              setState(() {
+
+                              });
                             },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ColorConstant.main),
