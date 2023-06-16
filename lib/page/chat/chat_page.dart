@@ -80,29 +80,34 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 ),
               );
             }
-            return SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).viewInsets.bottom -
-                  180,
-              child: ListView.builder(
-                reverse: true,
-                itemCount: data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  data.sort((a, b) {
-                    //sorting in descending order
-                    return b.createdAt.compareTo(a.createdAt);
-                  });
-                  final message = data[index];
-                  if (message.userId == uid) {
-                    return SendMessageBubble(message: message.content);
-                  } else {
-                    return ReceiveMessageBubble(
-                      messageEntity: message,
-                      roomId: widget.roomId,
-                    );
-                  }
-                },
-              ),
+            return  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                    child: ListView.builder(
+                      reverse: true,
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        data.sort((a, b) {
+                          //sorting in descending order
+                          return b.createdAt.compareTo(a.createdAt);
+                        });
+                        final message = data[index];
+                        if (message.userId == uid) {
+                          return SendMessageBubble(message: message.content);
+                        } else {
+                          return ReceiveMessageBubble(
+                            messageEntity: message,
+                            roomId: widget.roomId,
+                          );
+                        }
+                      },
+                    ),
+                ),
+                counter <= 0
+                    ? BottomField(roomId: widget.roomId)
+                    : BottomTextField(roomId: widget.roomId),
+              ],
             );
           },
           error: (error, stackTrace) {
