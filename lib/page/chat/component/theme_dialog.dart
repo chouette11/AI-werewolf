@@ -32,7 +32,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         content: SizedBox(
-          height: 360,
+          height: 280,
           width: 240,
           child: Center(
             child: messages.when(
@@ -61,7 +61,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         const Spacer(),
                       ],
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 24),
                     SizedBox(
                       height: 100,
                       width: 200,
@@ -72,6 +72,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         cursorColor: ColorConstant.main,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
+                        minLines: 2,
                         decoration: InputDecoration(
                           enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
@@ -91,7 +92,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Visibility(
                       visible: data.length != widget.maxNum && isSend,
                       child: const Text(
@@ -99,9 +100,9 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         style: TextStyleConstant.normal12,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 16),
                     SizedBox(
-                      height: 48,
+                      height: 40,
                       width: 80,
                       child: ElevatedButton(
                         onPressed: isSend
