@@ -12,6 +12,7 @@ class RoomDocument with _$RoomDocument {
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'maxNum') required int maxNum,
     @JsonKey(name: 'roles') required List<String> roles,
+    @JsonKey(name: 'votedSum') required int votedSum,
 
   }) = _RoomDocument;
 

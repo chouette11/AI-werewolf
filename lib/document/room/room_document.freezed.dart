@@ -26,6 +26,8 @@ mixin _$RoomDocument {
   int get maxNum => throw _privateConstructorUsedError;
   @JsonKey(name: 'roles')
   List<String> get roles => throw _privateConstructorUsedError;
+  @JsonKey(name: 'votedSum')
+  int get votedSum => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +44,8 @@ abstract class $RoomDocumentCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'maxNum') int maxNum,
-      @JsonKey(name: 'roles') List<String> roles});
+      @JsonKey(name: 'roles') List<String> roles,
+      @JsonKey(name: 'votedSum') int votedSum});
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
     Object? id = null,
     Object? maxNum = null,
     Object? roles = null,
+    Object? votedSum = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +79,10 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      votedSum: null == votedSum
+          ? _value.votedSum
+          : votedSum // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -90,7 +98,8 @@ abstract class _$$_RoomDocumentCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'maxNum') int maxNum,
-      @JsonKey(name: 'roles') List<String> roles});
+      @JsonKey(name: 'roles') List<String> roles,
+      @JsonKey(name: 'votedSum') int votedSum});
 }
 
 /// @nodoc
@@ -107,6 +116,7 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
     Object? id = null,
     Object? maxNum = null,
     Object? roles = null,
+    Object? votedSum = null,
   }) {
     return _then(_$_RoomDocument(
       id: null == id
@@ -121,6 +131,10 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
           ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      votedSum: null == votedSum
+          ? _value.votedSum
+          : votedSum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -131,7 +145,8 @@ class _$_RoomDocument extends _RoomDocument {
   const _$_RoomDocument(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'maxNum') required this.maxNum,
-      @JsonKey(name: 'roles') required final List<String> roles})
+      @JsonKey(name: 'roles') required final List<String> roles,
+      @JsonKey(name: 'votedSum') required this.votedSum})
       : _roles = roles,
         super._();
 
@@ -154,8 +169,12 @@ class _$_RoomDocument extends _RoomDocument {
   }
 
   @override
+  @JsonKey(name: 'votedSum')
+  final int votedSum;
+
+  @override
   String toString() {
-    return 'RoomDocument(id: $id, maxNum: $maxNum, roles: $roles)';
+    return 'RoomDocument(id: $id, maxNum: $maxNum, roles: $roles, votedSum: $votedSum)';
   }
 
   @override
@@ -165,13 +184,15 @@ class _$_RoomDocument extends _RoomDocument {
             other is _$_RoomDocument &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.maxNum, maxNum) || other.maxNum == maxNum) &&
-            const DeepCollectionEquality().equals(other._roles, _roles));
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
+            (identical(other.votedSum, votedSum) ||
+                other.votedSum == votedSum));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, maxNum, const DeepCollectionEquality().hash(_roles));
+  int get hashCode => Object.hash(runtimeType, id, maxNum,
+      const DeepCollectionEquality().hash(_roles), votedSum);
 
   @JsonKey(ignore: true)
   @override
@@ -191,7 +212,8 @@ abstract class _RoomDocument extends RoomDocument {
   const factory _RoomDocument(
           {@JsonKey(name: 'id') required final String id,
           @JsonKey(name: 'maxNum') required final int maxNum,
-          @JsonKey(name: 'roles') required final List<String> roles}) =
+          @JsonKey(name: 'roles') required final List<String> roles,
+          @JsonKey(name: 'votedSum') required final int votedSum}) =
       _$_RoomDocument;
   const _RoomDocument._() : super._();
 
@@ -207,6 +229,9 @@ abstract class _RoomDocument extends RoomDocument {
   @override
   @JsonKey(name: 'roles')
   List<String> get roles;
+  @override
+  @JsonKey(name: 'votedSum')
+  int get votedSum;
   @override
   @JsonKey(ignore: true)
   _$$_RoomDocumentCopyWith<_$_RoomDocument> get copyWith =>
