@@ -23,12 +23,11 @@ class RoomRepository {
     // 割り当てるidから0を取り除く
     final memberId = rng.nextInt(newMaxNum) + 1;
     final roles = ['村人', '村人', '狂人'];
-    final entity =
-        RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles);
+    final entity = RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
-    final memberEntity =
-        MemberEntity(userId: 'gpt', assignedId: memberId.toString(), role: '');
+    final memberEntity = MemberEntity(
+        userId: 'gpt', assignedId: memberId.toString(), role: '', voted: 0);
     await firestore.addMemberToRoom(roomId, memberEntity.toMemberDocument());
   }
 
@@ -36,7 +35,8 @@ class RoomRepository {
   Future<void> joinRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
-    final entity = MemberEntity(userId: uid, assignedId: '', role: '');
+    final entity =
+        MemberEntity(userId: uid, assignedId: '', role: '', voted: 0);
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
   }
 
@@ -71,5 +71,15 @@ class RoomRepository {
     if (members.isEmpty) {
       firestore.deleteRoom(roomId);
     }
+  }
+
+  /// 処刑するメンバー投票
+  Future<void> voteForMember(String roomId, String assignedId) async {
+    final firestore = ref.read(firestoreProvider);
+    final members = await firestore.fetchMembers(roomId);
+    final userId = members[
+            members.indexWhere((e) => e.assignedId.toString() == assignedId)]
+        .userId;
+    await firestore.voteForMember(roomId, userId);
   }
 }
