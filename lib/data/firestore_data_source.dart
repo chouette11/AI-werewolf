@@ -134,6 +134,20 @@ class FirestoreDataSource {
     }
   }
 
+  /// メンバーの消滅
+  Future<void> killMember(String roomId, String uid) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+       await db
+          .collection('rooms/$roomId/members')
+          .doc(uid)
+          .update({'isLive': false});
+    } catch (e) {
+      print('kill_member');
+      throw e;
+    }
+  }
+
   /// メンバーの削除
   Future<void> deleteMember(String roomId, String uid) async {
     try {
