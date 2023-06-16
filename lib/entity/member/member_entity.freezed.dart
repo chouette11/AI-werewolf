@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MemberEntity {
   String get userId => throw _privateConstructorUsedError;
   String get assignedId => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MemberEntityCopyWith<MemberEntity> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $MemberEntityCopyWith<$Res> {
           MemberEntity value, $Res Function(MemberEntity) then) =
       _$MemberEntityCopyWithImpl<$Res, MemberEntity>;
   @useResult
-  $Res call({String userId, String assignedId});
+  $Res call({String userId, String assignedId, String role});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
   $Res call({
     Object? userId = null,
     Object? assignedId = null,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -57,6 +59,10 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
       assignedId: null == assignedId
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -70,7 +76,7 @@ abstract class _$$_MemberEntityCopyWith<$Res>
       __$$_MemberEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, String assignedId});
+  $Res call({String userId, String assignedId, String role});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$_MemberEntityCopyWithImpl<$Res>
   $Res call({
     Object? userId = null,
     Object? assignedId = null,
+    Object? role = null,
   }) {
     return _then(_$_MemberEntity(
       userId: null == userId
@@ -96,6 +103,10 @@ class __$$_MemberEntityCopyWithImpl<$Res>
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -103,17 +114,20 @@ class __$$_MemberEntityCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MemberEntity extends _MemberEntity {
-  const _$_MemberEntity({required this.userId, required this.assignedId})
+  const _$_MemberEntity(
+      {required this.userId, required this.assignedId, required this.role})
       : super._();
 
   @override
   final String userId;
   @override
   final String assignedId;
+  @override
+  final String role;
 
   @override
   String toString() {
-    return 'MemberEntity(userId: $userId, assignedId: $assignedId)';
+    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role)';
   }
 
   @override
@@ -123,11 +137,12 @@ class _$_MemberEntity extends _MemberEntity {
             other is _$_MemberEntity &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.assignedId, assignedId) ||
-                other.assignedId == assignedId));
+                other.assignedId == assignedId) &&
+            (identical(other.role, role) || other.role == role));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, assignedId);
+  int get hashCode => Object.hash(runtimeType, userId, assignedId, role);
 
   @JsonKey(ignore: true)
   @override
@@ -139,13 +154,16 @@ class _$_MemberEntity extends _MemberEntity {
 abstract class _MemberEntity extends MemberEntity {
   const factory _MemberEntity(
       {required final String userId,
-      required final String assignedId}) = _$_MemberEntity;
+      required final String assignedId,
+      required final String role}) = _$_MemberEntity;
   const _MemberEntity._() : super._();
 
   @override
   String get userId;
   @override
   String get assignedId;
+  @override
+  String get role;
   @override
   @JsonKey(ignore: true)
   _$$_MemberEntityCopyWith<_$_MemberEntity> get copyWith =>

@@ -11,6 +11,7 @@ class MemberDocument with _$MemberDocument {
   const factory MemberDocument({
     @JsonKey(name: 'userId') required String userId,
     @JsonKey(name: 'assignedId') required int assignedId,
+    @JsonKey(name: 'role') required String role,
   }) = _MemberDocument;
 
   factory MemberDocument.fromJson(Map<String, dynamic> json) =>

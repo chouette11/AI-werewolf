@@ -10,19 +10,22 @@ class MemberEntity with _$MemberEntity {
   const factory MemberEntity({
     required String userId,
     required String assignedId,
+    required String role,
   }) = _MemberEntity;
 
   static MemberEntity fromDoc(MemberDocument memberDoc) {
     return MemberEntity(
       userId: memberDoc.userId,
       assignedId: memberDoc.assignedId.toString(),
+      role: memberDoc.role,
     );
   }
 
   MemberDocument toMemberDocument() {
     return MemberDocument(
       userId: userId,
-      assignedId: 0,
+      assignedId: assignedId == '' ? 0 : int.parse(assignedId),
+      role: role,
     );
   }
 }
