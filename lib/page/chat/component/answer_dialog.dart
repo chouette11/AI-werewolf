@@ -19,7 +19,6 @@ class AnswerDialog extends ConsumerWidget {
 
     return members.when(
       data: (data) {
-        final nameList = data.values.toList();
         return AlertDialog(
           backgroundColor: ColorConstant.black100,
           shape: const RoundedRectangleBorder(
@@ -31,13 +30,13 @@ class AnswerDialog extends ConsumerWidget {
             child: Column(
               children: [
                 const Text('誰がAI？'),
-                ...nameList
+                ...data
                     .map(
-                      (name) => ListTile(
-                        title: Text('プレイヤー${name.toString()}'),
+                      (member) => ListTile(
+                        title: Text('プレイヤー${member.assignedId}'),
                         leading: Radio<String>(
                           activeColor: ColorConstant.main,
-                          value: 'プレイヤー${name.toString()}',
+                          value: 'プレイヤー${member.assignedId}',
                           groupValue: value,
                           onChanged: (String? value) {
                             if (value != null) {
@@ -55,9 +54,10 @@ class AnswerDialog extends ConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (_) {
+                        final gpt = data[data.indexWhere((e) => e.userId == 'gpt')];
                         return CorrectDialog(
-                          answerName: data['gpt'].toString(),
-                          isCorrect: value[value.length - 1] == data['gpt'].toString(),
+                          gptAssignedId: gpt.assignedId,
+                          isCorrect: value[value.length - 1] == gpt.assignedId,
                           roomId: roomId,
                         );
                       },
