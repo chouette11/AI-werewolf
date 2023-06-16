@@ -65,7 +65,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
                     const Text('あなたは', style: TextStyleConstant.normal16),
                     const SizedBox(height: 8),
                     Text(
-                      'プレイヤー${member.assignedId}(一般人)',
+                      'プレイヤー${member.assignedId}(${member.role})',
                       style: TextStyleConstant.bold24,
                     ),
                     const SizedBox(height: 16),
