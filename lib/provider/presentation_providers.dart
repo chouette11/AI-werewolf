@@ -50,6 +50,9 @@ class LimitTime extends _$LimitTime {
   void startTimer() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       state = state - 1;
+      if (state < 0) {
+        timer.cancel();
+      }
     });
   }
 }
