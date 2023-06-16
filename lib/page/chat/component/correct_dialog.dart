@@ -9,12 +9,12 @@ import 'package:wordwolf/repository/room_repository.dart';
 class CorrectDialog extends ConsumerWidget {
   const CorrectDialog({
     super.key,
-    required this.answerName,
+    required this.gptAssignedId,
     required this.isCorrect,
     required this.roomId,
   });
 
-  final String answerName;
+  final String gptAssignedId;
   final bool isCorrect;
   final String roomId;
 
@@ -40,7 +40,7 @@ class CorrectDialog extends ConsumerWidget {
                 'AIは',
                 style: TextStyleConstant.normal24,
               ),
-              Text('プレイヤー$answerName', style: TextStyleConstant.normal24),
+              Text('プレイヤー$gptAssignedId', style: TextStyleConstant.normal24),
               const SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
