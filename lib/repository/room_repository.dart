@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
+import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/entity/room/room_entity.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
@@ -25,20 +26,23 @@ class RoomRepository {
         RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: newMaxNum);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
+    const memberEntity = MemberEntity(userId: 'gpt', assignedId: '');
+    await firestore.addMemberToRoom(roomId, memberEntity.toMemberDocument());
   }
 
   /// ルームに参加
   Future<void> joinRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
-    await firestore.addMemberToRoom(roomId, uid);
+    final entity = MemberEntity(userId: uid, assignedId: '');
+    await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
   }
 
   /// ルームメンバーのストリームを取得
-  Stream<Map<String, int>> getRoomMemberStream(String roomId) {
+  Stream<List<MemberEntity>> getRoomMemberStream(String roomId) {
     final firestore = ref.read(firestoreProvider);
-    return firestore.fetchRoomStream(roomId).map(
-          (event) => RoomEntity.fromDoc(event).members,
+    return firestore.fetchMembersStream(roomId).map(
+          (event) => event.map((e) => MemberEntity.fromDoc(e)).toList(),
         );
   }
 

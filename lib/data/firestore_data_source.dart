@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordwolf/document/member/member_document.dart';
 import 'package:wordwolf/document/message/message_document.dart';
 import 'package:wordwolf/document/room/room_document.dart';
 import 'package:wordwolf/provider/domain_providers.dart';
@@ -47,14 +48,16 @@ class FirestoreDataSource {
   Future<void> createRoom(RoomDocument roomDocument) async {
     final db = ref.read(firebaseFirestoreProvider);
     final collection = db.collection('rooms');
-    await collection.doc(roomDocument.id).set(roomDocument.copyWith.call().toJson());
+    await collection
+        .doc(roomDocument.id)
+        .set(roomDocument.copyWith.call().toJson());
   }
 
   /// ルームに参加
-  Future<void> addMemberToRoom(String roomId, String userId) async {
+  Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
     final db = ref.read(firebaseFirestoreProvider);
     final collection = db.collection('rooms/$roomId/members');
-    await collection.doc(userId).set({'userId': userId});
+    await collection.doc(member.userId).set(member.copyWith.call().toJson());
   }
 
   /// ルームを取得
@@ -100,6 +103,21 @@ class FirestoreDataSource {
   }
 
   ///Member
+
+  /// メンバーのストリームを取得
+  Stream<List<MemberDocument>> fetchMembersStream(String roomId) {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final stream = db.collection('rooms/$roomId/members').snapshots();
+      return stream.map((event) => event.docs
+          .map((doc) => doc.data())
+          .map((data) => MemberDocument.fromJson(data))
+          .toList());
+    } catch (e) {
+      print('firestore_getMemberStream');
+      throw e;
+    }
+  }
 
   /// メンバーの取得
   Future<List<String>> fetchMembers(String roomId) async {

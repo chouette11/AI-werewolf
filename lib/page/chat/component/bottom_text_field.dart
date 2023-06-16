@@ -40,14 +40,9 @@ class BottomTextField extends ConsumerWidget {
           children: [
             members.when(
               data: (data) {
-                if (data[uid] == null) {
-                  return const Text(
-                    'loading',
-                    style: TextStyleConstant.normal12,
-                  );
-                }
+                final member = data[data.indexWhere((e) => e.userId == uid)];
                 return Text(
-                  'あなたはユーザー${data[uid]}（一般人）',
+                  'あなたはユーザー${member.assignedId}（一般人）',
                   style: TextStyleConstant.bold12,
                 );
               },
