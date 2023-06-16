@@ -125,7 +125,9 @@ class FirestoreDataSource {
     try {
       final db = ref.read(firebaseFirestoreProvider);
       final members = await db.collection('rooms/$roomId/members').get();
-      return members.docs.map((e) => MemberDocument.fromJson(e.data())).toList();
+      return members.docs
+          .map((e) => MemberDocument.fromJson(e.data()))
+          .toList();
     } catch (e) {
       print('fetch_members');
       throw e;
@@ -155,6 +157,19 @@ class FirestoreDataSource {
           .update({'voted': FieldValue.increment(1)});
     } catch (e) {
       print('vote_for_member');
+      throw e;
+    }
+  }
+
+  /// 投票をカウントする
+  Future<void> addVoteToRoom(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).update(
+        {'votedSum': FieldValue.increment(1)},
+      );
+    } catch (e) {
+      print('count_vote');
       throw e;
     }
   }
