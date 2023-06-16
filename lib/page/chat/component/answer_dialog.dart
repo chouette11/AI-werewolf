@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/page/chat/component/executed_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
@@ -22,6 +24,19 @@ class AnswerDialog extends ConsumerWidget {
       data: (data) {
         return room.when(
           data: (room) {
+            // 全員等表示遷移
+            // gptの分を引く
+            if (room.votedSum == data.length - 1) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.pop();
+                showDialog(
+                  context: context,
+                  builder: (context) => ExecutedDialog(
+                    roomId: roomId,
+                  ),
+                );
+              });
+            }
             return AlertDialog(
               backgroundColor: ColorConstant.black100,
               shape: const RoundedRectangleBorder(
@@ -58,7 +73,7 @@ class AnswerDialog extends ConsumerWidget {
                           : () {
                               ref
                                   .read(roomRepositoryProvider)
-                                  .voteForMember(roomId, value);
+                                  .voteForMember(roomId, value[value.length-1]);
                             },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ColorConstant.main),
