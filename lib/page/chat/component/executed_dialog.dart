@@ -41,8 +41,6 @@ class ExecutedDialog extends ConsumerWidget {
 
         return room.when(
           data: (room) {
-            // プレイヤーxのxでソート
-            data.sort((a, b) => a.assignedId.compareTo(b.assignedId));
             return AlertDialog(
               backgroundColor: ColorConstant.black100,
               shape: const RoundedRectangleBorder(
