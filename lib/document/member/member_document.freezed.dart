@@ -26,6 +26,8 @@ mixin _$MemberDocument {
   int get assignedId => throw _privateConstructorUsedError;
   @JsonKey(name: 'role')
   String get role => throw _privateConstructorUsedError;
+  @JsonKey(name: 'isLive')
+  bool get isLive => throw _privateConstructorUsedError;
   @JsonKey(name: 'voted')
   int get voted => throw _privateConstructorUsedError;
 
@@ -45,6 +47,7 @@ abstract class $MemberDocumentCopyWith<$Res> {
       {@JsonKey(name: 'userId') String userId,
       @JsonKey(name: 'assignedId') int assignedId,
       @JsonKey(name: 'role') String role,
+      @JsonKey(name: 'isLive') bool isLive,
       @JsonKey(name: 'voted') int voted});
 }
 
@@ -64,6 +67,7 @@ class _$MemberDocumentCopyWithImpl<$Res, $Val extends MemberDocument>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_value.copyWith(
@@ -79,6 +83,10 @@ class _$MemberDocumentCopyWithImpl<$Res, $Val extends MemberDocument>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      isLive: null == isLive
+          ? _value.isLive
+          : isLive // ignore: cast_nullable_to_non_nullable
+              as bool,
       voted: null == voted
           ? _value.voted
           : voted // ignore: cast_nullable_to_non_nullable
@@ -99,6 +107,7 @@ abstract class _$$_MemberDocumentCopyWith<$Res>
       {@JsonKey(name: 'userId') String userId,
       @JsonKey(name: 'assignedId') int assignedId,
       @JsonKey(name: 'role') String role,
+      @JsonKey(name: 'isLive') bool isLive,
       @JsonKey(name: 'voted') int voted});
 }
 
@@ -116,6 +125,7 @@ class __$$_MemberDocumentCopyWithImpl<$Res>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_$_MemberDocument(
@@ -131,6 +141,10 @@ class __$$_MemberDocumentCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      isLive: null == isLive
+          ? _value.isLive
+          : isLive // ignore: cast_nullable_to_non_nullable
+              as bool,
       voted: null == voted
           ? _value.voted
           : voted // ignore: cast_nullable_to_non_nullable
@@ -146,6 +160,7 @@ class _$_MemberDocument extends _MemberDocument {
       {@JsonKey(name: 'userId') required this.userId,
       @JsonKey(name: 'assignedId') required this.assignedId,
       @JsonKey(name: 'role') required this.role,
+      @JsonKey(name: 'isLive') required this.isLive,
       @JsonKey(name: 'voted') required this.voted})
       : super._();
 
@@ -162,12 +177,15 @@ class _$_MemberDocument extends _MemberDocument {
   @JsonKey(name: 'role')
   final String role;
   @override
+  @JsonKey(name: 'isLive')
+  final bool isLive;
+  @override
   @JsonKey(name: 'voted')
   final int voted;
 
   @override
   String toString() {
-    return 'MemberDocument(userId: $userId, assignedId: $assignedId, role: $role, voted: $voted)';
+    return 'MemberDocument(userId: $userId, assignedId: $assignedId, role: $role, isLive: $isLive, voted: $voted)';
   }
 
   @override
@@ -179,12 +197,14 @@ class _$_MemberDocument extends _MemberDocument {
             (identical(other.assignedId, assignedId) ||
                 other.assignedId == assignedId) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.isLive, isLive) || other.isLive == isLive) &&
             (identical(other.voted, voted) || other.voted == voted));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, assignedId, role, voted);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, assignedId, role, isLive, voted);
 
   @JsonKey(ignore: true)
   @override
@@ -205,6 +225,7 @@ abstract class _MemberDocument extends MemberDocument {
       {@JsonKey(name: 'userId') required final String userId,
       @JsonKey(name: 'assignedId') required final int assignedId,
       @JsonKey(name: 'role') required final String role,
+      @JsonKey(name: 'isLive') required final bool isLive,
       @JsonKey(name: 'voted') required final int voted}) = _$_MemberDocument;
   const _MemberDocument._() : super._();
 
@@ -220,6 +241,9 @@ abstract class _MemberDocument extends MemberDocument {
   @override
   @JsonKey(name: 'role')
   String get role;
+  @override
+  @JsonKey(name: 'isLive')
+  bool get isLive;
   @override
   @JsonKey(name: 'voted')
   int get voted;

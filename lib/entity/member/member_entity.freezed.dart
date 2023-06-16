@@ -19,6 +19,7 @@ mixin _$MemberEntity {
   String get userId => throw _privateConstructorUsedError;
   String get assignedId => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
+  bool get isLive => throw _privateConstructorUsedError;
   int get voted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +33,8 @@ abstract class $MemberEntityCopyWith<$Res> {
           MemberEntity value, $Res Function(MemberEntity) then) =
       _$MemberEntityCopyWithImpl<$Res, MemberEntity>;
   @useResult
-  $Res call({String userId, String assignedId, String role, int voted});
+  $Res call(
+      {String userId, String assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -51,6 +53,7 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_value.copyWith(
@@ -66,6 +69,10 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      isLive: null == isLive
+          ? _value.isLive
+          : isLive // ignore: cast_nullable_to_non_nullable
+              as bool,
       voted: null == voted
           ? _value.voted
           : voted // ignore: cast_nullable_to_non_nullable
@@ -82,7 +89,8 @@ abstract class _$$_MemberEntityCopyWith<$Res>
       __$$_MemberEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, String assignedId, String role, int voted});
+  $Res call(
+      {String userId, String assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -99,6 +107,7 @@ class __$$_MemberEntityCopyWithImpl<$Res>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_$_MemberEntity(
@@ -114,6 +123,10 @@ class __$$_MemberEntityCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      isLive: null == isLive
+          ? _value.isLive
+          : isLive // ignore: cast_nullable_to_non_nullable
+              as bool,
       voted: null == voted
           ? _value.voted
           : voted // ignore: cast_nullable_to_non_nullable
@@ -129,6 +142,7 @@ class _$_MemberEntity extends _MemberEntity {
       {required this.userId,
       required this.assignedId,
       required this.role,
+      required this.isLive,
       required this.voted})
       : super._();
 
@@ -139,11 +153,13 @@ class _$_MemberEntity extends _MemberEntity {
   @override
   final String role;
   @override
+  final bool isLive;
+  @override
   final int voted;
 
   @override
   String toString() {
-    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role, voted: $voted)';
+    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role, isLive: $isLive, voted: $voted)';
   }
 
   @override
@@ -155,11 +171,13 @@ class _$_MemberEntity extends _MemberEntity {
             (identical(other.assignedId, assignedId) ||
                 other.assignedId == assignedId) &&
             (identical(other.role, role) || other.role == role) &&
+            (identical(other.isLive, isLive) || other.isLive == isLive) &&
             (identical(other.voted, voted) || other.voted == voted));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, assignedId, role, voted);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, assignedId, role, isLive, voted);
 
   @JsonKey(ignore: true)
   @override
@@ -173,6 +191,7 @@ abstract class _MemberEntity extends MemberEntity {
       {required final String userId,
       required final String assignedId,
       required final String role,
+      required final bool isLive,
       required final int voted}) = _$_MemberEntity;
   const _MemberEntity._() : super._();
 
@@ -182,6 +201,8 @@ abstract class _MemberEntity extends MemberEntity {
   String get assignedId;
   @override
   String get role;
+  @override
+  bool get isLive;
   @override
   int get voted;
   @override

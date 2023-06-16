@@ -12,6 +12,7 @@ class MemberDocument with _$MemberDocument {
     @JsonKey(name: 'userId') required String userId,
     @JsonKey(name: 'assignedId') required int assignedId,
     @JsonKey(name: 'role') required String role,
+    @JsonKey(name: 'isLive') required bool isLive,
     @JsonKey(name: 'voted') required int voted,
   }) = _MemberDocument;
 
