@@ -96,6 +96,7 @@ class BottomTextField extends ConsumerWidget {
                     ref
                         .read(messageRepositoryProvider)
                         .addMessage(content, roomId);
+                    ref.read(messageTextFieldProvider.notifier).update((_) => '');
                   },
                   child: const Icon(
                     Icons.send,
