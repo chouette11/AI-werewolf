@@ -47,7 +47,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         content: SizedBox(
-          height: 360,
+          height: 240,
           width: 240,
           child: Center(
             child: members.when(
@@ -61,6 +61,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
                   );
                 }
                 return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text('あなたは', style: TextStyleConstant.normal16),
                     const SizedBox(height: 8),
