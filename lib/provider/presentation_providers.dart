@@ -43,6 +43,10 @@ class LimitTime extends _$LimitTime {
     return 90;
   }
 
+  void reset() {
+    state = 90;
+  }
+
   void startTimer() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       state = state - 1;

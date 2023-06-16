@@ -48,6 +48,7 @@ class CorrectDialog extends ConsumerWidget {
                 onPressed: () async {
                   await ref.read(roomRepositoryProvider).leaveRoom(roomId);
                   ref.read(isMakeRoomProvider.notifier).update((state) => false);
+                  ref.read(limitTimeProvider.notifier).reset();
                   context.push('/');
                 },
                 child: Text(
