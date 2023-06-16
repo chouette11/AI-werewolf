@@ -155,10 +155,10 @@ class StartDialog extends ConsumerWidget {
             height: 48,
             width: 120,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
-                ref.read(roomRepositoryProvider).makeRoom(roomId, value);
+                await ref.read(roomRepositoryProvider).makeRoom(roomId, value);
                 ref.read(roomRepositoryProvider).joinRoom(roomId);
                 ref.read(isMakeRoomProvider.notifier).update((state) => true);
                 context.push("/chat", extra: roomId);

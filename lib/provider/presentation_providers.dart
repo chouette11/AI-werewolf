@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
@@ -22,7 +23,7 @@ final messagesStreamProvider = StreamProvider.family(
       ref.watch(messageRepositoryProvider).getMessageStream(roomId),
 );
 
-final membersStreamProvider = StreamProvider.family(
+final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
   (ref, String roomId) =>
       ref.watch(roomRepositoryProvider).getRoomMemberStream(roomId),
 );
@@ -42,9 +43,16 @@ class LimitTime extends _$LimitTime {
     return 90;
   }
 
+  void reset() {
+    state = 90;
+  }
+
   void startTimer() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       state = state - 1;
+      if (state < 0) {
+        timer.cancel();
+      }
     });
   }
 }

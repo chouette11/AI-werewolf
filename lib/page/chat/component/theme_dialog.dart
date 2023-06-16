@@ -52,7 +52,8 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                 }
                 return members.when(
                   data: (members) {
-                    if (members[uid] == null) {
+                    final member = members[members.indexWhere((e) => e.userId == uid)];
+                    if (member.assignedId == '0') {
                       return const Text(
                         '配役決め中です...',
                         style: TextStyleConstant.normal16,
@@ -63,7 +64,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         const Text('あなたは', style: TextStyleConstant.normal16),
                         const SizedBox(height: 8),
                         Text(
-                          'プレイヤー${members[uid]}(一般人)',
+                          'プレイヤー${member.assignedId}(一般人)',
                           style: TextStyleConstant.bold24,
                         ),
                         const SizedBox(height: 16),
