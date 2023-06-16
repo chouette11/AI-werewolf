@@ -11,6 +11,7 @@ _$_MemberDocument _$$_MemberDocumentFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String,
       assignedId: json['assignedId'] as int,
       role: json['role'] as String,
+      voted: json['voted'] as int,
     );
 
 Map<String, dynamic> _$$_MemberDocumentToJson(_$_MemberDocument instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_MemberDocumentToJson(_$_MemberDocument instance) =>
       'userId': instance.userId,
       'assignedId': instance.assignedId,
       'role': instance.role,
+      'voted': instance.voted,
     };

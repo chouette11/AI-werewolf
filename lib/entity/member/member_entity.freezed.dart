@@ -19,6 +19,7 @@ mixin _$MemberEntity {
   String get userId => throw _privateConstructorUsedError;
   String get assignedId => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
+  int get voted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MemberEntityCopyWith<MemberEntity> get copyWith =>
@@ -31,7 +32,7 @@ abstract class $MemberEntityCopyWith<$Res> {
           MemberEntity value, $Res Function(MemberEntity) then) =
       _$MemberEntityCopyWithImpl<$Res, MemberEntity>;
   @useResult
-  $Res call({String userId, String assignedId, String role});
+  $Res call({String userId, String assignedId, String role, int voted});
 }
 
 /// @nodoc
@@ -50,6 +51,7 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? voted = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -64,6 +66,10 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      voted: null == voted
+          ? _value.voted
+          : voted // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -76,7 +82,7 @@ abstract class _$$_MemberEntityCopyWith<$Res>
       __$$_MemberEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId, String assignedId, String role});
+  $Res call({String userId, String assignedId, String role, int voted});
 }
 
 /// @nodoc
@@ -93,6 +99,7 @@ class __$$_MemberEntityCopyWithImpl<$Res>
     Object? userId = null,
     Object? assignedId = null,
     Object? role = null,
+    Object? voted = null,
   }) {
     return _then(_$_MemberEntity(
       userId: null == userId
@@ -107,6 +114,10 @@ class __$$_MemberEntityCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      voted: null == voted
+          ? _value.voted
+          : voted // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -115,7 +126,10 @@ class __$$_MemberEntityCopyWithImpl<$Res>
 
 class _$_MemberEntity extends _MemberEntity {
   const _$_MemberEntity(
-      {required this.userId, required this.assignedId, required this.role})
+      {required this.userId,
+      required this.assignedId,
+      required this.role,
+      required this.voted})
       : super._();
 
   @override
@@ -124,10 +138,12 @@ class _$_MemberEntity extends _MemberEntity {
   final String assignedId;
   @override
   final String role;
+  @override
+  final int voted;
 
   @override
   String toString() {
-    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role)';
+    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role, voted: $voted)';
   }
 
   @override
@@ -138,11 +154,12 @@ class _$_MemberEntity extends _MemberEntity {
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.assignedId, assignedId) ||
                 other.assignedId == assignedId) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.voted, voted) || other.voted == voted));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, assignedId, role);
+  int get hashCode => Object.hash(runtimeType, userId, assignedId, role, voted);
 
   @JsonKey(ignore: true)
   @override
@@ -155,7 +172,8 @@ abstract class _MemberEntity extends MemberEntity {
   const factory _MemberEntity(
       {required final String userId,
       required final String assignedId,
-      required final String role}) = _$_MemberEntity;
+      required final String role,
+      required final int voted}) = _$_MemberEntity;
   const _MemberEntity._() : super._();
 
   @override
@@ -164,6 +182,8 @@ abstract class _MemberEntity extends MemberEntity {
   String get assignedId;
   @override
   String get role;
+  @override
+  int get voted;
   @override
   @JsonKey(ignore: true)
   _$$_MemberEntityCopyWith<_$_MemberEntity> get copyWith =>
