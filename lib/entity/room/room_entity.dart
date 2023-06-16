@@ -13,6 +13,7 @@ class RoomEntity with _$RoomEntity {
     required String id,
     required int maxNum,
     required List<String> roles,
+    required int votedSum,
   }) = _RoomEntity;
 
    factory RoomEntity.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +24,7 @@ class RoomEntity with _$RoomEntity {
       id: roomDoc.id,
       maxNum: roomDoc.maxNum,
       roles: roomDoc.roles,
+      votedSum: roomDoc.votedSum,
     );
   }
 
@@ -31,6 +33,7 @@ class RoomEntity with _$RoomEntity {
       id: id, 
       maxNum: maxNum,
       roles: roles,
+      votedSum: votedSum,
     );
   }
 }
