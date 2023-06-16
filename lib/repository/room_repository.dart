@@ -27,7 +27,7 @@ class RoomRepository {
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
     final memberEntity = MemberEntity(
-        userId: 'gpt', assignedId: memberId.toString(), role: '', voted: 0);
+        userId: 'gpt', assignedId: memberId.toString(), role: '', isLive: true, voted: 0);
     await firestore.addMemberToRoom(roomId, memberEntity.toMemberDocument());
   }
 
@@ -36,7 +36,7 @@ class RoomRepository {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
     final entity =
-        MemberEntity(userId: uid, assignedId: '', role: '', voted: 0);
+        MemberEntity(userId: uid, assignedId: '', role: '', isLive: true, voted: 0);
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
   }
 
@@ -81,10 +81,20 @@ class RoomRepository {
     }
   }
 
+  /// メンバーを消滅
+  Future<void> killMember(String roomId, String userId) async {
+    print(roomId);
+    print(userId);
+    final firestore = ref.read(firestoreProvider);
+    await firestore.killMember(roomId, userId);
+  }
+
   /// 処刑するメンバー投票
   Future<void> voteForMember(String roomId, String assignedId) async {
     final firestore = ref.read(firestoreProvider);
     final members = await firestore.fetchMembers(roomId);
+    print("assiId");
+    print(assignedId);
     final userId = members[
             members.indexWhere((e) => e.assignedId.toString() == assignedId)]
         .userId;
