@@ -24,8 +24,8 @@ mixin _$RoomDocument {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'maxNum')
   int get maxNum => throw _privateConstructorUsedError;
-  @JsonKey(name: 'members')
-  Map<String, int> get members => throw _privateConstructorUsedError;
+  @JsonKey(name: 'roles')
+  List<String> get roles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +42,7 @@ abstract class $RoomDocumentCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'maxNum') int maxNum,
-      @JsonKey(name: 'members') Map<String, int> members});
+      @JsonKey(name: 'roles') List<String> roles});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
   $Res call({
     Object? id = null,
     Object? maxNum = null,
-    Object? members = null,
+    Object? roles = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -71,10 +71,10 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
           ? _value.maxNum
           : maxNum // ignore: cast_nullable_to_non_nullable
               as int,
-      members: null == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
+      roles: null == roles
+          ? _value.roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -90,7 +90,7 @@ abstract class _$$_RoomDocumentCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'maxNum') int maxNum,
-      @JsonKey(name: 'members') Map<String, int> members});
+      @JsonKey(name: 'roles') List<String> roles});
 }
 
 /// @nodoc
@@ -106,7 +106,7 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? maxNum = null,
-    Object? members = null,
+    Object? roles = null,
   }) {
     return _then(_$_RoomDocument(
       id: null == id
@@ -117,10 +117,10 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
           ? _value.maxNum
           : maxNum // ignore: cast_nullable_to_non_nullable
               as int,
-      members: null == members
-          ? _value._members
-          : members // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>,
+      roles: null == roles
+          ? _value._roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -131,8 +131,8 @@ class _$_RoomDocument extends _RoomDocument {
   const _$_RoomDocument(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'maxNum') required this.maxNum,
-      @JsonKey(name: 'members') required final Map<String, int> members})
-      : _members = members,
+      @JsonKey(name: 'roles') required final List<String> roles})
+      : _roles = roles,
         super._();
 
   factory _$_RoomDocument.fromJson(Map<String, dynamic> json) =>
@@ -144,18 +144,18 @@ class _$_RoomDocument extends _RoomDocument {
   @override
   @JsonKey(name: 'maxNum')
   final int maxNum;
-  final Map<String, int> _members;
+  final List<String> _roles;
   @override
-  @JsonKey(name: 'members')
-  Map<String, int> get members {
-    if (_members is EqualUnmodifiableMapView) return _members;
+  @JsonKey(name: 'roles')
+  List<String> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_members);
+    return EqualUnmodifiableListView(_roles);
   }
 
   @override
   String toString() {
-    return 'RoomDocument(id: $id, maxNum: $maxNum, members: $members)';
+    return 'RoomDocument(id: $id, maxNum: $maxNum, roles: $roles)';
   }
 
   @override
@@ -165,13 +165,13 @@ class _$_RoomDocument extends _RoomDocument {
             other is _$_RoomDocument &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.maxNum, maxNum) || other.maxNum == maxNum) &&
-            const DeepCollectionEquality().equals(other._members, _members));
+            const DeepCollectionEquality().equals(other._roles, _roles));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, maxNum, const DeepCollectionEquality().hash(_members));
+      runtimeType, id, maxNum, const DeepCollectionEquality().hash(_roles));
 
   @JsonKey(ignore: true)
   @override
@@ -191,7 +191,7 @@ abstract class _RoomDocument extends RoomDocument {
   const factory _RoomDocument(
           {@JsonKey(name: 'id') required final String id,
           @JsonKey(name: 'maxNum') required final int maxNum,
-          @JsonKey(name: 'members') required final Map<String, int> members}) =
+          @JsonKey(name: 'roles') required final List<String> roles}) =
       _$_RoomDocument;
   const _RoomDocument._() : super._();
 
@@ -205,8 +205,8 @@ abstract class _RoomDocument extends RoomDocument {
   @JsonKey(name: 'maxNum')
   int get maxNum;
   @override
-  @JsonKey(name: 'members')
-  Map<String, int> get members;
+  @JsonKey(name: 'roles')
+  List<String> get roles;
   @override
   @JsonKey(ignore: true)
   _$$_RoomDocumentCopyWith<_$_RoomDocument> get copyWith =>

@@ -10,12 +10,12 @@ _$_RoomDocument _$$_RoomDocumentFromJson(Map<String, dynamic> json) =>
     _$_RoomDocument(
       id: json['id'] as String,
       maxNum: json['maxNum'] as int,
-      members: Map<String, int>.from(json['members'] as Map),
+      roles: (json['roles'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_RoomDocumentToJson(_$_RoomDocument instance) =>
     <String, dynamic>{
       'id': instance.id,
       'maxNum': instance.maxNum,
-      'members': instance.members,
+      'roles': instance.roles,
     };
