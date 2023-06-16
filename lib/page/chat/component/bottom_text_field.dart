@@ -60,9 +60,7 @@ class BottomTextField extends ConsumerWidget {
                   height: 40,
                   width: 320,
                   child: TextFormField(
-                    onChanged: (value) => ref
-                        .watch(messageTextFieldProvider.notifier)
-                        .update((state) => value),
+                    controller: ref.read(messageTextFieldController),
                     textAlign: TextAlign.left,
                     autofocus: true,
                     cursorColor: ColorConstant.main,
@@ -87,11 +85,11 @@ class BottomTextField extends ConsumerWidget {
                 const SizedBox(width: 16),
                 GestureDetector(
                   onTap: () {
-                    final content = ref.read(messageTextFieldProvider);
+                    final content = ref.read(messageTextFieldController).text;
                     ref
                         .read(messageRepositoryProvider)
                         .addMessage(content, roomId);
-                    ref.read(messageTextFieldProvider.notifier).update((_) => '');
+                    ref.read(messageTextFieldController).clear();
                   },
                   child: const Icon(
                     Icons.send,
