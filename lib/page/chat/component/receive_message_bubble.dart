@@ -72,6 +72,8 @@ class ReceiveMessageBubble extends ConsumerWidget {
       padding: const EdgeInsets.all(4.0),
       child: members.when(
         data: (data) {
+          final member =
+              data[data.indexWhere((e) => e.userId == messageEntity.userId)];
           return Row(
             children: [
               const SizedBox(width: 8),
@@ -80,14 +82,11 @@ class ReceiveMessageBubble extends ConsumerWidget {
                 width: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: borderColor(data[messageEntity.userId] ?? 0),
+                  color: borderColor(int.parse(member.assignedId)),
                 ),
                 child: Center(
                   child: Text(
-                    /// Todo nullになぜなるか
-                    data[messageEntity.userId] == null
-                        ? ''
-                        : data[messageEntity.userId]!.toString(),
+                    member.assignedId,
                     style: TextStyleConstant.normal24,
                   ),
                 ),
@@ -105,7 +104,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(24),
                   color: ColorConstant.black100,
                   border: Border.all(
-                    color: borderColor(data[messageEntity.userId] ?? 0),
+                    color: borderColor(int.parse(member.assignedId)),
                     width: 2,
                   ),
                 ),
