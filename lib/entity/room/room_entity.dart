@@ -11,8 +11,8 @@ class RoomEntity with _$RoomEntity {
 
   const factory RoomEntity({
     required String id,
-    required Map<String, int> members,
     required int maxNum,
+    required List<String> roles,
   }) = _RoomEntity;
 
    factory RoomEntity.fromJson(Map<String, dynamic> json) =>
@@ -21,8 +21,8 @@ class RoomEntity with _$RoomEntity {
   static RoomEntity fromDoc(RoomDocument roomDoc) {
     return RoomEntity(
       id: roomDoc.id,
-      members: roomDoc.members,
       maxNum: roomDoc.maxNum,
+      roles: roomDoc.roles,
     );
   }
 
@@ -30,7 +30,7 @@ class RoomEntity with _$RoomEntity {
     return RoomDocument(
       id: id, 
       maxNum: maxNum,
-      members: members,
+      roles: roles,
     );
   }
 }

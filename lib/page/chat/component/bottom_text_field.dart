@@ -42,7 +42,7 @@ class BottomTextField extends ConsumerWidget {
               data: (data) {
                 final member = data[data.indexWhere((e) => e.userId == uid)];
                 return Text(
-                  'あなたはユーザー${member.assignedId}（一般人）',
+                  'あなたはユーザー${member.assignedId}（${member.role}）',
                   style: TextStyleConstant.bold12,
                 );
               },

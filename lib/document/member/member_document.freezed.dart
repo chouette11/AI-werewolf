@@ -24,6 +24,8 @@ mixin _$MemberDocument {
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'assignedId')
   int get assignedId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'role')
+  String get role => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,7 +41,8 @@ abstract class $MemberDocumentCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'userId') String userId,
-      @JsonKey(name: 'assignedId') int assignedId});
+      @JsonKey(name: 'assignedId') int assignedId,
+      @JsonKey(name: 'role') String role});
 }
 
 /// @nodoc
@@ -57,6 +60,7 @@ class _$MemberDocumentCopyWithImpl<$Res, $Val extends MemberDocument>
   $Res call({
     Object? userId = null,
     Object? assignedId = null,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
       userId: null == userId
@@ -67,6 +71,10 @@ class _$MemberDocumentCopyWithImpl<$Res, $Val extends MemberDocument>
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
               as int,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -81,7 +89,8 @@ abstract class _$$_MemberDocumentCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'userId') String userId,
-      @JsonKey(name: 'assignedId') int assignedId});
+      @JsonKey(name: 'assignedId') int assignedId,
+      @JsonKey(name: 'role') String role});
 }
 
 /// @nodoc
@@ -97,6 +106,7 @@ class __$$_MemberDocumentCopyWithImpl<$Res>
   $Res call({
     Object? userId = null,
     Object? assignedId = null,
+    Object? role = null,
   }) {
     return _then(_$_MemberDocument(
       userId: null == userId
@@ -107,6 +117,10 @@ class __$$_MemberDocumentCopyWithImpl<$Res>
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
               as int,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -116,7 +130,8 @@ class __$$_MemberDocumentCopyWithImpl<$Res>
 class _$_MemberDocument extends _MemberDocument {
   const _$_MemberDocument(
       {@JsonKey(name: 'userId') required this.userId,
-      @JsonKey(name: 'assignedId') required this.assignedId})
+      @JsonKey(name: 'assignedId') required this.assignedId,
+      @JsonKey(name: 'role') required this.role})
       : super._();
 
   factory _$_MemberDocument.fromJson(Map<String, dynamic> json) =>
@@ -128,10 +143,13 @@ class _$_MemberDocument extends _MemberDocument {
   @override
   @JsonKey(name: 'assignedId')
   final int assignedId;
+  @override
+  @JsonKey(name: 'role')
+  final String role;
 
   @override
   String toString() {
-    return 'MemberDocument(userId: $userId, assignedId: $assignedId)';
+    return 'MemberDocument(userId: $userId, assignedId: $assignedId, role: $role)';
   }
 
   @override
@@ -141,12 +159,13 @@ class _$_MemberDocument extends _MemberDocument {
             other is _$_MemberDocument &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.assignedId, assignedId) ||
-                other.assignedId == assignedId));
+                other.assignedId == assignedId) &&
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, assignedId);
+  int get hashCode => Object.hash(runtimeType, userId, assignedId, role);
 
   @JsonKey(ignore: true)
   @override
@@ -164,9 +183,9 @@ class _$_MemberDocument extends _MemberDocument {
 
 abstract class _MemberDocument extends MemberDocument {
   const factory _MemberDocument(
-          {@JsonKey(name: 'userId') required final String userId,
-          @JsonKey(name: 'assignedId') required final int assignedId}) =
-      _$_MemberDocument;
+      {@JsonKey(name: 'userId') required final String userId,
+      @JsonKey(name: 'assignedId') required final int assignedId,
+      @JsonKey(name: 'role') required final String role}) = _$_MemberDocument;
   const _MemberDocument._() : super._();
 
   factory _MemberDocument.fromJson(Map<String, dynamic> json) =
@@ -178,6 +197,9 @@ abstract class _MemberDocument extends MemberDocument {
   @override
   @JsonKey(name: 'assignedId')
   int get assignedId;
+  @override
+  @JsonKey(name: 'role')
+  String get role;
   @override
   @JsonKey(ignore: true)
   _$$_MemberDocumentCopyWith<_$_MemberDocument> get copyWith =>

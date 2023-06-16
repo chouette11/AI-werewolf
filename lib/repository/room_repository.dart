@@ -22,11 +22,13 @@ class RoomRepository {
     final rng = Random();
     // 割り当てるidから0を取り除く
     final memberId = rng.nextInt(newMaxNum) + 1;
+    final roles = ['村人', '村人', '狂人'];
     final entity =
-        RoomEntity(id: roomId, members: {'gpt': memberId}, maxNum: newMaxNum);
+        RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
-    const memberEntity = MemberEntity(userId: 'gpt', assignedId: '');
+    final memberEntity =
+        MemberEntity(userId: 'gpt', assignedId: memberId.toString(), role: '');
     await firestore.addMemberToRoom(roomId, memberEntity.toMemberDocument());
   }
 
@@ -34,7 +36,7 @@ class RoomRepository {
   Future<void> joinRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
-    final entity = MemberEntity(userId: uid, assignedId: '');
+    final entity = MemberEntity(userId: uid, assignedId: '', role: '');
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
   }
 
