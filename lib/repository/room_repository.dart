@@ -23,7 +23,7 @@ class RoomRepository {
     // 割り当てるidから0を取り除く
     final memberId = rng.nextInt(newMaxNum) + 1;
     final roles = ['村人', '村人', '狂人'];
-    final entity = RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles);
+    final entity = RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles, votedSum: 0);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
     final memberEntity = MemberEntity(
@@ -38,6 +38,14 @@ class RoomRepository {
     final entity =
         MemberEntity(userId: uid, assignedId: '', role: '', voted: 0);
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
+  }
+
+  /// ルームのストリーム取得
+  Stream<RoomEntity> getRoomStream(String roomId) {
+    final firestore = ref.read(firestoreProvider);
+    return firestore.fetchRoomStream(roomId).map(
+          (event) => RoomEntity.fromDoc(event),
+        );
   }
 
   /// ルームメンバーのストリームを取得
@@ -81,5 +89,6 @@ class RoomRepository {
             members.indexWhere((e) => e.assignedId.toString() == assignedId)]
         .userId;
     await firestore.voteForMember(roomId, userId);
+    await firestore.addVoteToRoom(roomId);
   }
 }
