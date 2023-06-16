@@ -4,18 +4,18 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
-class ChatAppBar extends ConsumerStatefulWidget {
-  const ChatAppBar({super.key, required this.roomId});
+class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  const ChatAppBar({
+    super.key,
+    required this.roomId,
+  });
   final String roomId;
 
   @override
-  ConsumerState<ChatAppBar> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends ConsumerState<ChatAppBar> {
+  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height - 4);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final topic = ref.watch(topicProvider);
     final counter = ref.watch(limitTimeProvider);
 
@@ -50,7 +50,7 @@ class _ChatPageState extends ConsumerState<ChatAppBar> {
             ),
           ),
           Text(
-            widget.roomId,
+            roomId,
             style: TextStyleConstant.normal14
                 .copyWith(color: ColorConstant.black100),
           ),

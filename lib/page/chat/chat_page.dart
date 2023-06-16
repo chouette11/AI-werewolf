@@ -62,12 +62,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: ChatAppBar(roomId: widget.roomId),),
-        // bottomSheet: counter <= 0
-        //     ? BottomField(roomId: widget.roomId)
-        //     : BottomTextField(roomId: widget.roomId),
+        appBar: ChatAppBar(roomId: widget.roomId),
         body: messages.when(
           data: (data) {
             if (data.length < maxNum) {
@@ -80,29 +75,29 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 ),
               );
             }
-            return  Column(
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
-                    child: ListView.builder(
-                      reverse: true,
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        data.sort((a, b) {
-                          //sorting in descending order
-                          return b.createdAt.compareTo(a.createdAt);
-                        });
-                        final message = data[index];
-                        if (message.userId == uid) {
-                          return SendMessageBubble(message: message.content);
-                        } else {
-                          return ReceiveMessageBubble(
-                            messageEntity: message,
-                            roomId: widget.roomId,
-                          );
-                        }
-                      },
-                    ),
+                  child: ListView.builder(
+                    reverse: true,
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      data.sort((a, b) {
+                        //sorting in descending order
+                        return b.createdAt.compareTo(a.createdAt);
+                      });
+                      final message = data[index];
+                      if (message.userId == uid) {
+                        return SendMessageBubble(message: message.content);
+                      } else {
+                        return ReceiveMessageBubble(
+                          messageEntity: message,
+                          roomId: widget.roomId,
+                        );
+                      }
+                    },
+                  ),
                 ),
                 counter <= 0
                     ? BottomField(roomId: widget.roomId)
