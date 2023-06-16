@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/page/chat/component/bottom_field.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
+import 'package:wordwolf/page/chat/component/chat_appbar.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/theme_dialog.dart';
@@ -45,7 +44,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final topic = ref.watch(topicProvider);
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
     final counter = ref.watch(limitTimeProvider);
     final uid = ref.watch(uidProvider);
@@ -64,47 +62,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: ColorConstant.main,
-          centerTitle: true,
-          title: Row(
-            children: [
-              Text("お題は$topic",
-                  style: TextStyleConstant.bold16.copyWith(
-                    color: ColorConstant.black100,
-                  )),
-              const Spacer(),
-              Text('残り',
-                  style: TextStyleConstant.normal12.copyWith(
-                    color: ColorConstant.black100,
-                  )),
-              Text(counter >= 0 ? counter.toString() : '0',
-                  style: TextStyleConstant.bold16.copyWith(
-                    color: ColorConstant.black100,
-                  )),
-              Text('秒',
-                  style: TextStyleConstant.bold16.copyWith(
-                    color: ColorConstant.black100,
-                  )),
-              const Spacer(),
-              Text(
-                'ID:',
-                style: TextStyleConstant.normal12.copyWith(
-                  color: ColorConstant.black100,
-                ),
-              ),
-              Text(
-                widget.roomId,
-                style: TextStyleConstant.normal14
-                    .copyWith(color: ColorConstant.black100),
-              ),
-            ],
-          ),
-          automaticallyImplyLeading: false,
-        ),
-        bottomSheet: counter <= 0
-            ? BottomField(roomId: widget.roomId)
-            : BottomTextField(roomId: widget.roomId),
+        appBar: ChatAppBar(roomId: widget.roomId),
         body: messages.when(
           data: (data) {
             if (data.length < maxNum) {
@@ -112,32 +70,39 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).viewInsets.bottom -
                     180,
-                child: const Center(child: Text('それではゲームを開始します！'),),
+                child: const Center(
+                  child: Text('それではゲームを開始します！'),
+                ),
               );
             }
-            return SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).viewInsets.bottom -
-                  180,
-              child: ListView.builder(
-                reverse: true,
-                itemCount: data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  data.sort((a, b) {
-                    //sorting in descending order
-                    return b.createdAt.compareTo(a.createdAt);
-                  });
-                  final message = data[index];
-                  if (message.userId == uid) {
-                    return SendMessageBubble(message: message.content);
-                  } else {
-                    return ReceiveMessageBubble(
-                      messageEntity: message,
-                      roomId: widget.roomId,
-                    );
-                  }
-                },
-              ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: ListView.builder(
+                    reverse: true,
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      data.sort((a, b) {
+                        //sorting in descending order
+                        return b.createdAt.compareTo(a.createdAt);
+                      });
+                      final message = data[index];
+                      if (message.userId == uid) {
+                        return SendMessageBubble(message: message.content);
+                      } else {
+                        return ReceiveMessageBubble(
+                          messageEntity: message,
+                          roomId: widget.roomId,
+                        );
+                      }
+                    },
+                  ),
+                ),
+                counter <= 0
+                    ? BottomField(roomId: widget.roomId)
+                    : BottomTextField(roomId: widget.roomId),
+              ],
             );
           },
           error: (error, stackTrace) {
