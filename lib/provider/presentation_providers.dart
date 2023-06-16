@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
@@ -8,7 +9,7 @@ import 'package:wordwolf/repository/room_repository.dart';
 
 part 'presentation_providers.g.dart';
 
-final messageTextFieldProvider = StateProvider<String>((ref) => '');
+final messageTextFieldController = Provider((_) => TextEditingController());
 
 final idTextFieldProvider = StateProvider<String>((ref) => '');
 
