@@ -134,11 +134,28 @@ class FirestoreDataSource {
     }
   }
 
+  /// 生きているメンバーの取得
+  Future<List<MemberDocument>> fetchLivingMembers(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final members = await db
+          .collection('rooms/$roomId/members')
+          .where('isLive', isEqualTo: true)
+          .get();
+      return members.docs
+          .map((e) => MemberDocument.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      print('fetch_members');
+      throw e;
+    }
+  }
+
   /// メンバーの消滅
   Future<void> killMember(String roomId, String uid) async {
     try {
       final db = ref.read(firebaseFirestoreProvider);
-       await db
+      await db
           .collection('rooms/$roomId/members')
           .doc(uid)
           .update({'isLive': false});
