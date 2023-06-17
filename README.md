@@ -1,4 +1,4 @@
-# wordwolf
+# AI Knock
 
 AIと戦う人狼×wordwolfゲーム
 
