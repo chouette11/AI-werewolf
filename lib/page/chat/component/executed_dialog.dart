@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/page/chat/component/end_dialog.dart';
 import 'package:wordwolf/page/chat/component/night_dialog.dart';
@@ -29,7 +30,7 @@ class ExecutedDialog extends ConsumerWidget {
           return data[0];
         }
 
-        String  isContenue() {
+        String isContenue() {
           if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive == false) {
             return '村人';
           }
@@ -48,11 +49,25 @@ class ExecutedDialog extends ConsumerWidget {
               ),
               content: SizedBox(
                 width: 240,
-                height: 400,
+                height: 200,
                 child: Column(
                   children: [
-                    Text('プレイヤー${decidedExecuteId().assignedId}が処刑されました。'),
+                    const Spacer(),
+                    Text(
+                      'プレイヤー${decidedExecuteId().assignedId}',
+                      style: TextStyleConstant.normal18,
+                    ),
+                    Text(
+                      'を処刑しました',
+                      style: TextStyleConstant.normal14,
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorConstant.main,
+                      ),
                       onPressed: () async {
                         final member = decidedExecuteId();
                         final liveMem = [];
@@ -90,8 +105,13 @@ class ExecutedDialog extends ConsumerWidget {
                           );
                         }
                       },
-                      child: Text('OK'),
+                      child: Text(
+                        'OK',
+                        style: TextStyleConstant.bold12
+                            .copyWith(color: ColorConstant.black100),
+                      ),
                     ),
+                    const Spacer(),
                   ],
                 ),
               ),
