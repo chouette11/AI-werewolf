@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 
 class EndDialog extends StatelessWidget {
   const EndDialog({Key? key, required this.result}) : super(key: key);
@@ -10,7 +13,37 @@ class EndDialog extends StatelessWidget {
       content: SizedBox(
         width: 100,
         height: 100,
-        child: Text(result),
+        child: Column(
+          children: [
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  '勝利',
+                  style: TextStyleConstant.normal14,
+                ),
+                const SizedBox(width: 8),
+                Text(result, style: TextStyleConstant.bold18),
+              ],
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorConstant.main,
+              ),
+              onPressed: () {
+                context.push("/chat");
+              },
+              child: Text(
+                '終了',
+                style: TextStyleConstant.normal14
+                    .copyWith(color: ColorConstant.black100),
+              ),
+            ),
+            const Spacer()
+          ],
+        ),
       ),
     );
   }
