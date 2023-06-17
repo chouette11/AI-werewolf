@@ -109,7 +109,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             return Text(error.toString());
           },
           loading: () {
-            return const CircularProgressIndicator();
+            return const SizedBox.shrink();
           },
         ),
       ),
