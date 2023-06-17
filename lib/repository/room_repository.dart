@@ -23,12 +23,11 @@ class RoomRepository {
     // 割り当てるidから0を取り除く
     final memberId = rng.nextInt(newMaxNum) + 1;
     final roles = ['村人', '村人', '狂人'];
-    final entity =
-        RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles);
+    final entity = RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles, votedSum: 0);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
-    final memberEntity =
-        MemberEntity(userId: 'gpt', assignedId: memberId.toString(), role: '');
+    final memberEntity = MemberEntity(
+        userId: 'gpt', assignedId: memberId.toString(), role: '', isLive: true, voted: 0);
     await firestore.addMemberToRoom(roomId, memberEntity.toMemberDocument());
   }
 
@@ -36,8 +35,17 @@ class RoomRepository {
   Future<void> joinRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
-    final entity = MemberEntity(userId: uid, assignedId: '', role: '');
+    final entity =
+        MemberEntity(userId: uid, assignedId: '', role: '', isLive: true, voted: 0);
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
+  }
+
+  /// ルームのストリーム取得
+  Stream<RoomEntity> getRoomStream(String roomId) {
+    final firestore = ref.read(firestoreProvider);
+    return firestore.fetchRoomStream(roomId).map(
+          (event) => RoomEntity.fromDoc(event),
+        );
   }
 
   /// ルームメンバーのストリームを取得
@@ -71,5 +79,37 @@ class RoomRepository {
     if (members.isEmpty) {
       firestore.deleteRoom(roomId);
     }
+  }
+
+  /// メンバーを消滅
+  Future<void> killMember(String roomId, String userId) async {
+    final firestore = ref.read(firestoreProvider);
+    await firestore.killMember(roomId, userId);
+  }
+
+  /// 処刑するメンバー投票
+  Future<void> voteForMember(String roomId, String assignedId) async {
+    final firestore = ref.read(firestoreProvider);
+    final members = await firestore.fetchMembers(roomId);
+    print("assiId");
+    print(assignedId);
+    final userId = members[
+            members.indexWhere((e) => e.assignedId.toString() == assignedId)]
+        .userId;
+    await firestore.voteForMember(roomId, userId);
+    await firestore.addVoteToRoom(roomId);
+  }
+
+  /// AIのランダムキル
+  Future<void> randomKill(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final members = await firestore.fetchLivingMembers(roomId);
+    int random = Random().nextInt(members.length);
+    final killedMem = members[random];
+    while(killedMem.userId == 'gpt') {
+      random = Random().nextInt(members.length);
+    }
+    await firestore.killMember(roomId, members[random].userId);
+
   }
 }

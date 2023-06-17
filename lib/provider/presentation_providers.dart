@@ -29,6 +29,11 @@ final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
       ref.watch(roomRepositoryProvider).getRoomMemberStream(roomId),
 );
 
+final roomStreamProvider = StreamProvider.family(
+  (ref, String roomId) =>
+      ref.watch(roomRepositoryProvider).getRoomStream(roomId),
+);
+
 final answerRadioValueProvider = StateProvider<String>((ref) => '');
 
 final maxMemberProvider = StateProvider<int>((ref) => 3);

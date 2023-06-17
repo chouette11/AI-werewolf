@@ -11,6 +11,8 @@ class MemberEntity with _$MemberEntity {
     required String userId,
     required String assignedId,
     required String role,
+    required bool isLive,
+    required int voted,
   }) = _MemberEntity;
 
   static MemberEntity fromDoc(MemberDocument memberDoc) {
@@ -18,6 +20,8 @@ class MemberEntity with _$MemberEntity {
       userId: memberDoc.userId,
       assignedId: memberDoc.assignedId.toString(),
       role: memberDoc.role,
+      isLive: memberDoc.isLive,
+      voted: memberDoc.voted,
     );
   }
 
@@ -26,6 +30,8 @@ class MemberEntity with _$MemberEntity {
       userId: userId,
       assignedId: assignedId == '' ? 0 : int.parse(assignedId),
       role: role,
+      isLive: isLive,
+      voted: voted,
     );
   }
 }

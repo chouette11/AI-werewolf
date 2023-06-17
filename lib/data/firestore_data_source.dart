@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/document/member/member_document.dart';
 import 'package:wordwolf/document/message/message_document.dart';
@@ -120,13 +121,46 @@ class FirestoreDataSource {
   }
 
   /// メンバーの取得
-  Future<List<String>> fetchMembers(String roomId) async {
+  Future<List<MemberDocument>> fetchMembers(String roomId) async {
     try {
       final db = ref.read(firebaseFirestoreProvider);
       final members = await db.collection('rooms/$roomId/members').get();
-      return members.docs.map((e) => e.id).toList();
+      return members.docs
+          .map((e) => MemberDocument.fromJson(e.data()))
+          .toList();
     } catch (e) {
       print('fetch_members');
+      throw e;
+    }
+  }
+
+  /// 生きているメンバーの取得
+  Future<List<MemberDocument>> fetchLivingMembers(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final members = await db
+          .collection('rooms/$roomId/members')
+          .where('isLive', isEqualTo: true)
+          .get();
+      return members.docs
+          .map((e) => MemberDocument.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      print('fetch_members');
+      throw e;
+    }
+  }
+
+  /// メンバーの消滅
+  Future<void> killMember(String roomId, String uid) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db
+          .collection('rooms/$roomId/members')
+          .doc(uid)
+          .update({'isLive': false});
+    } catch (e) {
+      print('kill_member');
       throw e;
     }
   }
@@ -138,6 +172,35 @@ class FirestoreDataSource {
       await db.collection('rooms/$roomId/members').doc(uid).delete();
     } catch (e) {
       print('delete_member');
+      throw e;
+    }
+  }
+
+  /// Vote
+
+  /// 投票する
+  Future<void> voteForMember(String roomId, String uid) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db
+          .collection('rooms/$roomId/members')
+          .doc(uid)
+          .update({'voted': FieldValue.increment(1)});
+    } catch (e) {
+      print('vote_for_member');
+      throw e;
+    }
+  }
+
+  /// 投票をカウントする
+  Future<void> addVoteToRoom(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).update(
+        {'votedSum': FieldValue.increment(1)},
+      );
+    } catch (e) {
+      print('count_vote');
       throw e;
     }
   }

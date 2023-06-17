@@ -23,6 +23,7 @@ mixin _$RoomEntity {
   String get id => throw _privateConstructorUsedError;
   int get maxNum => throw _privateConstructorUsedError;
   List<String> get roles => throw _privateConstructorUsedError;
+  int get votedSum => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $RoomEntityCopyWith<$Res> {
           RoomEntity value, $Res Function(RoomEntity) then) =
       _$RoomEntityCopyWithImpl<$Res, RoomEntity>;
   @useResult
-  $Res call({String id, int maxNum, List<String> roles});
+  $Res call({String id, int maxNum, List<String> roles, int votedSum});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$RoomEntityCopyWithImpl<$Res, $Val extends RoomEntity>
     Object? id = null,
     Object? maxNum = null,
     Object? roles = null,
+    Object? votedSum = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +71,10 @@ class _$RoomEntityCopyWithImpl<$Res, $Val extends RoomEntity>
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      votedSum: null == votedSum
+          ? _value.votedSum
+          : votedSum // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$_RoomEntityCopyWith<$Res>
       __$$_RoomEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, int maxNum, List<String> roles});
+  $Res call({String id, int maxNum, List<String> roles, int votedSum});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$_RoomEntityCopyWithImpl<$Res>
     Object? id = null,
     Object? maxNum = null,
     Object? roles = null,
+    Object? votedSum = null,
   }) {
     return _then(_$_RoomEntity(
       id: null == id
@@ -112,6 +119,10 @@ class __$$_RoomEntityCopyWithImpl<$Res>
           ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      votedSum: null == votedSum
+          ? _value.votedSum
+          : votedSum // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -122,7 +133,8 @@ class _$_RoomEntity extends _RoomEntity {
   const _$_RoomEntity(
       {required this.id,
       required this.maxNum,
-      required final List<String> roles})
+      required final List<String> roles,
+      required this.votedSum})
       : _roles = roles,
         super._();
 
@@ -142,8 +154,11 @@ class _$_RoomEntity extends _RoomEntity {
   }
 
   @override
+  final int votedSum;
+
+  @override
   String toString() {
-    return 'RoomEntity(id: $id, maxNum: $maxNum, roles: $roles)';
+    return 'RoomEntity(id: $id, maxNum: $maxNum, roles: $roles, votedSum: $votedSum)';
   }
 
   @override
@@ -153,13 +168,15 @@ class _$_RoomEntity extends _RoomEntity {
             other is _$_RoomEntity &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.maxNum, maxNum) || other.maxNum == maxNum) &&
-            const DeepCollectionEquality().equals(other._roles, _roles));
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
+            (identical(other.votedSum, votedSum) ||
+                other.votedSum == votedSum));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, maxNum, const DeepCollectionEquality().hash(_roles));
+  int get hashCode => Object.hash(runtimeType, id, maxNum,
+      const DeepCollectionEquality().hash(_roles), votedSum);
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +196,8 @@ abstract class _RoomEntity extends RoomEntity {
   const factory _RoomEntity(
       {required final String id,
       required final int maxNum,
-      required final List<String> roles}) = _$_RoomEntity;
+      required final List<String> roles,
+      required final int votedSum}) = _$_RoomEntity;
   const _RoomEntity._() : super._();
 
   factory _RoomEntity.fromJson(Map<String, dynamic> json) =
@@ -191,6 +209,8 @@ abstract class _RoomEntity extends RoomEntity {
   int get maxNum;
   @override
   List<String> get roles;
+  @override
+  int get votedSum;
   @override
   @JsonKey(ignore: true)
   _$$_RoomEntityCopyWith<_$_RoomEntity> get copyWith =>
