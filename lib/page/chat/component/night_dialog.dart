@@ -11,20 +11,26 @@ class NightDialog extends ConsumerStatefulWidget {
   const NightDialog({
     super.key,
     required this.roomId,
-    required this.members,
+    required this.liveMem,
+    required this.reqUid,
   });
 
   final String roomId;
-  final List<MemberEntity> members;
+  final List<MemberEntity> liveMem;
+  final String reqUid;
 
   @override
   ConsumerState<NightDialog> createState() => _NightDialogState();
 }
 
 class _NightDialogState extends ConsumerState<NightDialog> {
+
   @override
   void initState() {
-    ref.read(roomRepositoryProvider).randomKill(widget.roomId);
+    final uid = ref.read(uidProvider);
+    if (widget.reqUid == uid) {
+      ref.read(roomRepositoryProvider).randomKill(widget.roomId);
+    }
     super.initState();
   }
 
@@ -35,7 +41,13 @@ class _NightDialogState extends ConsumerState<NightDialog> {
 
     return members.when(
       data: (data) {
-        if (data.length == widget.members.length - 1) {
+        final liveMem = [];
+        for (var e in data) {
+          if (e.isLive == true) {
+            liveMem.add(e);
+          }
+        }
+        if (widget.liveMem.length - 1 == liveMem.length ) {
           if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive == false) {
             context.pop();
             showDialog(

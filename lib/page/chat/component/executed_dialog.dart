@@ -55,6 +55,12 @@ class ExecutedDialog extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () async {
                         final member = decidedExecuteId();
+                        final liveMem = [];
+                        for (var e in data) {
+                          if (e.isLive == true) {
+                            liveMem.add(e);
+                          }
+                        }
                         await ref
                             .read(roomRepositoryProvider)
                             .killMember(roomId, member.userId);
@@ -62,9 +68,15 @@ class ExecutedDialog extends ConsumerWidget {
                           context.pop();
                           showDialog(
                             context: context,
-                            builder: (context) => NightDialog(roomId: roomId),
+                            builder: (context) => NightDialog(
+                              roomId: roomId,
+                              liveMem: data,
+                              reqUid: data[
+                                      data.indexWhere((e) => e.userId != 'gpt')]
+                                  .userId,
+                            ),
                           );
-                        } else if(isContenue() == '村人') {
+                        } else if (isContenue() == '村人') {
                           context.pop();
                           showDialog(
                             context: context,
