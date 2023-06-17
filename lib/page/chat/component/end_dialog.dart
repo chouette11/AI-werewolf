@@ -21,10 +21,10 @@ class EndDialog extends StatelessWidget {
               children: [
                 const Text(
                   '勝利',
-                  style: TextStyleConstant.bold18,
+                  style: TextStyleConstant.normal14,
                 ),
-                SizedBox(width: 8),
-                Text(result),
+                const SizedBox(width: 8),
+                Text(result, style: TextStyleConstant.bold18),
               ],
             ),
             const SizedBox(height: 24),
