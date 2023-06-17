@@ -83,8 +83,6 @@ class RoomRepository {
 
   /// メンバーを消滅
   Future<void> killMember(String roomId, String userId) async {
-    print(roomId);
-    print(userId);
     final firestore = ref.read(firestoreProvider);
     await firestore.killMember(roomId, userId);
   }
@@ -100,5 +98,18 @@ class RoomRepository {
         .userId;
     await firestore.voteForMember(roomId, userId);
     await firestore.addVoteToRoom(roomId);
+  }
+
+  /// AIのランダムキル
+  Future<void> randomKill(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final members = await firestore.fetchLivingMembers(roomId);
+    int random = Random().nextInt(members.length);
+    final killedMem = members[random];
+    while(killedMem.userId == 'gpt') {
+      random = Random().nextInt(members.length);
+    }
+    await firestore.killMember(roomId, members[random].userId);
+
   }
 }
