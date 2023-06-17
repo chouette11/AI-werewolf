@@ -6,6 +6,7 @@ import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/page/chat/component/end_dialog.dart';
 import 'package:wordwolf/page/chat/component/night_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class ExecutedDialog extends ConsumerWidget {
@@ -56,6 +57,7 @@ class ExecutedDialog extends ConsumerWidget {
                       onPressed: () async {
                         final member = decidedExecuteId();
                         final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+                        await ref.read(messageRepositoryProvider).deleteAllMessage(roomId);
                         final maxNum = room.maxNum;
                         final liveMem = [];
                         for (var e in data) {
@@ -67,6 +69,12 @@ class ExecutedDialog extends ConsumerWidget {
                             .read(roomRepositoryProvider)
                             .killMember(roomId, member.userId);
                         if (isContenue() == '続く') {
+                          final uid = ref.read(uidProvider);
+                          if (data[
+                          data.indexWhere((e) => e.userId != 'gpt')].userId == uid) {
+                            ref.read(roomRepositoryProvider).randomKill(roomId);
+                          }
+                          ref.read(limitTimeProvider.notifier).reset();
                           context.pop();
                           showDialog(
                             context: context,

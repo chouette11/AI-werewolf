@@ -5,8 +5,6 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/page/chat/component/end_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
 
 class NightDialog extends ConsumerStatefulWidget {
   const NightDialog( {
@@ -34,8 +32,6 @@ class _NightDialogState extends ConsumerState<NightDialog> {
     Future(() async {
       final uid = ref.read(uidProvider);
       if (widget.reqUid == uid) {
-        await ref.read(messageRepositoryProvider).deleteAllMessage(widget.roomId);
-        ref.read(roomRepositoryProvider).randomKill(widget.roomId);
       }
     });
   }
@@ -54,7 +50,6 @@ class _NightDialogState extends ConsumerState<NightDialog> {
           }
         }
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (widget.liveMem.length - 1 == liveMem.length) {
             if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive ==
                 false) {
               context.pop();
@@ -74,7 +69,7 @@ class _NightDialogState extends ConsumerState<NightDialog> {
             context.pop();
             context.push("/chat", extra: widget.roomId);
             });
-          }
+
         });
         return room.when(
           data: (room) {
