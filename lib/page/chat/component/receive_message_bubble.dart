@@ -72,6 +72,9 @@ class ReceiveMessageBubble extends ConsumerWidget {
       padding: const EdgeInsets.all(4.0),
       child: members.when(
         data: (data) {
+          if (data.indexWhere((e) => e.userId == messageEntity.userId) == -1) {
+            return const SizedBox.shrink();
+          }
           final member =
               data[data.indexWhere((e) => e.userId == messageEntity.userId)];
           return Row(
@@ -113,7 +116,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
             ],
           );
         },
-        loading: () => const Text('loading'),
+        loading: () => const SizedBox.shrink(),
         error: (error, stackTrace) => Text(error.toString()),
       ),
     );
