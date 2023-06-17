@@ -22,7 +22,20 @@ class RoomRepository {
     final rng = Random();
     // 割り当てるidから0を取り除く
     final memberId = rng.nextInt(newMaxNum) + 1;
-    final roles = ['村人', '村人', '狂人'];
+    List<String> roles = ['村人', '村人', '狂人'];
+    switch (newMaxNum) {
+      case 5:
+        roles.add('村人');
+      case 6:
+        roles.add('村人');
+        roles.add('狂人');
+      case 7:
+        roles.add('村人');
+        roles.add('狂人');
+        roles.add('村人');
+    }
+    print(maxNum);
+    print(roles);
     final entity = RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles, votedSum: 0);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
