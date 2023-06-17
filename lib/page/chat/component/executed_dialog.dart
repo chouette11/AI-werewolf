@@ -55,6 +55,8 @@ class ExecutedDialog extends ConsumerWidget {
                     ElevatedButton(
                       onPressed: () async {
                         final member = decidedExecuteId();
+                        final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+                        final maxNum = room.maxNum;
                         final liveMem = [];
                         for (var e in data) {
                           if (e.isLive == true) {
@@ -74,6 +76,7 @@ class ExecutedDialog extends ConsumerWidget {
                               reqUid: data[
                                       data.indexWhere((e) => e.userId != 'gpt')]
                                   .userId,
+                              maxNum: maxNum,
                             ),
                           );
                         } else if (isContenue() == '村人') {

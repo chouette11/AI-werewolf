@@ -5,19 +5,22 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
 import 'package:wordwolf/page/chat/component/end_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class NightDialog extends ConsumerStatefulWidget {
-  const NightDialog({
+  const NightDialog( {
     super.key,
     required this.roomId,
     required this.liveMem,
     required this.reqUid,
+    required this.maxNum,
   });
 
   final String roomId;
   final List<MemberEntity> liveMem;
   final String reqUid;
+  final int maxNum;
 
   @override
   ConsumerState<NightDialog> createState() => _NightDialogState();
@@ -27,11 +30,14 @@ class _NightDialogState extends ConsumerState<NightDialog> {
 
   @override
   void initState() {
-    final uid = ref.read(uidProvider);
-    if (widget.reqUid == uid) {
-      ref.read(roomRepositoryProvider).randomKill(widget.roomId);
-    }
     super.initState();
+    Future(() async {
+      final uid = ref.read(uidProvider);
+      if (widget.reqUid == uid) {
+        await ref.read(messageRepositoryProvider).deleteAllMessage(widget.roomId);
+        ref.read(roomRepositoryProvider).randomKill(widget.roomId);
+      }
+    });
   }
 
   @override
@@ -47,23 +53,29 @@ class _NightDialogState extends ConsumerState<NightDialog> {
             liveMem.add(e);
           }
         }
-        if (widget.liveMem.length - 1 == liveMem.length ) {
-          if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive == false) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (widget.liveMem.length - 1 == liveMem.length) {
+            if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive ==
+                false) {
+              context.pop();
+              showDialog(
+                context: context,
+                builder: (context) => EndDialog(result: '村人'),
+              );
+            }
+            if (data.length <= 2) {
+              context.pop();
+              showDialog(
+                context: context,
+                builder: (context) => EndDialog(result: 'AI'),
+              );
+            }
+            Future.delayed(Duration(seconds: 5), () {
             context.pop();
-            showDialog(
-              context: context,
-              builder: (context) => EndDialog(result: '村人'),
-            );
+            context.push("/chat", extra: widget.roomId);
+            });
           }
-          if (data.length <= 2) {
-            context.pop();
-            showDialog(
-              context: context,
-              builder: (context) => EndDialog(result: 'AI'),
-            );
-          }
-          context.pop();
-        }
+        });
         return room.when(
           data: (room) {
             return AlertDialog(
