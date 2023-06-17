@@ -68,4 +68,10 @@ class MessageRepository {
           (event) => event.map((e) => MessageEntity.fromDoc(e)).toList(),
         );
   }
+
+  /// すべてのメッセージを削除
+  Future<void> deleteAllMessage(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    await firestore.deleteAllMessage(roomId);
+  }
 }

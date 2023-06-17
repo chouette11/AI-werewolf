@@ -43,6 +43,20 @@ class FirestoreDataSource {
     await collection.add(messageDocument.copyWith.call().toJson());
   }
 
+  /// メッセージをすべて削除
+  Future<void> deleteAllMessage(String roomId) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final collection = db.collection('rooms/$roomId/messages');
+    await collection
+        .get()
+        .asStream()
+        .forEach((element) {
+      for (var element in element.docs) {
+        element.reference.delete();
+      }
+    });
+  }
+
   /// Room
 
   /// 新規ルーム追加
