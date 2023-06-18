@@ -4,6 +4,7 @@ import 'package:wordwolf/document/member/member_document.dart';
 import 'package:wordwolf/document/message/message_document.dart';
 import 'package:wordwolf/document/room/room_document.dart';
 import 'package:wordwolf/provider/domain_providers.dart';
+import 'package:wordwolf/provider/presentation_providers.dart';
 
 final firestoreProvider =
     Provider<FirestoreDataSource>((ref) => FirestoreDataSource(ref: ref));
@@ -144,6 +145,19 @@ class FirestoreDataSource {
           .toList();
     } catch (e) {
       print('fetch_members');
+      throw e;
+    }
+  }
+
+  /// メンバーのストリームを取得
+  Stream<MemberDocument> fetchMemberStream(String roomId) {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final uid = ref.read(uidProvider);
+      final stream = db.collection('rooms/$roomId/members').doc(uid).snapshots();
+      return stream.map((event) => MemberDocument.fromJson(event.data()!));
+    } catch (e) {
+      print('firestore_getMemberStream');
       throw e;
     }
   }
