@@ -6,7 +6,7 @@ part of 'presentation_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$limitTimeHash() => r'9c617ad0cac45fec7e966fb6c7da51fd00b7b3d9';
+String _$limitTimeHash() => r'c2f61bf0a07a2278e5a78f08f5d460d6daf81be2';
 
 /// See also [LimitTime].
 @ProviderFor(LimitTime)

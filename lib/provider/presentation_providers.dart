@@ -29,6 +29,11 @@ final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
       ref.watch(roomRepositoryProvider).getRoomMemberStream(roomId),
 );
 
+final memberStreamProvider = StreamProvider.family<MemberEntity, String>(
+  (ref, String roomId) =>
+      ref.watch(roomRepositoryProvider).getMemberStream(roomId),
+);
+
 final roomStreamProvider = StreamProvider.family(
   (ref, String roomId) =>
       ref.watch(roomRepositoryProvider).getRoomStream(roomId),
