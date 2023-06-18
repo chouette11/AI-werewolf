@@ -33,7 +33,7 @@ class EndDialog extends StatelessWidget {
                 backgroundColor: ColorConstant.main,
               ),
               onPressed: () {
-                context.push("/chat");
+                context.push("/");
               },
               child: Text(
                 '終了',
