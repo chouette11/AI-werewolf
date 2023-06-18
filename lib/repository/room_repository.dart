@@ -128,6 +128,17 @@ class RoomRepository {
     await firestore.addVoteToRoom(roomId);
   }
 
+  /// membersから生きているのを取得
+  List<MemberEntity> getLivingMembers(List<MemberEntity> members) {
+    final List<MemberEntity> liveMem = [];
+    for (var member in members) {
+      if (member.isLive == true) {
+        liveMem.add(member);
+      }
+    }
+    return liveMem;
+  }
+
   /// AIのランダムキル
   void randomKill(String roomId, List<MemberEntity> members) {
     final firestore = ref.read(firestoreProvider);
