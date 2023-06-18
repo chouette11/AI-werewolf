@@ -2,7 +2,7 @@ name: wordwolf
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.1.0+2
+version: 0.2.0+4
 
 environment:
   sdk: '>=3.0.1 <4.0.0'
