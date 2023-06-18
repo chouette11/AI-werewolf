@@ -129,14 +129,14 @@ class RoomRepository {
   }
 
   /// AIのランダムキル
-  Future<void> randomKill(String roomId) async {
+  void randomKill(String roomId, List<MemberEntity> members) {
     final firestore = ref.read(firestoreProvider);
-    final members = await firestore.fetchLivingMembers(roomId);
-    int random = Random().nextInt(members.length);
-    final killedMem = members[random];
+    final livingMembers = getLivingMembers(members);
+    int random = Random().nextInt(livingMembers.length);
+    final killedMem = livingMembers[random];
     while (killedMem.userId == 'gpt') {
-      random = Random().nextInt(members.length);
+      random = Random().nextInt(livingMembers.length);
     }
-    await firestore.killMember(roomId, members[random].userId);
+    firestore.killMember(roomId, livingMembers[random].userId);
   }
 }
