@@ -82,10 +82,12 @@ class ExecutedDialog extends ConsumerWidget {
                     final member = decidedExecuteId();
                     final room =
                         await ref.read(roomRepositoryProvider).getRoom(roomId);
-                    await ref
+                    ref
                         .read(roomRepositoryProvider)
-                        .killMember(roomId, member.userId);
-                    isContenue(room.maxNum);
+                        .killMember(roomId, member.userId)
+                        .then((_) {
+                      isContenue(room.maxNum);
+                    });
                   },
                   child: Text(
                     'OK',
