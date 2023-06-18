@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
-import 'package:wordwolf/page/chat/component/died_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
@@ -23,7 +22,7 @@ class BottomTextField extends ConsumerWidget {
     return member.when(
       data: (data) {
         if (!data.isLive) {
-          return DiedDialog();
+          return const DiedBottomSheet();
         }
         return Container(
           padding: const EdgeInsets.all(8),
@@ -116,6 +115,31 @@ class BottomTextField extends ConsumerWidget {
       },
       error: (_, __) => Text(_.toString()),
       loading: () => const CircularProgressIndicator(),
+    );
+  }
+}
+
+class DiedBottomSheet extends StatelessWidget {
+  const DiedBottomSheet({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      color: ColorConstant.secondary,
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Spacer(),
+            Text(
+              'あなたは死にました（一般人）',
+              style: TextStyleConstant.bold12,
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }
