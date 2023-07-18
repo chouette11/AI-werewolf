@@ -84,7 +84,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              '/make_topic_answer',
+              '/make_topic_answer_friend',
               queryParameters: queryParameters,
               data: _data,
             )
