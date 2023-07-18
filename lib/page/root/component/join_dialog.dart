@@ -88,7 +88,7 @@ class JoinDialog extends ConsumerWidget {
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
                 await ref.read(roomRepositoryProvider).joinRoom(textValue);
-                context.push("/chat", extra: textValue);
+                context.push("/chat/${true}", extra: textValue);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstant.main,
