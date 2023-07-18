@@ -8,10 +8,9 @@ import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 class RoleDialog extends ConsumerStatefulWidget {
-  const RoleDialog(this.roomId, this.maxNum, {super.key});
+  const RoleDialog(this.roomId, {super.key});
 
   final String roomId;
-  final int maxNum;
 
   @override
   ConsumerState<RoleDialog> createState() => _RoleDialogState();
@@ -25,7 +24,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
   void initState() {
     super.initState();
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if(mounted) {
+      if (mounted) {
         setState(() => count++);
       }
     });
