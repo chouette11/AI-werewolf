@@ -4,16 +4,16 @@ import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
-import 'package:wordwolf/page/chat/component/end_dialog.dart';
-import 'package:wordwolf/page/chat/component/night_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
 
 class ExecutedDialog extends ConsumerWidget {
-  const ExecutedDialog({super.key, required this.roomId});
-
+  const ExecutedDialog({
+    Key? key,
+    required this.roomId,
+    required this.members,
+  }) : super(key: key);
   final String roomId;
+  final List<MemberEntity> members;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,37 +21,9 @@ class ExecutedDialog extends ConsumerWidget {
 
     return members.when(
       data: (data) {
-        MemberEntity decidedExecuteId() {
+        MemberEntity decidedExecuteMem() {
           data.sort((a, b) => -a.voted.compareTo(b.voted));
           return data[0];
-        }
-
-        void isContenue(int maxNum) {
-          if (data[data.indexWhere((e) => e.userId == 'gpt')].isLive == false) {
-            context.pop();
-            showDialog(
-              context: context,
-              builder: (context) => const EndDialog(result: '村人'),
-            );
-          } else if (data.length <= 2) {
-            context.pop();
-            showDialog(
-              context: context,
-              builder: (context) => const EndDialog(result: 'AI'),
-            );
-          } else {
-            ref.read(messageRepositoryProvider).deleteAllMessage(roomId);
-            final uid = ref.read(uidProvider);
-            if (data[data.indexWhere((e) => e.userId != 'gpt')].userId == uid) {
-              ref.read(roomRepositoryProvider).randomKill(roomId, data);
-            }
-            ref.read(limitTimeProvider.notifier).reset();
-            context.pop();
-            showDialog(
-              context: context,
-              builder: (context) => NightDialog(roomId: roomId),
-            );
-          }
         }
 
         return AlertDialog(
@@ -66,7 +38,7 @@ class ExecutedDialog extends ConsumerWidget {
               children: [
                 const Spacer(),
                 Text(
-                  'プレイヤー${decidedExecuteId().assignedId}',
+                  'プレイヤー${decidedExecuteMem().assignedId}',
                   style: TextStyleConstant.normal18,
                 ),
                 const Text(
@@ -78,16 +50,8 @@ class ExecutedDialog extends ConsumerWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorConstant.main,
                   ),
-                  onPressed: () async {
-                    final member = decidedExecuteId();
-                    final room =
-                        await ref.read(roomRepositoryProvider).getRoom(roomId);
-                    ref
-                        .read(roomRepositoryProvider)
-                        .killMember(roomId, member.userId)
-                        .then((_) {
-                      isContenue(room.maxNum);
-                    });
+                  onPressed: () {
+                    context.push('/night', extra: roomId);
                   },
                   child: Text(
                     'OK',
