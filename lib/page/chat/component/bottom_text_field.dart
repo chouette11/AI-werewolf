@@ -22,7 +22,7 @@ class BottomTextField extends ConsumerWidget {
     return member.when(
       data: (data) {
         if (!data.isLive) {
-          return const DiedBottomSheet();
+          return DiedBottomSheet(role: data.role);
         }
         return Container(
           padding: const EdgeInsets.all(8),
@@ -120,23 +120,24 @@ class BottomTextField extends ConsumerWidget {
 }
 
 class DiedBottomSheet extends StatelessWidget {
-  const DiedBottomSheet({Key? key}) : super(key: key);
+  const DiedBottomSheet({Key? key, required this.role}) : super(key: key);
+  final String role;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 56,
       color: ColorConstant.secondary,
-      child: const Padding(
-        padding: EdgeInsets.all(16.0),
+      child:  Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
-              'あなたは死にました（一般人）',
+              'あなたは死にました（$role）',
               style: TextStyleConstant.bold12,
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
