@@ -29,6 +29,28 @@ final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
       ref.watch(roomRepositoryProvider).getRoomMemberStream(roomId),
 );
 
+final randomKillProvider =
+    FutureProvider.family<int, String>((ref, String roomId) async {
+  final isHost = ref.read(isMakeRoomProvider);
+  if (isHost) {
+    await ref.read(roomRepositoryProvider).randomKill(roomId);
+  }
+  final livingMem = await ref
+      .watch(roomRepositoryProvider)
+      .getLivingMembersFromDB(roomId);
+  if (livingMem[livingMem.indexWhere((e) => e.userId == 'gpt')].isLive ==
+      false) {
+    return 0;
+  } else if (livingMem.length <= 2) {
+    return 1;
+  } else {
+    ref.read(messageRepositoryProvider).deleteAllMessage(roomId);
+    ref.read(roomRepositoryProvider).resetVoted(roomId);
+    ref.read(limitTimeProvider.notifier).reset();
+    return 3;
+  }
+});
+
 final memberStreamProvider = StreamProvider.family<MemberEntity, String>(
   (ref, String roomId) =>
       ref.watch(roomRepositoryProvider).getMemberStream(roomId),
@@ -51,11 +73,11 @@ final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 class LimitTime extends _$LimitTime {
   @override
   int build() {
-    return 90;
+    return 10;
   }
 
   void reset() {
-    state = 90;
+    state = 10;
   }
 
   void startTimer() {
