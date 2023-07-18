@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordwolf/page/chat/chat_page.dart';
+import 'package:wordwolf/page/night/night_page.dart';
 import 'package:wordwolf/page/root/root_page.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
@@ -18,8 +19,19 @@ final routerProvider = Provider<GoRouter>(
         builder: (context, state) => const RootPage(),
         routes: [
           GoRoute(
-            path: 'chat',
-            builder: (context, state) => ChatPage(roomId: state.extra! as String),
+            path: 'chat/:isFirst',
+            builder: (context, state) {
+              final isFirst = state.pathParameters['isFirst'];
+              return ChatPage(
+                roomId: state.extra! as String,
+                isFirst: isFirst == 'true' ? true : false,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'night',
+            builder: (context, state) =>
+                NightPage(roomId: state.extra! as String),
           ),
         ],
       ),
