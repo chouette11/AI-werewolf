@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class JoinDialog extends ConsumerWidget {
@@ -74,8 +75,10 @@ class JoinDialog extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () async {
                 final textValue = ref.watch(idTextFieldProvider);
+
+                /// ルームがない場合
                 final isRoom =
-                    await ref.read(roomRepositoryProvider).isRoom(textValue);
+                await ref.read(roomRepositoryProvider).isRoom(textValue);
                 if (!isRoom) {
                   ref
                       .read(errorTextProvider.notifier)
@@ -85,6 +88,21 @@ class JoinDialog extends ConsumerWidget {
                   });
                   return;
                 }
+
+                /// ルームが満室の場合
+                final isLimit = await ref
+                    .read(memberRepositoryProvider)
+                    .isLimitMember(textValue);
+                if (isLimit) {
+                  ref
+                      .read(errorTextProvider.notifier)
+                      .update((state) => 'ルームが満室です');
+                  Timer(const Duration(seconds: 2), () {
+                    ref.refresh(errorTextProvider);
+                  });
+                  return;
+                }
+
                 final uuid = const Uuid().v4();
                 ref.read(uidProvider.notifier).update((state) => uuid);
                 await ref.read(roomRepositoryProvider).joinRoom(textValue);

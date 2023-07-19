@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
+import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
@@ -26,17 +27,17 @@ final messagesStreamProvider = StreamProvider.family(
 
 final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
   (ref, String roomId) =>
-      ref.watch(roomRepositoryProvider).getRoomMemberStream(roomId),
+      ref.watch(memberRepositoryProvider).getRoomMemberStream(roomId),
 );
 
 final randomKillProvider =
     FutureProvider.family<int, String>((ref, String roomId) async {
   final isHost = ref.read(isMakeRoomProvider);
   if (isHost) {
-    await ref.read(roomRepositoryProvider).randomKill(roomId);
+    await ref.read(memberRepositoryProvider).randomKill(roomId);
   }
   final livingMem = await ref
-      .watch(roomRepositoryProvider)
+      .watch(memberRepositoryProvider)
       .getLivingMembersFromDB(roomId);
   if (livingMem[livingMem.indexWhere((e) => e.userId == 'gpt')].isLive ==
       false) {
@@ -45,7 +46,7 @@ final randomKillProvider =
     return 1;
   } else {
     ref.read(messageRepositoryProvider).deleteAllMessage(roomId);
-    ref.read(roomRepositoryProvider).resetVoted(roomId);
+    ref.read(memberRepositoryProvider).resetVoted(roomId);
     ref.read(limitTimeProvider.notifier).reset();
     return 3;
   }
@@ -53,7 +54,7 @@ final randomKillProvider =
 
 final memberStreamProvider = StreamProvider.family<MemberEntity, String>(
   (ref, String roomId) =>
-      ref.watch(roomRepositoryProvider).getMemberStream(roomId),
+      ref.watch(memberRepositoryProvider).getMemberStream(roomId),
 );
 
 final roomStreamProvider = StreamProvider.family(
