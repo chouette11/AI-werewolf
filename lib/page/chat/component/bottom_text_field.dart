@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
-import 'package:wordwolf/page/chat/component/died_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 
@@ -23,7 +22,7 @@ class BottomTextField extends ConsumerWidget {
     return member.when(
       data: (data) {
         if (!data.isLive) {
-          return DiedDialog();
+          return DiedBottomSheet(role: data.role);
         }
         return Container(
           padding: const EdgeInsets.all(8),
@@ -116,6 +115,32 @@ class BottomTextField extends ConsumerWidget {
       },
       error: (_, __) => Text(_.toString()),
       loading: () => const CircularProgressIndicator(),
+    );
+  }
+}
+
+class DiedBottomSheet extends StatelessWidget {
+  const DiedBottomSheet({Key? key, required this.role}) : super(key: key);
+  final String role;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      color: ColorConstant.secondary,
+      child:  Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            const Spacer(),
+            Text(
+              'あなたは死にました（$role）',
+              style: TextStyleConstant.bold12,
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }

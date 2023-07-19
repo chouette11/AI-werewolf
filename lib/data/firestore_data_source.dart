@@ -48,10 +48,7 @@ class FirestoreDataSource {
   Future<void> deleteAllMessage(String roomId) async {
     final db = ref.read(firebaseFirestoreProvider);
     final collection = db.collection('rooms/$roomId/messages');
-    await collection
-        .get()
-        .asStream()
-        .forEach((element) {
+    await collection.get().asStream().forEach((element) {
       for (var element in element.docs) {
         element.reference.delete();
       }
@@ -154,7 +151,8 @@ class FirestoreDataSource {
     try {
       final db = ref.read(firebaseFirestoreProvider);
       final uid = ref.read(uidProvider);
-      final stream = db.collection('rooms/$roomId/members').doc(uid).snapshots();
+      final stream =
+          db.collection('rooms/$roomId/members').doc(uid).snapshots();
       return stream.map((event) => MemberDocument.fromJson(event.data()!));
     } catch (e) {
       print('firestore_getMemberStream');
@@ -231,5 +229,21 @@ class FirestoreDataSource {
       print('count_vote');
       throw e;
     }
+  }
+
+  /// 投票をリセットする
+  Future<void> resetVoted(String roomId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).update(
+        {'votedSum': 0},
+      );
+      final collection = db.collection('rooms/$roomId/messages');
+      await collection.get().asStream().forEach((element) {
+        for (var element in element.docs) {
+          element.reference.update({'voted': 0});
+        }
+      });
+    } catch (e) {}
   }
 }

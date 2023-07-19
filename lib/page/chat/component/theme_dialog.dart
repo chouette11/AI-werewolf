@@ -42,10 +42,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                     context.pop();
                     showDialog(
                       context: context,
-                      builder: (context) => RoleDialog(
-                        widget.roomId,
-                        widget.maxNum,
-                      ),
+                      builder: (context) => RoleDialog(widget.roomId),
                     );
                   });
                 }

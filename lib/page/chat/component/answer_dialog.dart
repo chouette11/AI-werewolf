@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/page/chat/component/executed_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
@@ -26,23 +24,13 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
 
     return members.when(
       data: (data) {
+        final livingMem = ref.read(roomRepositoryProvider).getLivingMembers(data);
         // プレイヤーxのxでソート
-        data.sort((a, b) => a.assignedId.compareTo(b.assignedId));
+        livingMem.sort((a, b) => a.assignedId.compareTo(b.assignedId));
         return room.when(
           data: (room) {
             // 全員等表示遷移
-            // gptの分を引く
-            if (room.votedSum == data.length - 1) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.pop();
-                showDialog(
-                  context: context,
-                  builder: (context) => ExecutedDialog(
-                    roomId: widget.roomId,
-                  ),
-                );
-              });
-            }
+
             return AlertDialog(
               backgroundColor: ColorConstant.black100,
               shape: const RoundedRectangleBorder(
@@ -54,7 +42,7 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                 child: Column(
                   children: [
                     const Text('誰を処刑しますか？'),
-                    ...data
+                    ...livingMem
                         .map(
                           (member) => ListTile(
                             title: Text('プレイヤー${member.assignedId}'),

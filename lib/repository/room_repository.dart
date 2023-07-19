@@ -128,15 +128,39 @@ class RoomRepository {
     await firestore.addVoteToRoom(roomId);
   }
 
+  /// 投票をリセット
+  Future<void> resetVoted(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    await firestore.resetVoted(roomId);
+  }
+
+  /// membersから生きているのを取得
+  List<MemberEntity> getLivingMembers(List<MemberEntity> members) {
+    final List<MemberEntity> liveMem = [];
+    for (var member in members) {
+      if (member.isLive == true) {
+        liveMem.add(member);
+      }
+    }
+    return liveMem;
+  }
+
+  /// DBのmembersから生きているのを取得
+  Future<List<MemberEntity>> getLivingMembersFromDB(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final mem = await firestore.fetchLivingMembers(roomId);
+    return mem.map((e) => MemberEntity.fromDoc(e)).toList();
+  }
+
   /// AIのランダムキル
   Future<void> randomKill(String roomId) async {
     final firestore = ref.read(firestoreProvider);
-    final members = await firestore.fetchLivingMembers(roomId);
-    int random = Random().nextInt(members.length);
-    final killedMem = members[random];
+    final livingMembers = await getLivingMembersFromDB(roomId);
+    int random = Random().nextInt(livingMembers.length);
+    final killedMem = livingMembers[random];
     while (killedMem.userId == 'gpt') {
-      random = Random().nextInt(members.length);
+      random = Random().nextInt(livingMembers.length);
     }
-    await firestore.killMember(roomId, members[random].userId);
+    firestore.killMember(roomId, livingMembers[random].userId);
   }
 }
