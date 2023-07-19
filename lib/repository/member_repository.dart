@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
 import 'package:wordwolf/entity/member/member_entity.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
 final memberRepositoryProvider =
 Provider<MemberRepository>((ref) => MemberRepository(ref));
@@ -26,6 +27,15 @@ class MemberRepository {
     return firestore.fetchMembersStream(roomId).map(
           (event) => event.map((e) => MemberEntity.fromDoc(e)).toList(),
     );
+  }
+
+  /// ルームが満員か判定
+  Future<bool> isLimitMember(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+    final maxNum = room.maxNum;
+    final members = await firestore.fetchMembers(roomId);
+    return maxNum == members.length;
   }
 
   /// membersから生きているのを取得
