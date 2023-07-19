@@ -12,6 +12,7 @@ import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/theme_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
@@ -34,7 +35,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   Future<void> _showStartDialog() async {
     final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
     final livingMem = await ref
-        .read(roomRepositoryProvider)
+        .read(memberRepositoryProvider)
         .getLivingMembersFromDB(widget.roomId);
     if (!livingMem.map((e) => e.userId).contains(ref.read(uidProvider))) {
       return;
@@ -53,7 +54,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   Future<void> _showExecutedDialog(RoomEntity room, bool isMake) async {
     final livingMem = await ref
-        .read(roomRepositoryProvider)
+        .read(memberRepositoryProvider)
         .getLivingMembersFromDB(widget.roomId);
     if (!livingMem.map((e) => e.userId).contains(ref.read(uidProvider))) {
       return;
@@ -63,7 +64,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       if (isMake) {
         livingMem.sort((a, b) => -a.voted.compareTo(b.voted));
         final mem = livingMem[0];
-        await ref.read(roomRepositoryProvider).killMember(
+        await ref.read(memberRepositoryProvider).killMember(
               widget.roomId,
               mem.userId,
             );

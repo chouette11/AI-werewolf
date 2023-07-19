@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:wordwolf/repository/member_repository.dart';
 
 class AnswerDialog extends ConsumerStatefulWidget {
   const AnswerDialog({super.key, required this.roomId});
@@ -24,7 +24,7 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
 
     return members.when(
       data: (data) {
-        final livingMem = ref.read(roomRepositoryProvider).getLivingMembers(data);
+        final livingMem = ref.read(memberRepositoryProvider).getLivingMembers(data);
         // プレイヤーxのxでソート
         livingMem.sort((a, b) => a.assignedId.compareTo(b.assignedId));
         return room.when(
@@ -65,7 +65,7 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                       onPressed: value == '' || isSend
                           ? null
                           : () {
-                              ref.read(roomRepositoryProvider).voteForMember(
+                              ref.read(memberRepositoryProvider).voteForMember(
                                   widget.roomId, value[value.length - 1]);
                               isSend = true;
                               setState(() {

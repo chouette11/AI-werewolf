@@ -70,14 +70,6 @@ class RoomRepository {
         );
   }
 
-  /// ルームメンバーのストリームを取得
-  Stream<List<MemberEntity>> getRoomMemberStream(String roomId) {
-    final firestore = ref.read(firestoreProvider);
-    return firestore.fetchMembersStream(roomId).map(
-          (event) => event.map((e) => MemberEntity.fromDoc(e)).toList(),
-        );
-  }
-
   ///　ルームが存在するか確認
   Future<bool> isRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
@@ -101,66 +93,5 @@ class RoomRepository {
     if (members.isEmpty) {
       firestore.deleteRoom(roomId);
     }
-  }
-
-  /// メンバーのストリームを取得
-  Stream<MemberEntity> getMemberStream(String roomId) {
-    final firestore = ref.read(firestoreProvider);
-    return firestore
-        .fetchMemberStream(roomId)
-        .map((event) => MemberEntity.fromDoc(event));
-  }
-
-  /// メンバーを消滅
-  Future<void> killMember(String roomId, String userId) async {
-    final firestore = ref.read(firestoreProvider);
-    await firestore.killMember(roomId, userId);
-  }
-
-  /// 処刑するメンバー投票
-  Future<void> voteForMember(String roomId, String assignedId) async {
-    final firestore = ref.read(firestoreProvider);
-    final members = await firestore.fetchMembers(roomId);
-    final userId = members[
-            members.indexWhere((e) => e.assignedId.toString() == assignedId)]
-        .userId;
-    await firestore.voteForMember(roomId, userId);
-    await firestore.addVoteToRoom(roomId);
-  }
-
-  /// 投票をリセット
-  Future<void> resetVoted(String roomId) async {
-    final firestore = ref.read(firestoreProvider);
-    await firestore.resetVoted(roomId);
-  }
-
-  /// membersから生きているのを取得
-  List<MemberEntity> getLivingMembers(List<MemberEntity> members) {
-    final List<MemberEntity> liveMem = [];
-    for (var member in members) {
-      if (member.isLive == true) {
-        liveMem.add(member);
-      }
-    }
-    return liveMem;
-  }
-
-  /// DBのmembersから生きているのを取得
-  Future<List<MemberEntity>> getLivingMembersFromDB(String roomId) async {
-    final firestore = ref.read(firestoreProvider);
-    final mem = await firestore.fetchLivingMembers(roomId);
-    return mem.map((e) => MemberEntity.fromDoc(e)).toList();
-  }
-
-  /// AIのランダムキル
-  Future<void> randomKill(String roomId) async {
-    final firestore = ref.read(firestoreProvider);
-    final livingMembers = await getLivingMembersFromDB(roomId);
-    int random = Random().nextInt(livingMembers.length);
-    final killedMem = livingMembers[random];
-    while (killedMem.userId == 'gpt') {
-      random = Random().nextInt(livingMembers.length);
-    }
-    firestore.killMember(roomId, livingMembers[random].userId);
   }
 }
