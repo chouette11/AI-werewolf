@@ -9,6 +9,7 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
     super.key,
     required this.roomId,
   });
+
   final String roomId;
 
   @override
@@ -16,45 +17,51 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final topic = ref.watch(topicProvider);
+    final topic = ref.watch(topicProvider(roomId));
     final counter = ref.watch(limitTimeProvider);
 
     return AppBar(
       backgroundColor: ColorConstant.main,
       automaticallyImplyLeading: false,
       centerTitle: true,
-      title: Row(
-        children: [
-          Text("お題は$topic",
-              style: TextStyleConstant.bold16.copyWith(
-                color: ColorConstant.black100,
-              )),
-          const Spacer(),
-          Text('残り',
-              style: TextStyleConstant.normal12.copyWith(
-                color: ColorConstant.black100,
-              )),
-          Text(counter >= 0 ? counter.toString() : '0',
-              style: TextStyleConstant.bold16.copyWith(
-                color: ColorConstant.black100,
-              )),
-          Text('秒',
-              style: TextStyleConstant.bold16.copyWith(
-                color: ColorConstant.black100,
-              )),
-          const Spacer(),
-          Text(
-            'ID:',
-            style: TextStyleConstant.normal12.copyWith(
-              color: ColorConstant.black100,
-            ),
-          ),
-          Text(
-            roomId,
-            style: TextStyleConstant.normal14
-                .copyWith(color: ColorConstant.black100),
-          ),
-        ],
+      title: topic.when(
+        data: (topic) {
+          return Row(
+            children: [
+              Text("お題は$topic",
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              const Spacer(),
+              Text('残り',
+                  style: TextStyleConstant.normal12.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              Text(counter >= 0 ? counter.toString() : '0',
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              Text('秒',
+                  style: TextStyleConstant.bold16.copyWith(
+                    color: ColorConstant.black100,
+                  )),
+              const Spacer(),
+              Text(
+                'ID:',
+                style: TextStyleConstant.normal12.copyWith(
+                  color: ColorConstant.black100,
+                ),
+              ),
+              Text(
+                roomId,
+                style: TextStyleConstant.normal14
+                    .copyWith(color: ColorConstant.black100),
+              ),
+            ],
+          );
+        },
+        error: (_, __) => const Text('error'),
+        loading: () => const SizedBox.shrink(),
       ),
     );
   }

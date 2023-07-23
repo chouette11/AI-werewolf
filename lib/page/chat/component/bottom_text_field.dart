@@ -4,6 +4,7 @@ import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 
 class BottomTextField extends ConsumerWidget {
   const BottomTextField({
@@ -92,12 +93,15 @@ class BottomTextField extends ConsumerWidget {
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         final content =
                             ref.read(messageTextFieldController).text;
+                        final room = await ref
+                            .read(roomRepositoryProvider)
+                            .getRoom(roomId);
                         ref
                             .read(messageRepositoryProvider)
-                            .addMessage(content, roomId);
+                            .addMessage(content, roomId, room.topic);
                         ref.read(messageTextFieldController).clear();
                       },
                       child: const Icon(
@@ -128,7 +132,7 @@ class DiedBottomSheet extends StatelessWidget {
     return Container(
       height: 56,
       color: ColorConstant.secondary,
-      child:  Padding(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
