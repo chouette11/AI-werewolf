@@ -36,9 +36,8 @@ final randomKillProvider =
   if (isHost) {
     await ref.read(memberRepositoryProvider).randomKill(roomId);
   }
-  final livingMem = await ref
-      .watch(memberRepositoryProvider)
-      .getLivingMembersFromDB(roomId);
+  final livingMem =
+      await ref.watch(memberRepositoryProvider).getLivingMembersFromDB(roomId);
   if (livingMem[livingMem.indexWhere((e) => e.userId == 'gpt')].isLive ==
       false) {
     return 0;
@@ -66,7 +65,11 @@ final answerRadioValueProvider = StateProvider<String>((ref) => '');
 
 final maxMemberProvider = StateProvider<int>((ref) => 3);
 
-final topicProvider = StateProvider((ref) => 'うどん');
+final topicProvider =
+    FutureProvider.family<String, String>((ref, String roomId) async {
+  final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+  return room.topic;
+});
 
 final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 

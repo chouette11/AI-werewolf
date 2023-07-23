@@ -15,14 +15,14 @@ class MessageRepository {
   final Ref ref;
 
   /// 新規メッセージ追加
-  Future<void> addMessage(String content, String roomId) async {
+  Future<void> addMessage(String content, String roomId, String topic) async {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
     final entity =
         MessageEntity(content: content, userId: uid, createdAt: DateTime.now());
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
-    addMessageFromGptToQuestion(entity, roomId);
+    addMessageFromGptToQuestion(entity, roomId, topic);
   }
 
   /// topicに対するAIの返答
@@ -42,11 +42,10 @@ class MessageRepository {
 
   /// 他のユーザーが疑問文で送ったときに対するAIの返答
   Future<void> addMessageFromGptToQuestion(
-      MessageEntity message, String roomId) async {
+      MessageEntity message, String roomId, String topic) async {
     print('send_api');
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
-    final topic = ref.read(topicProvider);
     final resMessage = await api.fetchQuestionAnswerMessage(message, topic);
     final resEntity = MessageEntity(
       content: resMessage.content,

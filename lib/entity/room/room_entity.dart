@@ -11,6 +11,7 @@ class RoomEntity with _$RoomEntity {
 
   const factory RoomEntity({
     required String id,
+    required String topic,
     required int maxNum,
     required List<String> roles,
     required int votedSum,
@@ -22,6 +23,7 @@ class RoomEntity with _$RoomEntity {
   static RoomEntity fromDoc(RoomDocument roomDoc) {
     return RoomEntity(
       id: roomDoc.id,
+      topic: roomDoc.topic,
       maxNum: roomDoc.maxNum,
       roles: roomDoc.roles,
       votedSum: roomDoc.votedSum,
@@ -30,7 +32,8 @@ class RoomEntity with _$RoomEntity {
 
   RoomDocument toRoomDocument() {
     return RoomDocument(
-      id: id, 
+      id: id,
+      topic: topic,
       maxNum: maxNum,
       roles: roles,
       votedSum: votedSum,

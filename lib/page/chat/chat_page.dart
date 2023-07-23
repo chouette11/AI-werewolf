@@ -37,9 +37,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final livingMem = await ref
         .read(memberRepositoryProvider)
         .getLivingMembersFromDB(widget.roomId);
+
+    /// 死んでいたらダイアログを表示しない
     if (!livingMem.map((e) => e.userId).contains(ref.read(uidProvider))) {
       return;
     }
+
     return showDialog<void>(
       barrierDismissible: false,
       context: context,

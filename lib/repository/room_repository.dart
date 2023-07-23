@@ -34,8 +34,10 @@ class RoomRepository {
         roles.add('狂人');
         roles.add('村人');
     }
-    final entity =
-        RoomEntity(id: roomId, maxNum: newMaxNum, roles: roles, votedSum: 0);
+    final topics = ['うどん', 'プログラミング', '雪', 'お祭り'];
+    final topic = topics[rng.nextInt(topics.length)];
+    final entity = RoomEntity(
+        id: roomId, topic: topic, maxNum: newMaxNum, roles: roles, votedSum: 0);
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);
     final memberEntity = MemberEntity(
