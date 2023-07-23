@@ -21,7 +21,7 @@ class RoomRepository {
     final newMaxNum = maxNum + 1;
     final rng = Random();
     // 割り当てるidから0を取り除く
-    final memberId = rng.nextInt(newMaxNum) + 1;
+    final assignedId = rng.nextInt(newMaxNum) + 1;
     List<String> roles = ['村人', '村人', '狂人'];
     switch (newMaxNum) {
       case 5:
@@ -42,7 +42,7 @@ class RoomRepository {
     await firestore.createRoom(roomDoc);
     final memberEntity = MemberEntity(
       userId: 'gpt',
-      assignedId: memberId.toString(),
+      assignedId: assignedId,
       role: '',
       isLive: true,
       voted: 0,
@@ -56,7 +56,7 @@ class RoomRepository {
     final uid = ref.read(uidProvider);
     final entity = MemberEntity(
       userId: uid,
-      assignedId: '',
+      assignedId: 0,
       role: '',
       isLive: true,
       voted: 0,
