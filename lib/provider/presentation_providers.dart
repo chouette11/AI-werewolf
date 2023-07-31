@@ -44,10 +44,7 @@ final randomKillProvider =
   } else if (livingMem.length <= 2) {
     return 1;
   } else {
-    ref.read(messageRepositoryProvider).deleteAllMessage(roomId);
-    ref.read(memberRepositoryProvider).resetVoted(roomId);
-    ref.read(limitTimeProvider.notifier).reset();
-    return 3;
+    return 300;
   }
 });
 

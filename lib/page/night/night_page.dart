@@ -34,9 +34,19 @@ class NightPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text('xが惨殺されました'),
-                        ElevatedButton(onPressed: () {
-                          context.push('/chat/${false}', extra: roomId);
-                        }, child: Text('OK'))
+                        ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(messageRepositoryProvider)
+                                .deleteAllMessage(roomId);
+                            ref
+                                .read(memberRepositoryProvider)
+                                .resetVoted(roomId);
+                            ref.read(limitTimeProvider.notifier).reset();
+                            context.push('/chat/${false}', extra: roomId);
+                          },
+                          child: const Text('OK'),
+                        ),
                       ],
                     );
                   }
