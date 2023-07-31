@@ -2,12 +2,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wordwolf/document/room/room_document.dart';
 
 part 'room_entity.freezed.dart';
-part 'room_entity.g.dart';
 
+part 'room_entity.g.dart';
 
 @freezed
 class RoomEntity with _$RoomEntity {
-    const RoomEntity._();
+  const RoomEntity._();
 
   const factory RoomEntity({
     required String id,
@@ -15,9 +15,10 @@ class RoomEntity with _$RoomEntity {
     required int maxNum,
     required List<String> roles,
     required int votedSum,
+    required int killedId,
   }) = _RoomEntity;
 
-   factory RoomEntity.fromJson(Map<String, dynamic> json) =>
+  factory RoomEntity.fromJson(Map<String, dynamic> json) =>
       _$RoomEntityFromJson(json);
 
   static RoomEntity fromDoc(RoomDocument roomDoc) {
@@ -27,6 +28,7 @@ class RoomEntity with _$RoomEntity {
       maxNum: roomDoc.maxNum,
       roles: roomDoc.roles,
       votedSum: roomDoc.votedSum,
+      killedId: roomDoc.killedId,
     );
   }
 
@@ -37,6 +39,7 @@ class RoomEntity with _$RoomEntity {
       maxNum: maxNum,
       roles: roles,
       votedSum: votedSum,
+      killedId: killedId,
     );
   }
 }
