@@ -33,16 +33,20 @@ final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
 final randomKillProvider =
     FutureProvider.family<int, String>((ref, String roomId) async {
   final isHost = ref.read(isMakeRoomProvider);
+  int killedUserAssignedId = 404;
   if (isHost) {
+    print('kill_before');
     await ref.read(memberRepositoryProvider).randomKill(roomId);
+    print('kill_after');
   }
   final livingMem =
       await ref.watch(memberRepositoryProvider).getLivingMembersFromDB(roomId);
-  if (livingMem[livingMem.indexWhere((e) => e.userId == 'gpt')].isLive ==
-      false) {
-    return 0;
+  if (killedUserAssignedId == 404) {
+    return 404;
+  } else if (livingMem.indexWhere((e) => e.userId == 'gpt') == -1) {
+    return 100;
   } else if (livingMem.length <= 2) {
-    return 1;
+    return 200;
   } else {
     return 300;
   }
@@ -74,11 +78,11 @@ final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 class LimitTime extends _$LimitTime {
   @override
   int build() {
-    return 10;
+    return 3;
   }
 
   void reset() {
-    state = 10;
+    state = 3;
   }
 
   void startTimer() {
