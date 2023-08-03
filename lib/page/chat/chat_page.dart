@@ -65,6 +65,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     // gptの分を引く
     if (room.votedSum == livingMem.length - 1) {
       if (isMake) {
+        /// 投票数が多い人間を処刑
         livingMem.sort((a, b) => -a.voted.compareTo(b.voted));
         final mem = livingMem[0];
         await ref.read(memberRepositoryProvider).killMember(

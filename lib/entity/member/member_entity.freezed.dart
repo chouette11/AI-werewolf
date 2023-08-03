@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MemberEntity {
   String get userId => throw _privateConstructorUsedError;
-  String get assignedId => throw _privateConstructorUsedError;
+  int get assignedId => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
   bool get isLive => throw _privateConstructorUsedError;
   int get voted => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $MemberEntityCopyWith<$Res> {
       _$MemberEntityCopyWithImpl<$Res, MemberEntity>;
   @useResult
   $Res call(
-      {String userId, String assignedId, String role, bool isLive, int voted});
+      {String userId, int assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
       assignedId: null == assignedId
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$_MemberEntityCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String userId, String assignedId, String role, bool isLive, int voted});
+      {String userId, int assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class __$$_MemberEntityCopyWithImpl<$Res>
       assignedId: null == assignedId
           ? _value.assignedId
           : assignedId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -149,7 +149,7 @@ class _$_MemberEntity extends _MemberEntity {
   @override
   final String userId;
   @override
-  final String assignedId;
+  final int assignedId;
   @override
   final String role;
   @override
@@ -189,7 +189,7 @@ class _$_MemberEntity extends _MemberEntity {
 abstract class _MemberEntity extends MemberEntity {
   const factory _MemberEntity(
       {required final String userId,
-      required final String assignedId,
+      required final int assignedId,
       required final String role,
       required final bool isLive,
       required final int voted}) = _$_MemberEntity;
@@ -198,7 +198,7 @@ abstract class _MemberEntity extends MemberEntity {
   @override
   String get userId;
   @override
-  String get assignedId;
+  int get assignedId;
   @override
   String get role;
   @override

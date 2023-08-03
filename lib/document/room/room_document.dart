@@ -14,7 +14,7 @@ class RoomDocument with _$RoomDocument {
     @JsonKey(name: 'maxNum') required int maxNum,
     @JsonKey(name: 'roles') required List<String> roles,
     @JsonKey(name: 'votedSum') required int votedSum,
-
+    @JsonKey(name: 'killedId') required int killedId,
   }) = _RoomDocument;
 
   factory RoomDocument.fromJson(Map<String, dynamic> json) =>

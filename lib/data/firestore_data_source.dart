@@ -104,6 +104,17 @@ class FirestoreDataSource {
     }
   }
 
+  /// キルメンバーの更新
+  Future<void> updateKilledId(String roomId, int assignedId) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('rooms').doc(roomId).update({'killedId': assignedId});
+    } catch (e) {
+      print('update_killed_id');
+      throw e;
+    }
+  }
+
   /// ルームを削除
   Future<void> deleteRoom(String roomId) async {
     try {

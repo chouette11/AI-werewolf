@@ -85,11 +85,11 @@ class ReceiveMessageBubble extends ConsumerWidget {
                 width: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: borderColor(int.parse(member.assignedId)),
+                  color: borderColor(member.assignedId),
                 ),
                 child: Center(
                   child: Text(
-                    member.assignedId,
+                    member.assignedId.toString(),
                     style: TextStyleConstant.normal24,
                   ),
                 ),
@@ -107,7 +107,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(24),
                   color: ColorConstant.black100,
                   border: Border.all(
-                    color: borderColor(int.parse(member.assignedId)),
+                    color: borderColor(member.assignedId),
                     width: 2,
                   ),
                 ),
