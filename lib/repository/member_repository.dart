@@ -83,12 +83,10 @@ class MemberRepository {
   Future<void> randomKill(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final livingMembers = await getLivingMembersFromDB(roomId);
-    int random = Random().nextInt(livingMembers.length);
-    final killedMem = livingMembers[random];
-    while (killedMem.userId == 'gpt') {
-      random = Random().nextInt(livingMembers.length);
-    }
-    firestore.killMember(roomId, livingMembers[random].userId);
+    livingMembers.removeWhere((e) => e.userId == 'gpt');
+    int random = Random().nextInt(livingMembers.length - 1);
+    await firestore.killMember(roomId, livingMembers[random].userId);
+    await firestore.updateKilledId(roomId, livingMembers[random].assignedId);
   }
 
 }
