@@ -92,6 +92,12 @@ class RoomRepository {
     return RoomEntity.fromDoc(roomDoc);
   }
 
+  /// キルメンバーのリセット
+  Future<void> resetKilledId(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    await firestore.updateKilledId(roomId, 404);
+  }
+
   /// ルームから退出
   Future<void> leaveRoom(String roomId) async {
     final firestore = ref.read(firestoreProvider);
