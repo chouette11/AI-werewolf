@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
-import 'package:wordwolf/page/root/component/start_dialog.dart';
+import 'package:wordwolf/page/root/component/make_dialog.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -14,12 +14,13 @@ class RootPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: ColorConstant.back,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                "Knock AI",
+                "AI人狼",
                 style: TextStyleConstant.bold28,
               ),
               const SizedBox(height: 40),
@@ -29,7 +30,8 @@ class RootPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     final rng = Random();
-                    final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
+                    final roomId =
+                        rng.nextInt(100000).toString().padLeft(5, '0');
                     showDialog(
                       context: context,
                       builder: (_) {
@@ -39,17 +41,9 @@ class RootPage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ColorConstant.main,
-                    backgroundColor: ColorConstant.main,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    backgroundColor: ColorConstant.accent,
                   ),
-                  child: Text(
-                    "部屋作成",
-                    style: TextStyleConstant.normal24.copyWith(
-                      color: ColorConstant.black100,
-                    ),
-                  ),
+                  child: const Text("部屋作成", style: TextStyleConstant.normal24),
                 ),
               ),
               const SizedBox(height: 16),
@@ -66,11 +60,8 @@ class RootPage extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: ColorConstant.secondary,
-                    backgroundColor: ColorConstant.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    foregroundColor: ColorConstant.accent,
+                    backgroundColor: ColorConstant.accent,
                   ),
                   child: const Text(
                     "参加する",

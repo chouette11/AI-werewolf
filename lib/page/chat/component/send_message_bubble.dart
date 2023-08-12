@@ -57,7 +57,7 @@ class SendMessageBubble extends StatelessWidget {
             borderRadius: BorderRadius.all(
               Radius.circular(24),
             ),
-            color: ColorConstant.secondary,
+            color: ColorConstant.accent,
           ),
           child: bubbleSize(),
         ),
