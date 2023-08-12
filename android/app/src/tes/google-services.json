@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "632237526803",
+    "project_id": "wordwolf-1f53d",
+    "storage_bucket": "wordwolf-1f53d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632237526803:android:a196338799ea76ca3754e6",
+        "android_client_info": {
+          "package_name": "com.knockAI.tes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4C2BMh84GgFWlHDQFDmBQX24SpiEDJzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
