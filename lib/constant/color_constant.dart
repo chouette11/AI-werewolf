@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class ColorConstant {
   ColorConstant._();
 
-  static const secondary = Color(0xFFE1EDE8);
-  static const main = Color(0xFF397756);
+  static const back = Color(0xFF474747);
+
+  static const accent = Color(0xFF74AA9C);
+  static const main = Color(0xFFFFFFFF);
+  static const text = Color(0xFFFFFFFF);
+
   static const chat1 = Color(0xFFD97F6B);
   static const chat2 = Color(0xFF75A893);
   static const chat3 = Color(0xFF9E67B1);
