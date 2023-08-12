@@ -25,7 +25,7 @@ class RoomRepository {
     List<String> roles = ['村人', '村人', '狂人'];
     switch (newMaxNum) {
       case 5:
-        roles.add('村人');
+        roles.add('狂人');
       case 6:
         roles.add('村人');
         roles.add('狂人');
