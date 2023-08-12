@@ -18,7 +18,7 @@ class StartDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(maxMemberProvider);
     return AlertDialog(
-      backgroundColor: ColorConstant.black100,
+      backgroundColor: ColorConstant.back,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
@@ -82,14 +82,7 @@ class StartDialog extends ConsumerWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.black100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(
-                        color: ColorConstant.main,
-                        width: 1,
-                      ),
-                    ),
+                    backgroundColor: ColorConstant.accent,
                   ),
                   child: Row(
                     children: [
@@ -110,21 +103,14 @@ class StartDialog extends ConsumerWidget {
               ),
               const Spacer(),
               SizedBox(
-                height:40,
+                height: 40,
                 width: 96,
                 child: ElevatedButton(
                   onPressed: () {
                     Share.share(roomId);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.black100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    side: BorderSide(
-                      color: ColorConstant.main,
-                      width: 1,
-                    ),
+                    backgroundColor: ColorConstant.accent,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -164,17 +150,9 @@ class StartDialog extends ConsumerWidget {
                 context.push("/chat/${true}", extra: roomId);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.main,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                backgroundColor: ColorConstant.accent,
               ),
-              child: Text(
-                "入室する",
-                style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.black100,
-                ),
-              ),
+              child: Text("入室する", style: TextStyleConstant.normal16),
             ),
           ),
         ),
