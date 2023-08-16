@@ -80,6 +80,25 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions 'flavor'
+    productFlavors {
+        dev {
+            dimension 'flavor'
+            applicationIdSuffix '.dev'
+            manifestPlaceholders = [appName: 'タグスト_dev']
+        }
+        prod {
+            dimension 'flavor'
+            applicationIdSuffix ''
+            manifestPlaceholders = [appName: 'タグスト']
+        }
+        tes {
+            dimension 'flavor'
+            applicationIdSuffix '.tes'
+            manifestPlaceholders = [appName: 'タグスト_test']
+        }
+    }
 }
 
 flutter {

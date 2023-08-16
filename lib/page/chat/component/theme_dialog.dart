@@ -37,6 +37,17 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
               child: Center(
                 child: messages.when(
                   data: (data) {
+                    const flavor = String.fromEnvironment('flavor');
+                    if (flavor == 'tes') {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        context.pop();
+                        showDialog(
+                          context: context,
+                          builder: (context) => RoleDialog(widget.roomId),
+                        );
+                      });
+                    }
+
                     if (data.length == widget.maxNum) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         context.pop();

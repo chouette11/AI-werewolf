@@ -78,11 +78,11 @@ final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 class LimitTime extends _$LimitTime {
   @override
   int build() {
-    return 3;
+    return 60;
   }
 
   void reset() {
-    state = 3;
+    state = 60;
   }
 
   void startTimer() {
