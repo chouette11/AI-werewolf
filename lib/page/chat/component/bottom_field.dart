@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 
 class BottomField extends StatelessWidget {

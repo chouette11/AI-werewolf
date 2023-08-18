@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:wordwolf/entity/member/member_entity.dart';
+import 'package:wordwolf/model/entity/member/member_entity.dart';
 import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
@@ -78,11 +78,11 @@ final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 class LimitTime extends _$LimitTime {
   @override
   int build() {
-    return 60;
+    return 200;
   }
 
   void reset() {
-    state = 60;
+    state = 200;
   }
 
   void startTimer() {

@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
 import 'package:wordwolf/page/root/component/make_dialog.dart';
 

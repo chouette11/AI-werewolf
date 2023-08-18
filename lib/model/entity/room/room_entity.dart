@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wordwolf/document/room/room_document.dart';
+import 'package:wordwolf/model/document/room/room_document.dart';
 
 part 'room_entity.freezed.dart';
 

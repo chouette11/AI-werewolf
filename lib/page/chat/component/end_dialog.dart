@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordwolf/constant/color_constant.dart';
-import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
 
 class EndDialog extends StatelessWidget {
   const EndDialog({Key? key, required this.result}) : super(key: key);

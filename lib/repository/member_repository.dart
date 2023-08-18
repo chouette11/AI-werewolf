@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
-import 'package:wordwolf/entity/member/member_entity.dart';
+import 'package:wordwolf/model/entity/member/member_entity.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 final memberRepositoryProvider =
