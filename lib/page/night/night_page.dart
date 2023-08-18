@@ -59,7 +59,7 @@ class NightPage extends ConsumerWidget {
                                 .read(roomRepositoryProvider)
                                 .resetKilledId(roomId);
                             ref.read(limitTimeProvider.notifier).reset();
-                            context.push('/chat/${false}', extra: roomId);
+                            context.go('/chat/$roomId/0');
                           },
                           child: const Text('OK'),
                         ),

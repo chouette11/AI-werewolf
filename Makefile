@@ -60,6 +60,13 @@ prod:
 prod:
 	flutterfire configure --out=lib/environment/src/firebase_options_prod.dart --platforms=android,ios --ios-bundle-id=com.flutter.template --android-package-name=com.flutter.template
 
+.PHONY: web
+web:
+	fvm flutter clean
+	fvm flutter build web
+	cd build/web;echo "google.com, pub-3443545166967285, DIRECT, f08c47fec0942fa0" > ads.txt
+	firebase deploy
+
 .PHONY: release-android
 release-android:
 	fvm flutter build appbundle --no-tree-shake-icons

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
@@ -65,77 +63,6 @@ class StartDialog extends ConsumerWidget {
       ),
       actions: <Widget>[
         Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                height: 32,
-                width: 80,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: roomId));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('テキストがクリップボードに保存されました'),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.accent,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "コピー",
-                        style: TextStyleConstant.normal12.copyWith(
-                          color: ColorConstant.main,
-                        ),
-                      ),
-                      const Icon(
-                        Icons.content_copy,
-                        color: ColorConstant.main,
-                        size: 12,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 32,
-                width: 80,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Share.share(roomId);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.accent,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "共有",
-                        style: TextStyleConstant.normal12.copyWith(
-                          color: ColorConstant.main,
-                        ),
-                      ),
-                      const SizedBox(width: 2),
-                      const Icon(
-                        Icons.share,
-                        color: ColorConstant.main,
-                        size: 12,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 24),
-        Center(
           child: SizedBox(
             height: 48,
             width: 120,
@@ -146,12 +73,12 @@ class StartDialog extends ConsumerWidget {
                 await ref.read(roomRepositoryProvider).makeRoom(roomId, value);
                 await ref.read(roomRepositoryProvider).joinRoom(roomId);
                 ref.read(isMakeRoomProvider.notifier).update((state) => true);
-                context.push("/chat/${true}", extra: roomId);
+                context.go("/make/$roomId");
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstant.accent,
               ),
-              child: const Text("入室する", style: TextStyleConstant.normal16),
+              child: const Text("作成する", style: TextStyleConstant.normal16),
             ),
           ),
         ),

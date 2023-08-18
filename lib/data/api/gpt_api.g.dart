@@ -37,7 +37,7 @@ class _RestClient implements RestClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/';
+    baseUrl ??= 'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net';
   }
 
   final Dio _dio;
