@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/environment/src/firebase_options_dev.dart';
 import 'package:wordwolf/provider/domain_providers.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
+import 'package:wordwolf/util/environment/src/firebase_options_dev.dart';
 
-import 'model/constant/color_constant.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

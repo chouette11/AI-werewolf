@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/model/constant/text_style_constant.dart';
-import 'package:wordwolf/model/constant/color_constant.dart';
+import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/model/entity/room/room_entity.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/page/chat/component/bottom_field.dart';
