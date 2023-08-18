@@ -46,20 +46,22 @@ class ReceiveMessageBubble extends ConsumerWidget {
       final textWidth = _textSize(messageEntity.content).width;
       if (textWidth < MediaQuery.of(context).size.width * 0.5) {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             messageEntity.content,
-            style: TextStyleConstant.normal16,
+            style: TextStyleConstant.normal16
+                .copyWith(color: ColorConstant.black10),
           ),
         );
       } else {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
             child: Text(
               messageEntity.content,
-              style: TextStyleConstant.normal16,
+              style: TextStyleConstant.normal16
+                  .copyWith(color: ColorConstant.black10),
               overflow: TextOverflow.visible,
             ),
           ),
@@ -69,7 +71,7 @@ class ReceiveMessageBubble extends ConsumerWidget {
 
     final members = ref.watch(membersStreamProvider(roomId));
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.only(left: 8, top: 6, bottom: 6),
       child: members.when(
         data: (data) {
           if (data.indexWhere((e) => e.userId == messageEntity.userId) == -1) {
@@ -78,37 +80,40 @@ class ReceiveMessageBubble extends ConsumerWidget {
           final member =
               data[data.indexWhere((e) => e.userId == messageEntity.userId)];
           return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 8),
               Container(
-                height: 40,
-                width: 40,
+                height: 36,
+                width: 36,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: borderColor(member.assignedId),
+                  border: Border.all(color: ColorConstant.black0, width: 1),
                 ),
                 child: Center(
                   child: Text(
                     member.assignedId.toString(),
-                    style: TextStyleConstant.normal24,
+                    style: TextStyleConstant.normal18
+                        .copyWith(color: ColorConstant.black10),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 12),
               Container(
                 decoration: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
-                      color: ColorConstant.black70,
-                      spreadRadius: 0.1,
-                      blurRadius: 1,
+                      color: ColorConstant.black20,
+                      offset: Offset(0, 4),
+                      spreadRadius: 1,
+                      blurRadius: 4,
                     )
                   ],
-                  borderRadius: BorderRadius.circular(24),
-                  color: ColorConstant.black100,
+                  borderRadius: BorderRadius.circular(1),
+                  color: borderColor(member.assignedId),
                   border: Border.all(
-                    color: borderColor(member.assignedId),
-                    width: 2,
+                    color: ColorConstant.black0,
+                    width: 1,
                   ),
                 ),
                 child: bubbleSize(),

@@ -9,11 +9,11 @@ class ColorConstant {
   static const main = Color(0xFFFFFFFF);
   static const text = Color(0xFFFFFFFF);
 
-  static const chat1 = Color(0xFFD97F6B);
-  static const chat2 = Color(0xFF75A893);
-  static const chat3 = Color(0xFF9E67B1);
-  static const chat4 = Color(0xFF32436B);
-  static const chat5 = Color(0xFFD7975A);
+  static const chat1 = Color(0xFFFF7D34);
+  static const chat2 = Color(0xFF74AA9C);
+  static const chat3 = Color(0xFFA58CEA);
+  static const chat4 = Color(0xFF23ACD8);
+  static const chat5 = Color(0xFFFFC03F);
 
   static const black100 = Color(0xFFFFFFFF);
   static const black99 = Color(0xFFFAFAFA);

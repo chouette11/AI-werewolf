@@ -32,6 +32,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // 5秒経過したときこのダイアログを消す
     if (count >= 5) {
       ref.read(limitTimeProvider.notifier).startTimer();
       context.pop();
@@ -41,19 +42,16 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
     return WillPopScope(
       onWillPop: () async => false,
       child: AlertDialog(
-        backgroundColor: ColorConstant.black100,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
+        backgroundColor: ColorConstant.back,
         content: SizedBox(
-          height: 240,
-          width: 240,
+          height: 200,
+          width: 120,
           child: Center(
             child: members.when(
               data: (members) {
                 final member =
                     members[members.indexWhere((e) => e.userId == uid)];
-                if (member.assignedId == '0') {
+                if (member.assignedId == 0) {
                   return const Text(
                     '配役決め中です...',
                     style: TextStyleConstant.normal16,
@@ -63,36 +61,16 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text('あなたは', style: TextStyleConstant.normal16),
-                    const SizedBox(height: 8),
-                    Text(
-                      'プレイヤー${member.assignedId}(${member.role})',
-                      style: TextStyleConstant.bold24,
+                    Icon(
+                      member.role == '人間'
+                          ? Icons.diversity_3
+                          : Icons.psychology_outlined,
+                      color: member.role == '人間'
+                          ? ColorConstant.main
+                          : ColorConstant.accent,
+                      size: 120,
                     ),
-                    const SizedBox(height: 16),
-                    const SizedBox(height: 24),
-                    SizedBox(
-                      height: 48,
-                      width: 100,
-                      child: ElevatedButton(
-                        onPressed: isSend
-                            ? null
-                            : () {
-                                isSend = true;
-                                setState(() {});
-                              }, //textfieldに入力された値を送信する
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorConstant.main,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        child: Text(
-                          '把握した',
-                          style: TextStyleConstant.bold14
-                              .copyWith(color: ColorConstant.black100),
-                        ),
-                      ),
-                    ),
+                    Text(member.role, style: TextStyleConstant.bold24),
                   ],
                 );
               },

@@ -84,6 +84,11 @@ class TextStyleConstant {
       fontWeight: FontWeight.normal,
       fontSize: 24,
       color: ColorConstant.text);
+  static const normal28 = TextStyle(
+      fontFamily: 'NotoSans',
+      fontWeight: FontWeight.normal,
+      fontSize: 28,
+      color: ColorConstant.text);
   static const normal32 = TextStyle(
       fontFamily: 'NotoSans',
       fontWeight: FontWeight.normal,

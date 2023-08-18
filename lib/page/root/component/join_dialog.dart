@@ -42,7 +42,8 @@ class JoinDialog extends ConsumerWidget {
                     .update((state) => value),
                 textAlign: TextAlign.left,
                 autofocus: true,
-                cursorColor: ColorConstant.main,
+                keyboardType: TextInputType.number,
+                cursorColor: ColorConstant.black40,
                 decoration: const InputDecoration(
                   fillColor: ColorConstant.black90,
                   filled: true,
@@ -51,13 +52,13 @@ class JoinDialog extends ConsumerWidget {
                       TextStyle(fontSize: 16, color: ColorConstant.black50),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
                     borderSide: BorderSide.none,
                   ),
                 ),
                 style: const TextStyle(
                   fontSize: 16,
-                  color: ColorConstant.text,
+                  color: ColorConstant.black40,
                 ),
               ),
             ),
