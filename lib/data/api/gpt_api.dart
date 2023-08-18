@@ -8,7 +8,7 @@ part 'gpt_api.g.dart';
 
 final apiClientProvider = Provider((ref) => RestClient(Dio()));
 
-@RestApi(baseUrl: "https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/")
+@RestApi(baseUrl: "https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
