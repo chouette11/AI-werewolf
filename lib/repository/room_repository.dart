@@ -22,17 +22,17 @@ class RoomRepository {
     final rng = Random();
     // 割り当てるidから0を取り除く
     final assignedId = rng.nextInt(newMaxNum) + 1;
-    List<String> roles = ['村人', '村人', '狂人'];
+    List<String> roles = ['人間', '人間', '電脳体'];
     switch (newMaxNum) {
       case 5:
-        roles.add('狂人');
+        roles.add('電脳体');
       case 6:
         roles.add('村人');
         roles.add('狂人');
       case 7:
-        roles.add('村人');
-        roles.add('狂人');
-        roles.add('村人');
+        roles.add('電脳体');
+        roles.add('人間');
+        roles.add('電脳体');
     }
     final topics = ['うどん', 'プログラミング', '雪', 'お祭り'];
     final topic = topics[rng.nextInt(topics.length)];
