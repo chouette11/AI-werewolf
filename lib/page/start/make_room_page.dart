@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wordwolf/constant/color_constant.dart';
 import 'package:wordwolf/constant/text_style_constant.dart';
+import 'package:wordwolf/page/start/component/polygon.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
@@ -18,6 +22,7 @@ class MakeRoomPage extends ConsumerStatefulWidget {
 
 class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
   int maxNum = 404;
+  int count = 100;
 
   @override
   void initState() {
@@ -33,6 +38,14 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
         .getRoom(widget.roomId)
         .then((value) => maxNum = value.maxNum);
     super.initState();
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (mounted) {
+        setState(() => count--);
+      }
+      if (count < 0) {
+        timer.cancel();
+      }
+    });
   }
 
   @override
@@ -45,49 +58,59 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
             context.go('/chat/${widget.roomId}/1');
           });
         }
-        return Scaffold(
-          backgroundColor: ColorConstant.back,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('ROOM ID', style: TextStyleConstant.normal24),
-              const SizedBox(height: 8),
-              Text(widget.roomId, style: TextStyleConstant.bold48),
-              const SizedBox(height: 12),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.share, color: ColorConstant.main),
-                  SizedBox(width: 20),
-                  Icon(Icons.copy, color: ColorConstant.main),
-                ],
-              ),
-              const SizedBox(height: 48),
-              const Text('メンバー待機中...', style: TextStyleConstant.normal18),
-              const SizedBox(height: 24),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.person_outline,
-                      color: ColorConstant.main, size: 40),
-                  SizedBox(width: 32),
-                  Image(image: AssetImage('assets/images/polygon1.png')),
-                  SizedBox(width: 16),
-                  Image(image: AssetImage('assets/images/polygon2.png')),
-                  SizedBox(width: 16),
-                  Image(image: AssetImage('assets/images/polygon3.png')),
-                  SizedBox(width: 32),
-                  Icon(Icons.group_outlined,
-                      color: ColorConstant.main, size: 40),
-                ],
-              )
-            ],
+        return WillPopScope(
+          onWillPop:() async => false,
+          child: Scaffold(
+            backgroundColor: ColorConstant.back,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text('ROOM ID', style: TextStyleConstant.normal24),
+                const SizedBox(height: 8),
+                Text(widget.roomId, style: TextStyleConstant.bold48),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Share.share(
+                            'https://wordwolf-main.web.app/#/make/${widget.roomId}');
+                      },
+                      child: const Icon(Icons.share, color: ColorConstant.main),
+                    ),
+                    const SizedBox(width: 20),
+                    GestureDetector(
+                        child: const Icon(Icons.copy, color: ColorConstant.main)),
+                  ],
+                ),
+                const SizedBox(height: 48),
+                const Text('メンバー待機中...', style: TextStyleConstant.normal18),
+                const SizedBox(height: 24),
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.person_outline,
+                        color: ColorConstant.main, size: 40),
+                    const SizedBox(width: 32),
+                    PolygonWidget(0, count),
+                    const SizedBox(width: 16),
+                    PolygonWidget(1, count),
+                    const SizedBox(width: 16),
+                    PolygonWidget(2, count),
+                    const SizedBox(width: 32),
+                    const Icon(Icons.group_outlined,
+                        color: ColorConstant.main, size: 40),
+                  ],
+                )
+              ],
+            ),
           ),
         );
       },
       error: (_, __) => Text(_.toString()),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Scaffold(backgroundColor: ColorConstant.back),
     );
   }
 }
