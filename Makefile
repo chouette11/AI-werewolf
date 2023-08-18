@@ -64,6 +64,7 @@ prod:
 web:
 	fvm flutter clean
 	fvm flutter build web
+	cd build/web;echo "google.com, pub-3443545166967285, DIRECT, f08c47fec0942fa0" > ads.txt
 	firebase deploy
 
 .PHONY: release-android
