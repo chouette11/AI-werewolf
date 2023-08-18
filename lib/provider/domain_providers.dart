@@ -20,19 +20,20 @@ final routerProvider = Provider<GoRouter>(
         builder: (context, state) => const RootPage(),
         routes: [
           GoRoute(
-            path: 'chat/:isFirst',
+            path: 'chat/:roomId/:isFirst',
             builder: (context, state) {
+              final roomId = state.pathParameters['roomId'];
               final isFirst = state.pathParameters['isFirst'];
               return ChatPage(
-                roomId: state.extra! as String,
-                isFirst: isFirst == 'true' ? true : false,
+                roomId: roomId!,
+                isFirst: isFirst! == '1' ? true : false,
               );
             },
           ),
           GoRoute(
-              path: 'make',
+              path: 'make/:roomId',
               builder: (context, state) =>
-                  MakeRoomPage(roomId: state.extra! as String)),
+                  MakeRoomPage(roomId: state.pathParameters['roomId']!)),
           GoRoute(
             path: 'night',
             builder: (context, state) =>

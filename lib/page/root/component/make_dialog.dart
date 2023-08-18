@@ -146,7 +146,7 @@ class StartDialog extends ConsumerWidget {
                 await ref.read(roomRepositoryProvider).makeRoom(roomId, value);
                 await ref.read(roomRepositoryProvider).joinRoom(roomId);
                 ref.read(isMakeRoomProvider.notifier).update((state) => true);
-                context.push("/chat/${true}", extra: roomId);
+                context.go("/make/$roomId");
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: ColorConstant.accent,
