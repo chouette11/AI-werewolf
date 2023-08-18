@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/api/gpt_api.dart';
-import 'package:wordwolf/entity/message/message_entity.dart';
+import 'package:wordwolf/model/entity/message/message_entity.dart';
 
 final apiProvider = Provider<ApiDataSource>((ref) => ApiDataSource(ref: ref));
 

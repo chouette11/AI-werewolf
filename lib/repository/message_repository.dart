@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/api_data_source.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
-import 'package:wordwolf/entity/message/message_entity.dart';
+import 'package:wordwolf/model/entity/message/message_entity.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 final messageRepositoryProvider =

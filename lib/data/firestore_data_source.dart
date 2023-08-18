@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/document/member/member_document.dart';
-import 'package:wordwolf/document/message/message_document.dart';
-import 'package:wordwolf/document/room/room_document.dart';
+import 'package:wordwolf/model/document/member/member_document.dart';
+import 'package:wordwolf/model/document/message/message_document.dart';
+import 'package:wordwolf/model/document/room/room_document.dart';
+
 import 'package:wordwolf/provider/domain_providers.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 

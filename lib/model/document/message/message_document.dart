@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wordwolf/document/timestamp_converter.dart';
+import 'package:wordwolf/model/document/message/timestamp_converter.dart';
 
 part 'message_document.freezed.dart';
 

@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/data/firestore_data_source.dart';
-import 'package:wordwolf/entity/member/member_entity.dart';
-import 'package:wordwolf/entity/room/room_entity.dart';
+import 'package:wordwolf/model/entity/member/member_entity.dart';
+import 'package:wordwolf/model/entity/room/room_entity.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 final roomRepositoryProvider =
