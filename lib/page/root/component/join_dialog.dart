@@ -17,10 +17,7 @@ class JoinDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final error = ref.watch(errorTextProvider);
     return AlertDialog(
-      backgroundColor: ColorConstant.black100,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
+      backgroundColor: ColorConstant.back,
       content: SizedBox(
         width: 240,
         height: 160,
@@ -45,7 +42,8 @@ class JoinDialog extends ConsumerWidget {
                     .update((state) => value),
                 textAlign: TextAlign.left,
                 autofocus: true,
-                cursorColor: ColorConstant.main,
+                keyboardType: TextInputType.number,
+                cursorColor: ColorConstant.black40,
                 decoration: const InputDecoration(
                   fillColor: ColorConstant.black90,
                   filled: true,
@@ -54,13 +52,13 @@ class JoinDialog extends ConsumerWidget {
                       TextStyle(fontSize: 16, color: ColorConstant.black50),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
                     borderSide: BorderSide.none,
                   ),
                 ),
                 style: const TextStyle(
                   fontSize: 16,
-                  color: ColorConstant.black0,
+                  color: ColorConstant.black40,
                 ),
               ),
             ),
@@ -78,7 +76,7 @@ class JoinDialog extends ConsumerWidget {
 
                 /// ルームがない場合
                 final isRoom =
-                await ref.read(roomRepositoryProvider).isRoom(textValue);
+                    await ref.read(roomRepositoryProvider).isRoom(textValue);
                 if (!isRoom) {
                   ref
                       .read(errorTextProvider.notifier)
@@ -109,10 +107,7 @@ class JoinDialog extends ConsumerWidget {
                 context.push("/chat/${true}", extra: textValue);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.main,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                backgroundColor: ColorConstant.accent,
               ),
               child: Text(
                 "入室する",

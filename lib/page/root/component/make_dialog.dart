@@ -18,31 +18,31 @@ class StartDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final value = ref.watch(maxMemberProvider);
     return AlertDialog(
-      backgroundColor: ColorConstant.black100,
+      backgroundColor: ColorConstant.back,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
       content: SizedBox(
         width: 240,
-        height: 200,
+        height: 160,
         child: Column(
           children: [
             const Text(
               'ID',
-              style: TextStyleConstant.normal32,
+              style: TextStyleConstant.normal24,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Text(
               roomId,
               style: TextStyleConstant.normal32,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(),
                 const Text('参加人数：', style: TextStyleConstant.normal16),
                 SizedBox(
-                  height: 72,
+                  height: 70,
                   child: NumberPicker(
                     textStyle: TextStyleConstant.normal12,
                     selectedTextStyle: TextStyleConstant.normal16,
@@ -58,7 +58,6 @@ class StartDialog extends ConsumerWidget {
                   ),
                 ),
                 const Text('人', style: TextStyleConstant.normal16),
-                const Spacer(),
               ],
             ),
           ],
@@ -67,11 +66,11 @@ class StartDialog extends ConsumerWidget {
       actions: <Widget>[
         Center(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Spacer(),
               SizedBox(
-                height: 40,
-                width: 96,
+                height: 32,
+                width: 80,
                 child: ElevatedButton(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: roomId));
@@ -82,49 +81,35 @@ class StartDialog extends ConsumerWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.black100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(
-                        color: ColorConstant.main,
-                        width: 1,
-                      ),
-                    ),
+                    backgroundColor: ColorConstant.accent,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "コピー",
-                        style: TextStyleConstant.normal16.copyWith(
+                        style: TextStyleConstant.normal12.copyWith(
                           color: ColorConstant.main,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.content_copy,
                         color: ColorConstant.main,
-                        size: 16,
+                        size: 12,
                       )
                     ],
                   ),
                 ),
               ),
-              const Spacer(),
               SizedBox(
-                height:40,
-                width: 96,
+                height: 32,
+                width: 80,
                 child: ElevatedButton(
                   onPressed: () {
                     Share.share(roomId);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.black100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    side: BorderSide(
-                      color: ColorConstant.main,
-                      width: 1,
-                    ),
+                    backgroundColor: ColorConstant.accent,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,20 +117,20 @@ class StartDialog extends ConsumerWidget {
                     children: [
                       Text(
                         "共有",
-                        style: TextStyleConstant.normal16.copyWith(
+                        style: TextStyleConstant.normal12.copyWith(
                           color: ColorConstant.main,
                         ),
                       ),
-                      Icon(
+                      const SizedBox(width: 2),
+                      const Icon(
                         Icons.share,
                         color: ColorConstant.main,
-                        size: 16,
+                        size: 12,
                       ),
                     ],
                   ),
                 ),
               ),
-              const Spacer(),
             ],
           ),
         ),
@@ -164,17 +149,9 @@ class StartDialog extends ConsumerWidget {
                 context.push("/chat/${true}", extra: roomId);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorConstant.main,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                backgroundColor: ColorConstant.accent,
               ),
-              child: Text(
-                "入室する",
-                style: TextStyleConstant.normal16.copyWith(
-                  color: ColorConstant.black100,
-                ),
-              ),
+              child: const Text("入室する", style: TextStyleConstant.normal16),
             ),
           ),
         ),

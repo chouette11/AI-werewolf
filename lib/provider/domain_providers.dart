@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:wordwolf/page/chat/chat_page.dart';
 import 'package:wordwolf/page/night/night_page.dart';
 import 'package:wordwolf/page/root/root_page.dart';
+import 'package:wordwolf/page/start/make_room_page.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
@@ -28,6 +29,10 @@ final routerProvider = Provider<GoRouter>(
               );
             },
           ),
+          GoRoute(
+              path: 'make',
+              builder: (context, state) =>
+                  MakeRoomPage(roomId: state.extra! as String)),
           GoRoute(
             path: 'night',
             builder: (context, state) =>

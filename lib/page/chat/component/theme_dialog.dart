@@ -28,10 +28,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
     return WillPopScope(
       onWillPop: () async => false,
       child: AlertDialog(
-        backgroundColor: ColorConstant.black100,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
+        backgroundColor: ColorConstant.back,
         content: topic.when(
           data: (topic) {
             return SizedBox(
@@ -80,26 +77,21 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                             onChanged: (value) => ref
                                 .read(startTextFieldProvider.notifier)
                                 .update((state) => value),
-                            cursorColor: ColorConstant.main,
+                            cursorColor: ColorConstant.black50,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             minLines: 2,
                             decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorConstant.main,
-                                ),
-                              ),
+                              filled: true,
+                              fillColor: ColorConstant.black90,
                               focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: ColorConstant.main,
                                 ),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
                               hintText: '解答を入力してください',
-                              hintStyle: TextStyleConstant.normal16,
+                              hintStyle: TextStyleConstant.normal16
+                                  .copyWith(color: ColorConstant.black50),
                             ),
                           ),
                         ),
@@ -138,10 +130,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                                     }
                                   }, //textfieldに入力された値を送信する
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorConstant.main,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
+                              backgroundColor: ColorConstant.accent,
                             ),
                             child: Text(
                               '送信',

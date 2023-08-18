@@ -11,7 +11,7 @@ class BottomField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 56,
-      color: ColorConstant.secondary,
+      color: ColorConstant.accent,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(

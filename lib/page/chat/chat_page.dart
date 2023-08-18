@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordwolf/constant/color_constant.dart';
+import 'package:wordwolf/constant/text_style_constant.dart';
 import 'package:wordwolf/entity/room/room_entity.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/page/chat/component/bottom_field.dart';
@@ -111,39 +113,110 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     room.whenData((value) => _showExecutedDialog(value, isMake));
 
+    ScrollController _controller = ScrollController();
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: ChatAppBar(roomId: widget.roomId),
+        backgroundColor: ColorConstant.back,
+        floatingActionButton: SizedBox(
+          height: 100,
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller.animateTo(
+                    _controller.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  color: ColorConstant.accent,
+                  child: const Icon(Icons.arrow_downward_sharp, size: 28),
+                ),
+              ),
+            ],
+          ),
+        ),
         body: messages.when(
           data: (data) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
-                  child: ListView.builder(
-                    reverse: true,
-                    itemCount: data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      data.sort((a, b) {
-                        //sorting in descending order
-                        return b.createdAt.compareTo(a.createdAt);
-                      });
-                      final message = data[index];
-                      if (message.userId == uid) {
-                        return SendMessageBubble(message: message.content);
-                      } else {
-                        return ReceiveMessageBubble(
-                          messageEntity: message,
-                          roomId: widget.roomId,
-                        );
-                      }
-                    },
+                  child: ScrollConfiguration(
+                    behavior: NoEffectScrollBehavior(),
+                    child: ListView.builder(
+                      controller: _controller,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: data.length + 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  height: 16,
+                                  width: 80,
+                                  child: Divider(
+                                    color: ColorConstant.accent,
+                                    thickness: 2,
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  'ゲーム開始',
+                                  style: TextStyleConstant.normal16
+                                      .copyWith(color: ColorConstant.accent),
+                                ),
+                                const SizedBox(width: 16),
+                                const SizedBox(
+                                  height: 16,
+                                  width: 80,
+                                  child: Divider(
+                                    color: ColorConstant.accent,
+                                    thickness: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        data.sort((a, b) {
+                          //sorting in descending order
+                          return a.createdAt.compareTo(b.createdAt);
+                        });
+                        final message = data[index - 1];
+                        if (message.userId == uid) {
+                          return SendMessageBubble(
+                            messageEntity: message,
+                            roomId: widget.roomId,
+                          );
+                        } else {
+                          return ReceiveMessageBubble(
+                            messageEntity: message,
+                            roomId: widget.roomId,
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
                 counter <= 0
-                    ? BottomField(roomId: widget.roomId)
-                    : BottomTextField(roomId: widget.roomId),
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: BottomField(roomId: widget.roomId),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: BottomTextField(roomId: widget.roomId),
+                      ),
               ],
             );
           },
@@ -156,5 +229,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ),
       ),
     );
+  }
+}
+
+class NoEffectScrollBehavior extends ScrollBehavior {
+  Widget buildViewportChrome(
+    BuildContext context,
+    Widget child,
+    AxisDirection axisDirection,
+  ) {
+    return child;
   }
 }
