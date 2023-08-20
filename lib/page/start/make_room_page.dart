@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -13,8 +14,13 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 class MakeRoomPage extends ConsumerStatefulWidget {
-  const MakeRoomPage({Key? key, required this.roomId}) : super(key: key);
+  const MakeRoomPage({
+    Key? key,
+    required this.roomId,
+    required this.isJoin,
+  }) : super(key: key);
   final String roomId;
+  final bool isJoin;
 
   @override
   ConsumerState<MakeRoomPage> createState() => _MakeRoomPageState();
@@ -27,7 +33,7 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
   @override
   void initState() {
     Future(() async {
-      if (kIsWeb) {
+      if (kIsWeb && !widget.isJoin) {
         final uuid = const Uuid().v4();
         ref.read(uidProvider.notifier).update((state) => uuid);
         await ref.read(roomRepositoryProvider).joinRoom(widget.roomId);
