@@ -31,9 +31,16 @@ final routerProvider = Provider<GoRouter>(
             },
           ),
           GoRoute(
-              path: 'make/:roomId',
-              builder: (context, state) =>
-                  MakeRoomPage(roomId: state.pathParameters['roomId']!)),
+            path: 'make/:roomId/:isJoin',
+            builder: (context, state) {
+              final roomId = state.pathParameters['roomId'];
+              final isJoin = state.pathParameters['isJoin'];
+              return MakeRoomPage(
+                roomId: roomId!,
+                isJoin: isJoin! == '1' ? true : false,
+              );
+            },
+          ),
           GoRoute(
             path: 'night',
             builder: (context, state) =>
