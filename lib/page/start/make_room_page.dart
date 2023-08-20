@@ -59,7 +59,7 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
           });
         }
         return WillPopScope(
-          onWillPop:() async => false,
+          onWillPop: () async => false,
           child: Scaffold(
             backgroundColor: ColorConstant.back,
             body: Column(
@@ -82,13 +82,22 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
                     ),
                     const SizedBox(width: 20),
                     GestureDetector(
-                        child: const Icon(Icons.copy, color: ColorConstant.main)),
+                      onTap: () {
+                        Clipboard.setData(ClipboardData(text: widget.roomId));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('テキストがクリップボードに保存されました'),
+                          ),
+                        );
+                      },
+                      child: const Icon(Icons.copy, color: ColorConstant.main),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 48),
                 const Text('メンバー待機中...', style: TextStyleConstant.normal18),
                 const SizedBox(height: 24),
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.person_outline,
