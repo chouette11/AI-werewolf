@@ -8,9 +8,10 @@ import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 
 class RoleDialog extends ConsumerStatefulWidget {
-  const RoleDialog(this.roomId, {super.key});
+  const RoleDialog(this.roomId, this.isPop, {super.key});
 
   final String roomId;
+  final bool isPop;
 
   @override
   ConsumerState<RoleDialog> createState() => _RoleDialogState();
@@ -40,7 +41,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
     final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => widget.isPop,
       child: AlertDialog(
         backgroundColor: ColorConstant.back,
         content: SizedBox(
