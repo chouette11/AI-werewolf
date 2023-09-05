@@ -1,16 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
+import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/repository/room_repository.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
-import 'package:wordwolf/page/root/component/make_dialog.dart';
 
-class RootPage extends StatelessWidget {
+class RootPage extends ConsumerWidget {
   const RootPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -28,16 +32,16 @@ class RootPage extends StatelessWidget {
                 height: 48,
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final rng = Random();
                     final roomId =
                         rng.nextInt(100000).toString().padLeft(5, '0');
-                    showDialog(
-                      context: context,
-                      builder: (_) {
-                        return StartDialog(roomId: roomId);
-                      },
-                    );
+                    final uuid = const Uuid().v4();
+                    ref.read(uidProvider.notifier).update((state) => uuid);
+                    await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
+                    await ref.read(roomRepositoryProvider).joinRoom(roomId);
+                    ref.read(isMakeRoomProvider.notifier).update((state) => true);
+                    context.go("/make/$roomId/1");
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ColorConstant.main,

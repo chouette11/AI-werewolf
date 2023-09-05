@@ -43,7 +43,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         context.pop();
                         showDialog(
                           context: context,
-                          builder: (context) => RoleDialog(widget.roomId),
+                          builder: (context) => RoleDialog(widget.roomId, true),
                         );
                       });
                     }
@@ -53,7 +53,7 @@ class _ThemeDialogState extends ConsumerState<ThemeDialog> {
                         context.pop();
                         showDialog(
                           context: context,
-                          builder: (context) => RoleDialog(widget.roomId),
+                          builder: (context) => RoleDialog(widget.roomId, false),
                         );
                       });
                     }

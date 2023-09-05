@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wordwolf/page/chat/component/role_dialog.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
@@ -67,7 +68,8 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
                               ),
                               child: Stack(
                                 children: [
-                                  SvgPicture.asset('assets/images/timer_box.svg'),
+                                  SvgPicture.asset(
+                                      'assets/images/timer_box.svg'),
                                   Positioned(
                                     top: 6,
                                     child: SizedBox(
@@ -76,7 +78,8 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
                                         child: Text(
                                           counter.toString(),
                                           style: TextStyleConstant.normal28
-                                              .copyWith(color: ColorConstant.black30),
+                                              .copyWith(
+                                                  color: ColorConstant.black30),
                                         ),
                                       ),
                                     ),
@@ -87,7 +90,19 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 48,)
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => RoleDialog(roomId, true),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: ColorConstant.main,
+                          backgroundColor: ColorConstant.accent,
+                        ),
+                        child: const Text('役職'),
+                      ),
                     ],
                   ),
                 ],
