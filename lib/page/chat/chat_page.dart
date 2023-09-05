@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordwolf/page/chat/component/role_dialog.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/model/entity/room/room_entity.dart';
@@ -12,10 +13,8 @@ import 'package:wordwolf/page/chat/component/chat_appbar.dart';
 import 'package:wordwolf/page/chat/component/executed_dialog.dart';
 import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
 import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
-import 'package:wordwolf/page/chat/component/theme_dialog.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({
@@ -33,29 +32,6 @@ class ChatPage extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
-
-  Future<void> _showStartDialog() async {
-    final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
-    final livingMem = await ref
-        .read(memberRepositoryProvider)
-        .getLivingMembersFromDB(widget.roomId);
-
-    /// 死んでいたらダイアログを表示しない
-    if (!livingMem.map((e) => e.userId).contains(ref.read(uidProvider))) {
-      return;
-    }
-
-    return showDialog<void>(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return ThemeDialog(
-          widget.roomId,
-          widget.isFirst ? room.maxNum : livingMem.length,
-        );
-      },
-    );
-  }
 
   Future<void> _showExecutedDialog(RoomEntity room, bool isMake) async {
     final livingMem = await ref
@@ -87,8 +63,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (context) => RoleDialog(widget.roomId, false),
+      );
+    });
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _showStartDialog());
   }
 
   @override
