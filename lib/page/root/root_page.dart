@@ -41,6 +41,11 @@ class RootPage extends ConsumerWidget {
                     await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
                     await ref.read(roomRepositoryProvider).joinRoom(roomId);
                     ref.read(isMakeRoomProvider.notifier).update((state) => true);
+                    const flavor = String.fromEnvironment('flavor');
+                    if (flavor == 'tes') {
+                      context.go('/chat/$roomId/1');
+                      return;
+                    }
                     context.go("/make/$roomId/1");
                   },
                   style: ElevatedButton.styleFrom(
