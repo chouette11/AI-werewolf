@@ -82,7 +82,7 @@ class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
                     GestureDetector(
                       onTap: () {
                         Share.share(
-                            'https://wordwolf-main.web.app/#/make/${widget.roomId}');
+                            'https://wordwolf-main.web.app/#/make/${widget.roomId}/0');
                       },
                       child: const Icon(Icons.share, color: ColorConstant.main),
                     ),
