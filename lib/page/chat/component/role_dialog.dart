@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/util/enum/role.dart';
 
 class RoleDialog extends ConsumerStatefulWidget {
   const RoleDialog(this.roomId, this.isPop, {super.key});
@@ -63,10 +64,10 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
                   children: [
                     const Text('あなたは', style: TextStyleConstant.normal16),
                     Icon(
-                      member.role == '人間'
+                      member.role == RoleEnum.human.displayName
                           ? Icons.diversity_3
                           : Icons.psychology_outlined,
-                      color: member.role == '人間'
+                      color: member.role == RoleEnum.human.displayName
                           ? ColorConstant.main
                           : ColorConstant.accent,
                       size: 120,
