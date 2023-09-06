@@ -5,6 +5,7 @@ import 'package:wordwolf/data/firestore_data_source.dart';
 import 'package:wordwolf/model/entity/member/member_entity.dart';
 import 'package:wordwolf/model/entity/room/room_entity.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:wordwolf/util/enum/role.dart';
 
 final roomRepositoryProvider =
     Provider<RoomRepository>((ref) => RoomRepository(ref));
@@ -22,17 +23,21 @@ class RoomRepository {
     final rng = Random();
     // 割り当てるidから0を取り除く
     final assignedId = rng.nextInt(newMaxNum) + 1;
-    List<String> roles = ['人間', '人間', '電脳体'];
+    List<String> roles = [
+      RoleEnum.human.displayName,
+      RoleEnum.human.displayName,
+      RoleEnum.humanoid.displayName,
+    ];
     switch (newMaxNum) {
       case 5:
-        roles.add('電脳体');
+        roles.add(RoleEnum.humanoid.displayName);
       case 6:
         roles.add('村人');
         roles.add('狂人');
       case 7:
-        roles.add('電脳体');
-        roles.add('人間');
-        roles.add('電脳体');
+        roles.add(RoleEnum.humanoid.displayName);
+        roles.add(RoleEnum.human.displayName);
+        roles.add(RoleEnum.human.displayName);
     }
     final topics = ['うどん', 'プログラミング', '雪', 'お祭り'];
     final topic = topics[rng.nextInt(topics.length)];

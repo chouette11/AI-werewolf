@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordwolf/page/result/result_page.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
+import 'package:wordwolf/util/constant/color_constant.dart';
+import 'package:wordwolf/util/enum/role.dart';
 
 class NightPage extends ConsumerWidget {
   const NightPage({Key? key, required this.roomId}) : super(key: key);
@@ -16,18 +19,21 @@ class NightPage extends ConsumerWidget {
     final kill = ref.watch(randomKillProvider(roomId));
     final room = ref.watch(roomStreamProvider(roomId));
     return Scaffold(
+      backgroundColor: ColorConstant.back,
       body: Center(
         child: members.when(
           data: (mem) {
             final livingMem =
                 ref.read(memberRepositoryProvider).getLivingMembers(mem);
+            // 処刑で試合が決まるかどうか
             if (livingMem.indexWhere((e) => e.userId == 'gpt') == -1) {
-              return const Text('村人');
+              return ResultPage(roomId: roomId, winner: RoleEnum.human.displayName);
             } else if (livingMem.length <= 2) {
-              return const Text('AI');
+              return ResultPage(roomId: roomId, winner: RoleEnum.humanoid.displayName);
             } else {
               return kill.when(
                 data: (data) {
+                  // 惨殺で試合が決まるかどうか
                   if (data == 404) {
                     return const Text('AIが惨殺しています');
                   } else if (data == 100) {
@@ -35,6 +41,7 @@ class NightPage extends ConsumerWidget {
                   } else if (data == 200) {
                     return const Text('AI');
                   } else {
+                    // 試合継続
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

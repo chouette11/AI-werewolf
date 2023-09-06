@@ -78,17 +78,25 @@ final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 class LimitTime extends _$LimitTime {
   @override
   int build() {
+    const flavor = String.fromEnvironment('flavor');
+    if (flavor == 'tes') {
+      return 10;
+    }
     return 200;
   }
 
   void reset() {
     state = 200;
+    const flavor = String.fromEnvironment('flavor');
+    if (flavor == 'tes') {
+      state = 10;
+    }
   }
 
   void startTimer() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       state = state - 1;
-      if (state < 0) {
+      if (state < 1) {
         timer.cancel();
       }
     });

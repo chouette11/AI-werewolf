@@ -72,6 +72,12 @@ class BottomTextField extends ConsumerWidget {
                       onTap: () async {
                         final content =
                             ref.read(messageTextFieldController).text;
+
+                        // 空文字の場合
+                        if (content.isEmpty) {
+                          return;
+                        }
+
                         final room = await ref
                             .read(roomRepositoryProvider)
                             .getRoom(roomId);
