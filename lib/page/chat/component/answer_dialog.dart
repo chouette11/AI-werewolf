@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
+import 'package:wordwolf/util/constant/text_style_constant.dart';
 
 class AnswerDialog extends ConsumerStatefulWidget {
   const AnswerDialog({super.key, required this.roomId});
@@ -25,60 +25,66 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
 
     return members.when(
       data: (data) {
-        final livingMem = ref.read(memberRepositoryProvider).getLivingMembers(data);
+        final livingMem =
+            ref.read(memberRepositoryProvider).getLivingMembers(data);
         // プレイヤーxのxでソート
         livingMem.sort((a, b) => a.assignedId.compareTo(b.assignedId));
         return room.when(
           data: (room) {
-            // 全員等表示遷移
-
             return AlertDialog(
-              backgroundColor: ColorConstant.black100,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              content: SizedBox(
-                width: 240,
-                height: 400,
-                child: Column(
-                  children: [
-                    const Text('誰を処刑しますか？'),
-                    ...livingMem
-                        .map(
-                          (member) => ListTile(
-                            title: Text('プレイヤー${member.assignedId}'),
-                            leading: Radio<String>(
-                              activeColor: ColorConstant.main,
-                              value: 'プレイヤー${member.assignedId}',
-                              groupValue: value,
-                              onChanged: (String? value) {
-                                if (value != null) {
-                                  ref
-                                      .read(answerRadioValueProvider.notifier)
-                                      .update((state) => value);
-                                }
-                              },
-                            ),
+              backgroundColor: ColorConstant.back,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    '誰を処刑しますか？',
+                    style: TextStyleConstant.normal20,
+                  ),
+                  ...livingMem
+                      .map(
+                        (member) => ListTile(
+                          title: Text(
+                            'プレイヤー${member.assignedId}',
+                            style: TextStyleConstant.normal16,
                           ),
-                        )
-                        .toList(),
-                    ElevatedButton(
-                      onPressed: value == '' || isSend
-                          ? null
-                          : () {
-                              ref.read(memberRepositoryProvider).voteForMember(
-                                  widget.roomId, value[value.length - 1]);
-                              isSend = true;
-                              setState(() {
-
-                              });
+                          leading: Radio<String>(
+                            activeColor: ColorConstant.main,
+                            value: 'プレイヤー${member.assignedId}',
+                            groupValue: value,
+                            onChanged: (String? value) {
+                              if (value != null) {
+                                ref
+                                    .read(answerRadioValueProvider.notifier)
+                                    .update((state) => value);
+                              }
                             },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorConstant.main),
-                      child: const Text('決定'),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  isSend
+                      ? Text(
+                          '全員が投票するまでおまちください',
+                          style: TextStyleConstant.normal12
+                              .copyWith(color: ColorConstant.accent),
+                        )
+                      : const SizedBox.shrink(),
+                  ElevatedButton(
+                    onPressed: value == '' || isSend
+                        ? null
+                        : () {
+                            ref.read(memberRepositoryProvider).voteForMember(
+                                widget.roomId, value[value.length - 1]);
+                            isSend = true;
+                            setState(() {});
+                          },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: ColorConstant.main,
+                      backgroundColor: ColorConstant.accent,
                     ),
-                  ],
-                ),
+                    child: const Text('決定'),
+                  ),
+                ],
               ),
             );
           },

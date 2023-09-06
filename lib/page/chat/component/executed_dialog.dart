@@ -26,41 +26,43 @@ class ExecutedDialog extends ConsumerWidget {
           return data[0];
         }
 
-        return AlertDialog(
-          backgroundColor: ColorConstant.black100,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          content: SizedBox(
-            width: 240,
-            height: 200,
-            child: Column(
-              children: [
-                const Spacer(),
-                Text(
-                  'プレイヤー${decidedExecuteMem().assignedId}',
-                  style: TextStyleConstant.normal18,
-                ),
-                const Text(
-                  'を処刑しました',
-                  style: TextStyleConstant.normal14,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorConstant.main,
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            backgroundColor: ColorConstant.back,
+            content: SizedBox(
+              width: 240,
+              height: 200,
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Text(
+                    'プレイヤー${decidedExecuteMem().assignedId}',
+                    style: TextStyleConstant.normal18,
                   ),
-                  onPressed: () {
-                    context.push('/night', extra: roomId);
-                  },
-                  child: Text(
-                    'OK',
-                    style: TextStyleConstant.bold12
-                        .copyWith(color: ColorConstant.black100),
+                  const Text(
+                    'を処刑しました',
+                    style: TextStyleConstant.normal14,
                   ),
-                ),
-                const Spacer(),
-              ],
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: ColorConstant.main,
+                      backgroundColor: ColorConstant.accent,
+                    ),
+                    onPressed: () {
+                      context.pop();
+                      context.go('/night', extra: roomId);
+                    },
+                    child: Text(
+                      'OK',
+                      style: TextStyleConstant.bold12
+                          .copyWith(color: ColorConstant.black100),
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
         );
