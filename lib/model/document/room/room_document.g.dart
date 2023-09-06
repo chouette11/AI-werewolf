@@ -14,6 +14,8 @@ _$_RoomDocument _$$_RoomDocumentFromJson(Map<String, dynamic> json) =>
       roles: (json['roles'] as List<dynamic>).map((e) => e as String).toList(),
       votedSum: json['votedSum'] as int,
       killedId: json['killedId'] as int,
+      startTime:
+          const TimestampConverter().fromJson(json['startTime'] as Timestamp),
     );
 
 Map<String, dynamic> _$$_RoomDocumentToJson(_$_RoomDocument instance) =>
@@ -24,4 +26,5 @@ Map<String, dynamic> _$$_RoomDocumentToJson(_$_RoomDocument instance) =>
       'roles': instance.roles,
       'votedSum': instance.votedSum,
       'killedId': instance.killedId,
+      'startTime': const TimestampConverter().toJson(instance.startTime),
     };

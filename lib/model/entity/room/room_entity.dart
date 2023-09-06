@@ -30,7 +30,7 @@ class RoomEntity with _$RoomEntity {
       roles: roomDoc.roles,
       votedSum: roomDoc.votedSum,
       killedId: roomDoc.killedId,
-      startTime: roomDoc.startTime
+      startTime: roomDoc.startTime,
     );
   }
 
