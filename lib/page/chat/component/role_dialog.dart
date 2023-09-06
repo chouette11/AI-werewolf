@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordwolf/repository/room_repository.dart';
+import 'package:wordwolf/util/constant/const.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
@@ -21,9 +23,14 @@ class RoleDialog extends ConsumerStatefulWidget {
 class _RoleDialogState extends ConsumerState<RoleDialog> {
   bool isSend = false;
   int count = 0;
+  DateTime startTime = DateTime.now();
 
   @override
   void initState() {
+    Future(() async {
+      final room = await ref.read(roomRepositoryProvider).getRoom(widget.roomId);
+      startTime = room.startTime;
+    });
     super.initState();
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (mounted) {
@@ -35,8 +42,8 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
   @override
   Widget build(BuildContext context) {
     // 5秒経過したときこのダイアログを消す
-    if (count >= 5) {
-      ref.read(limitTimeProvider.notifier).startTimer();
+    if (count >= ROLE_DIALOG_TIME) {
+      ref.read(limitTimeProvider.notifier).startTimer(startTime);
       context.pop();
     }
     final members = ref.watch(membersStreamProvider(widget.roomId));

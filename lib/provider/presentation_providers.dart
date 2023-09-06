@@ -7,6 +7,7 @@ import 'package:wordwolf/model/entity/member/member_entity.dart';
 import 'package:wordwolf/repository/member_repository.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
+import 'package:wordwolf/util/constant/const.dart';
 
 part 'presentation_providers.g.dart';
 
@@ -74,6 +75,12 @@ final topicProvider =
 
 final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 
+final limitTimerProvider = StateProvider.family((ref, DateTime startTime) {
+  final now = new DateTime.now();
+  print(now);
+  return now.difference(startTime);
+});
+
 @riverpod
 class LimitTime extends _$LimitTime {
   @override
@@ -93,9 +100,12 @@ class LimitTime extends _$LimitTime {
     }
   }
 
-  void startTimer() {
+  void startTimer(DateTime startTime) {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      state = state - 1;
+      const flavor = String.fromEnvironment('flavor');
+      final time = DateTime.now().difference(startTime);
+      state =
+          (flavor == 'tes' ? 10 : 200) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
       if (state < 1) {
         timer.cancel();
       }

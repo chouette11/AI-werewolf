@@ -32,6 +32,9 @@ mixin _$RoomDocument {
   int get votedSum => throw _privateConstructorUsedError;
   @JsonKey(name: 'killedId')
   int get killedId => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  @JsonKey(name: 'startTime')
+  DateTime get startTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +54,8 @@ abstract class $RoomDocumentCopyWith<$Res> {
       @JsonKey(name: 'maxNum') int maxNum,
       @JsonKey(name: 'roles') List<String> roles,
       @JsonKey(name: 'votedSum') int votedSum,
-      @JsonKey(name: 'killedId') int killedId});
+      @JsonKey(name: 'killedId') int killedId,
+      @TimestampConverter() @JsonKey(name: 'startTime') DateTime startTime});
 }
 
 /// @nodoc
@@ -73,6 +77,7 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
     Object? roles = null,
     Object? votedSum = null,
     Object? killedId = null,
+    Object? startTime = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -99,6 +104,10 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
           ? _value.killedId
           : killedId // ignore: cast_nullable_to_non_nullable
               as int,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -117,7 +126,8 @@ abstract class _$$_RoomDocumentCopyWith<$Res>
       @JsonKey(name: 'maxNum') int maxNum,
       @JsonKey(name: 'roles') List<String> roles,
       @JsonKey(name: 'votedSum') int votedSum,
-      @JsonKey(name: 'killedId') int killedId});
+      @JsonKey(name: 'killedId') int killedId,
+      @TimestampConverter() @JsonKey(name: 'startTime') DateTime startTime});
 }
 
 /// @nodoc
@@ -137,6 +147,7 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
     Object? roles = null,
     Object? votedSum = null,
     Object? killedId = null,
+    Object? startTime = null,
   }) {
     return _then(_$_RoomDocument(
       id: null == id
@@ -163,6 +174,10 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
           ? _value.killedId
           : killedId // ignore: cast_nullable_to_non_nullable
               as int,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -171,12 +186,21 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RoomDocument extends _RoomDocument {
   const _$_RoomDocument(
-      {@JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'topic') required this.topic,
-      @JsonKey(name: 'maxNum') required this.maxNum,
-      @JsonKey(name: 'roles') required final List<String> roles,
-      @JsonKey(name: 'votedSum') required this.votedSum,
-      @JsonKey(name: 'killedId') required this.killedId})
+      {@JsonKey(name: 'id')
+          required this.id,
+      @JsonKey(name: 'topic')
+          required this.topic,
+      @JsonKey(name: 'maxNum')
+          required this.maxNum,
+      @JsonKey(name: 'roles')
+          required final List<String> roles,
+      @JsonKey(name: 'votedSum')
+          required this.votedSum,
+      @JsonKey(name: 'killedId')
+          required this.killedId,
+      @TimestampConverter()
+      @JsonKey(name: 'startTime')
+          required this.startTime})
       : _roles = roles,
         super._();
 
@@ -207,10 +231,14 @@ class _$_RoomDocument extends _RoomDocument {
   @override
   @JsonKey(name: 'killedId')
   final int killedId;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'startTime')
+  final DateTime startTime;
 
   @override
   String toString() {
-    return 'RoomDocument(id: $id, topic: $topic, maxNum: $maxNum, roles: $roles, votedSum: $votedSum, killedId: $killedId)';
+    return 'RoomDocument(id: $id, topic: $topic, maxNum: $maxNum, roles: $roles, votedSum: $votedSum, killedId: $killedId, startTime: $startTime)';
   }
 
   @override
@@ -225,13 +253,22 @@ class _$_RoomDocument extends _RoomDocument {
             (identical(other.votedSum, votedSum) ||
                 other.votedSum == votedSum) &&
             (identical(other.killedId, killedId) ||
-                other.killedId == killedId));
+                other.killedId == killedId) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, topic, maxNum,
-      const DeepCollectionEquality().hash(_roles), votedSum, killedId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      topic,
+      maxNum,
+      const DeepCollectionEquality().hash(_roles),
+      votedSum,
+      killedId,
+      startTime);
 
   @JsonKey(ignore: true)
   @override
@@ -249,13 +286,21 @@ class _$_RoomDocument extends _RoomDocument {
 
 abstract class _RoomDocument extends RoomDocument {
   const factory _RoomDocument(
-          {@JsonKey(name: 'id') required final String id,
-          @JsonKey(name: 'topic') required final String topic,
-          @JsonKey(name: 'maxNum') required final int maxNum,
-          @JsonKey(name: 'roles') required final List<String> roles,
-          @JsonKey(name: 'votedSum') required final int votedSum,
-          @JsonKey(name: 'killedId') required final int killedId}) =
-      _$_RoomDocument;
+      {@JsonKey(name: 'id')
+          required final String id,
+      @JsonKey(name: 'topic')
+          required final String topic,
+      @JsonKey(name: 'maxNum')
+          required final int maxNum,
+      @JsonKey(name: 'roles')
+          required final List<String> roles,
+      @JsonKey(name: 'votedSum')
+          required final int votedSum,
+      @JsonKey(name: 'killedId')
+          required final int killedId,
+      @TimestampConverter()
+      @JsonKey(name: 'startTime')
+          required final DateTime startTime}) = _$_RoomDocument;
   const _RoomDocument._() : super._();
 
   factory _RoomDocument.fromJson(Map<String, dynamic> json) =
@@ -279,6 +324,10 @@ abstract class _RoomDocument extends RoomDocument {
   @override
   @JsonKey(name: 'killedId')
   int get killedId;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'startTime')
+  DateTime get startTime;
   @override
   @JsonKey(ignore: true)
   _$$_RoomDocumentCopyWith<_$_RoomDocument> get copyWith =>

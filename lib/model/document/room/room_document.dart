@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wordwolf/model/document/timestamp_converter.dart';
 
 part 'room_document.freezed.dart';
 
@@ -15,6 +17,8 @@ class RoomDocument with _$RoomDocument {
     @JsonKey(name: 'roles') required List<String> roles,
     @JsonKey(name: 'votedSum') required int votedSum,
     @JsonKey(name: 'killedId') required int killedId,
+    @TimestampConverter() @JsonKey(name: 'startTime') required DateTime startTime,
+
   }) = _RoomDocument;
 
   factory RoomDocument.fromJson(Map<String, dynamic> json) =>

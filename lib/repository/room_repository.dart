@@ -48,6 +48,7 @@ class RoomRepository {
       roles: roles,
       votedSum: 0,
       killedId: 404,
+      startTime: DateTime.now(),
     );
     final roomDoc = entity.toRoomDocument();
     await firestore.createRoom(roomDoc);

@@ -14,6 +14,7 @@ _$_RoomEntity _$$_RoomEntityFromJson(Map<String, dynamic> json) =>
       roles: (json['roles'] as List<dynamic>).map((e) => e as String).toList(),
       votedSum: json['votedSum'] as int,
       killedId: json['killedId'] as int,
+      startTime: DateTime.parse(json['startTime'] as String),
     );
 
 Map<String, dynamic> _$$_RoomEntityToJson(_$_RoomEntity instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_RoomEntityToJson(_$_RoomEntity instance) =>
       'roles': instance.roles,
       'votedSum': instance.votedSum,
       'killedId': instance.killedId,
+      'startTime': instance.startTime.toIso8601String(),
     };
