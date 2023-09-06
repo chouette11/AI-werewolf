@@ -116,6 +116,41 @@ class FirestoreDataSource {
     }
   }
 
+  /// ルームの更新
+  Future<void> updateRoom({
+    required String id,
+    String? topic,
+    int? maxNum,
+    List<String>? roles,
+    int? votedSum,
+    int? killedId,
+    DateTime? startTime,
+  }
+  ) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final docRef = db.collection('rooms').doc(id);
+      await db.runTransaction((Transaction transaction) async {
+        // トランザクション内でドキュメントを読み込む
+        final snapshot = await transaction.get(docRef);
+        final room = RoomDocument.fromJson(snapshot.data()!);
+
+        // ドキュメントを更新する
+        transaction.update(docRef, room.copyWith.call(
+          topic: topic ?? room.topic,
+          maxNum: maxNum ?? room.maxNum,
+          roles: roles ?? room.roles,
+          votedSum: votedSum ?? room.votedSum,
+          killedId: killedId ?? room.killedId,
+          startTime: startTime ?? room.startTime,
+        ).toJson());
+      });
+    } catch (e) {
+      print('update_room');
+      throw e;
+    }
+  }
+
   /// ルームを削除
   Future<void> deleteRoom(String roomId) async {
     try {
