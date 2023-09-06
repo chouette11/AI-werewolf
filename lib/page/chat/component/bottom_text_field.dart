@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wordwolf/page/chat/component/answer_dialog.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
@@ -10,9 +11,11 @@ class BottomTextField extends ConsumerWidget {
   const BottomTextField({
     super.key,
     required this.roomId,
+    required this.counter,
   });
 
   final String roomId;
+  final int counter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,8 +23,13 @@ class BottomTextField extends ConsumerWidget {
 
     return member.when(
       data: (data) {
+        // 残り時間がない場合
+        if (counter <= 0 ) {
+          return _EndBottomSheet(roomId: roomId, role: data.role);
+        }
+        // 死んでいる場合
         if (!data.isLive) {
-          return DiedBottomSheet(role: data.role);
+          return _DiedBottomSheet(role: data.role);
         }
         return Container(
           height: 64,
@@ -104,8 +112,8 @@ class BottomTextField extends ConsumerWidget {
   }
 }
 
-class DiedBottomSheet extends StatelessWidget {
-  const DiedBottomSheet({Key? key, required this.role}) : super(key: key);
+class _DiedBottomSheet extends StatelessWidget {
+  const _DiedBottomSheet({Key? key, required this.role}) : super(key: key);
   final String role;
 
   @override
@@ -121,6 +129,59 @@ class DiedBottomSheet extends StatelessWidget {
             Text(
               'あなたは死にました（$role）',
               style: TextStyleConstant.bold12,
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EndBottomSheet extends StatelessWidget {
+  const _EndBottomSheet({super.key, required this.roomId, required this.role});
+
+  final String roomId;
+  final String role;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      color: ColorConstant.accent,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            const Spacer(),
+            Text(
+              'あなたは $role',
+              style: TextStyleConstant.bold12,
+            ),
+            const Spacer(),
+            SizedBox(
+              width: 80,
+              height: 32,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AnswerDialog(roomId: roomId);
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: ColorConstant.accent,
+                  backgroundColor: ColorConstant.main,
+                ),
+                child: Text(
+                  '解答',
+                  style: TextStyleConstant.bold12.copyWith(
+                    color: ColorConstant.accent,
+                  ),
+                ),
+              ),
             ),
             const Spacer(),
           ],

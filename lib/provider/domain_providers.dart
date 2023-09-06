@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:wordwolf/page/chat/chat_page.dart';
 import 'package:wordwolf/page/night/night_page.dart';
 import 'package:wordwolf/page/root/root_page.dart';
-import 'package:wordwolf/page/start/make_room_page.dart';
+import 'package:wordwolf/page/wait/make_room_page.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
@@ -35,7 +35,7 @@ final routerProvider = Provider<GoRouter>(
             builder: (context, state) {
               final roomId = state.pathParameters['roomId'];
               final isJoin = state.pathParameters['isJoin'];
-              return MakeRoomPage(
+              return WaitPage(
                 roomId: roomId!,
                 isJoin: isJoin! == '1' ? true : false,
               );

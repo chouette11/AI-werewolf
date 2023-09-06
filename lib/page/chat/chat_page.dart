@@ -7,7 +7,6 @@ import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/model/entity/room/room_entity.dart';
 import 'package:wordwolf/page/chat/component/answer_dialog.dart';
-import 'package:wordwolf/page/chat/component/bottom_field.dart';
 import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
 import 'package:wordwolf/page/chat/component/chat_appbar.dart';
 import 'package:wordwolf/page/chat/component/executed_dialog.dart';
@@ -51,6 +50,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               mem.userId,
             );
       }
+      // ignore: use_build_context_synchronously
       return showDialog<void>(
         barrierDismissible: false,
         context: context,
@@ -80,7 +80,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final room = ref.watch(roomStreamProvider(widget.roomId));
     final isMake = ref.watch(isMakeRoomProvider);
 
-    if (counter < 0 && !isDialog) {
+    if (counter <= 0 && !isDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
@@ -92,6 +92,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       });
     }
 
+    // 投票数が生きているメンバー数と一致するとき、処刑
     room.whenData((value) => _showExecutedDialog(value, isMake));
 
     ScrollController _controller = ScrollController();
@@ -189,15 +190,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     ),
                   ),
                 ),
-                counter <= 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: BottomField(roomId: widget.roomId),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: BottomTextField(roomId: widget.roomId),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: BottomTextField(
+                    roomId: widget.roomId,
+                    counter: counter,
+                  ),
+                ),
               ],
             );
           },

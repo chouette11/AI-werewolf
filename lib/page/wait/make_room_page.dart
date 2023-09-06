@@ -7,14 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wordwolf/page/wait/component/polygon.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/page/start/component/polygon.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
-class MakeRoomPage extends ConsumerStatefulWidget {
-  const MakeRoomPage({
+class WaitPage extends ConsumerStatefulWidget {
+  const WaitPage({
     Key? key,
     required this.roomId,
     required this.isJoin,
@@ -23,10 +23,10 @@ class MakeRoomPage extends ConsumerStatefulWidget {
   final bool isJoin;
 
   @override
-  ConsumerState<MakeRoomPage> createState() => _MakeRoomPageState();
+  ConsumerState<WaitPage> createState() => _MakeRoomPageState();
 }
 
-class _MakeRoomPageState extends ConsumerState<MakeRoomPage> {
+class _MakeRoomPageState extends ConsumerState<WaitPage> {
   int maxNum = 404;
   int count = 100;
 
