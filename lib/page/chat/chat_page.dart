@@ -80,7 +80,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final room = ref.watch(roomStreamProvider(widget.roomId));
     final isMake = ref.watch(isMakeRoomProvider);
 
-    if (counter == 0 && !isDialog) {
+    if (counter < 0 && !isDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
