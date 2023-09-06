@@ -16,6 +16,7 @@ class RoomEntity with _$RoomEntity {
     required List<String> roles,
     required int votedSum,
     required int killedId,
+    required DateTime startTime,
   }) = _RoomEntity;
 
   factory RoomEntity.fromJson(Map<String, dynamic> json) =>
@@ -29,6 +30,7 @@ class RoomEntity with _$RoomEntity {
       roles: roomDoc.roles,
       votedSum: roomDoc.votedSum,
       killedId: roomDoc.killedId,
+      startTime: roomDoc.startTime
     );
   }
 
@@ -40,6 +42,7 @@ class RoomEntity with _$RoomEntity {
       roles: roles,
       votedSum: votedSum,
       killedId: killedId,
+      startTime: startTime,
     );
   }
 }
