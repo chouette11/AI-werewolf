@@ -7,8 +7,8 @@ import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/message_repository.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
-class BottomTextField extends ConsumerWidget {
-  const BottomTextField({
+class CustomBottomSheet extends ConsumerWidget {
+  const CustomBottomSheet({
     super.key,
     required this.roomId,
     required this.counter,
@@ -31,86 +31,94 @@ class BottomTextField extends ConsumerWidget {
         if (!data.isLive) {
           return _DiedBottomSheet(role: data.role);
         }
-        return Container(
-          height: 64,
-          decoration: const BoxDecoration(
-            color: ColorConstant.back,
-            boxShadow: [
-              BoxShadow(
-                color: ColorConstant.black10,
-                offset: Offset(0, -0.25),
-                blurRadius: 0.5,
-              ),
-            ],
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: TextFormField(
-                      controller: ref.read(messageTextFieldController),
-                      textAlign: TextAlign.left,
-                      autofocus: true,
-                      cursorColor: ColorConstant.black30,
-                      decoration: const InputDecoration(
-                        fillColor: ColorConstant.black90,
-                        filled: true,
-                        hintText: 'メッセージを入力',
-                        hintStyle: TextStyle(
-                            fontSize: 16, color: ColorConstant.black50),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: ColorConstant.black30,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        final content =
-                            ref.read(messageTextFieldController).text;
-
-                        // 空文字の場合
-                        if (content.isEmpty) {
-                          return;
-                        }
-
-                        final room = await ref
-                            .read(roomRepositoryProvider)
-                            .getRoom(roomId);
-                        ref
-                            .read(messageRepositoryProvider)
-                            .addMessage(content, roomId, room.topic);
-                        ref.read(messageTextFieldController).clear();
-                      },
-                      child: const Icon(
-                        Icons.send,
-                        color: ColorConstant.accent,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        return _BottomTextField(roomId: roomId);
       },
       error: (_, __) => Text(_.toString()),
       loading: () => const CircularProgressIndicator(),
     );
   }
 }
+
+class _BottomTextField extends ConsumerWidget {
+  const _BottomTextField({Key? key, required this.roomId}) : super(key: key);
+  final String roomId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      height: 64,
+      decoration: const BoxDecoration(
+        color: ColorConstant.back,
+        boxShadow: [
+          BoxShadow(
+            color: ColorConstant.black10,
+            offset: Offset(0, -0.25),
+            blurRadius: 0.5,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Flexible(
+              child: TextFormField(
+                controller: ref.read(messageTextFieldController),
+                textAlign: TextAlign.left,
+                autofocus: true,
+                cursorColor: ColorConstant.black30,
+                decoration: const InputDecoration(
+                  fillColor: ColorConstant.black90,
+                  filled: true,
+                  hintText: 'メッセージを入力',
+                  hintStyle: TextStyle(
+                      fontSize: 16, color: ColorConstant.black50),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: ColorConstant.black30,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () async {
+                  final content =
+                      ref.read(messageTextFieldController).text;
+
+                  // 空文字の場合
+                  if (content.isEmpty) {
+                    return;
+                  }
+
+                  final room = await ref
+                      .read(roomRepositoryProvider)
+                      .getRoom(roomId);
+                  ref
+                      .read(messageRepositoryProvider)
+                      .addMessage(content, roomId, room.topic);
+                  ref.read(messageTextFieldController).clear();
+                },
+                child: const Icon(
+                  Icons.send,
+                  color: ColorConstant.accent,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class _DiedBottomSheet extends StatelessWidget {
   const _DiedBottomSheet({Key? key, required this.role}) : super(key: key);
