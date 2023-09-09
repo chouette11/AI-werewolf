@@ -50,21 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB-VrYqmBtRO-1Yo1C7EDZBlFIkbszcMhk',
-    appId: '1:1019371604114:android:91694d7b0ed35621123e4b',
-    messagingSenderId: '1019371604114',
-    projectId: 'pocket-schedule-1dab1',
-    storageBucket: 'pocket-schedule-1dab1.appspot.com',
+    apiKey: 'AIzaSyCYkNRJMsRvex4SdqPCTmfEC9AHUIDSrP0',
+    appId: '1:418359697356:android:dd4e08a7bd92522f558769',
+    messagingSenderId: '418359697356',
+    projectId: 'ai-werewofl-prod',
+    storageBucket: 'ai-werewofl-prod.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBa0UluwBKb-imf4fFRkwD99zgDgH5qObQ',
-    appId: '1:1019371604114:ios:ad7b17151fbc06b6123e4b',
-    messagingSenderId: '1019371604114',
-    projectId: 'pocket-schedule-1dab1',
-    storageBucket: 'pocket-schedule-1dab1.appspot.com',
-    androidClientId: '1019371604114-blafkb5rvl440k18uo1i5b8990qkvq89.apps.googleusercontent.com',
-    iosClientId: '1019371604114-gut35qose36srsec0b0ct1n5o8tfknkr.apps.googleusercontent.com',
-    iosBundleId: 'com.pocket.schedule',
+    apiKey: 'AIzaSyAM-q5YHMqeEEZca94ARBW_L51kKIGOl2g',
+    appId: '1:418359697356:ios:2cef9095804e987d558769',
+    messagingSenderId: '418359697356',
+    projectId: 'ai-werewofl-prod',
+    storageBucket: 'ai-werewofl-prod.appspot.com',
+    iosBundleId: 'com.AI.werewolf',
   );
 }

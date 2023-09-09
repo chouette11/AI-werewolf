@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "632237526803",
+    "project_id": "wordwolf-1f53d",
+    "storage_bucket": "wordwolf-1f53d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632237526803:android:cd66ad08598295e13754e6",
+        "android_client_info": {
+          "package_name": "com.AI.werewolf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4C2BMh84GgFWlHDQFDmBQX24SpiEDJzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632237526803-l4t2gq4hbj7ja3ofls74kkuohg6u1f9u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.AI.werewolf"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632237526803:android:afc644bb60d69b083754e6",
+        "android_client_info": {
+          "package_name": "com.AI.werewolf.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4C2BMh84GgFWlHDQFDmBQX24SpiEDJzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632237526803-l4t2gq4hbj7ja3ofls74kkuohg6u1f9u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.AI.werewolf"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632237526803:android:a196338799ea76ca3754e6",
+        "android_client_info": {
+          "package_name": "com.example.wordwolf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4C2BMh84GgFWlHDQFDmBQX24SpiEDJzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632237526803-l4t2gq4hbj7ja3ofls74kkuohg6u1f9u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.AI.werewolf"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
