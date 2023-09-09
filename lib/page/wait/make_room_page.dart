@@ -100,8 +100,27 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 56),
                 const Text('メンバー待機中...', style: TextStyleConstant.normal18),
+                const SizedBox(height: 24),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: '${data.length - 1}',
+                          style: TextStyleConstant.bold32),
+                      const WidgetSpan(child: SizedBox(width: 8)),
+                      const TextSpan(
+                          text: '/', style: TextStyleConstant.normal28),
+                      const WidgetSpan(child: SizedBox(width: 8)),
+                      const TextSpan(
+                          text: '4', style: TextStyleConstant.normal18),
+                      const WidgetSpan(child: SizedBox(width: 4)),
+                      const TextSpan(
+                          text: '人', style: TextStyleConstant.normal14),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
