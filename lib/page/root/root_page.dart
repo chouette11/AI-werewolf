@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wordwolf/provider/audio_provider.dart';
 import 'package:wordwolf/provider/presentation_providers.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 import 'package:wordwolf/util/constant/text_style_constant.dart';
 import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
+import 'package:wordwolf/util/play.dart';
 
 class RootPage extends ConsumerWidget {
   const RootPage({super.key});
@@ -60,16 +62,20 @@ class RootPage extends ConsumerWidget {
                 height: 48,
                 width: 160,
                 child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) {
-                        return const JoinDialog();
-                      },
-                    );
+                  onPressed: () async {
+                    final path = ref.read(buttonSoundProvider);
+                    await play(ref, path);
+                    Future.delayed(const Duration(milliseconds: 500), () {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return const JoinDialog();
+                        },
+                      );
+                    });
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: ColorConstant.accent,
+                    foregroundColor: ColorConstant.main,
                     backgroundColor: ColorConstant.accent,
                   ),
                   child: const Text(
