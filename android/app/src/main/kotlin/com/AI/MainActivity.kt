@@ -1,4 +1,4 @@
-package com.knockAI
+package com.AI.werewolf
 
 import io.flutter.embedding.android.FlutterActivity
 

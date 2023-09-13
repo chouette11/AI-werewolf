@@ -50,15 +50,15 @@ change-prod:
 pod-install:
 	sudo arch -x86_64 gem install cocoapods
 	sudo arch -x86_64 gem install ffi
-	cd ios;arch -x86_64 pod install --repo-update
+	cd ios;arch -x86_64 pod install
 
 .PHONY: dev
-prod:
-	flutterfire configure --out=lib/environment/src/firebase_options_dev.dart --platforms=android,ios --ios-bundle-id=com.flutter.template.dev --android-package-name=com.flutter.template.dev
+dev: 
+	flutterfire configure --project=wordwolf-1f53d --out=lib/util/environment/src/firebase_options_dev.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf.dev --android-package-name=com.AI.werewolf.dev
 
 .PHONY: prod
 prod:
-	flutterfire configure --out=lib/environment/src/firebase_options_prod.dart --platforms=android,ios --ios-bundle-id=com.flutter.template --android-package-name=com.flutter.template
+	flutterfire configure --project=ai-werewofl-prod --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
 
 .PHONY: web
 web:
@@ -69,7 +69,7 @@ web:
 
 .PHONY: release-android
 release-android:
-	fvm flutter build appbundle --no-tree-shake-icons
+	fvm flutter build appbundle --release --no-tree-shake-icons
 
 .PHONY: release-ios
 release-ios: ## clean project
@@ -77,4 +77,4 @@ release-ios: ## clean project
 	cd ios; rm -rf Podfile.lock Pods
 	fvm flutter pub get
 	make pod-install
-	fvm flutter build ios --no-tree-shake-icons
+	fvm flutter build ios --no-tree-shake-icons --dart-define-from-file=dart_defines/prod.json
