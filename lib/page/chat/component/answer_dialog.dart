@@ -67,7 +67,7 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                               children: [
                                                 Positioned(
                                                   top: 3.5,
-                                                  left: 3,
+                                                  left: 1,
                                                   child: Image.asset(
                                                       'assets/images/shadow.png'),
                                                 ),
