@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCYkNRJMsRvex4SdqPCTmfEC9AHUIDSrP0',
-    appId: '1:418359697356:android:dd4e08a7bd92522f558769',
-    messagingSenderId: '418359697356',
-    projectId: 'ai-werewofl-prod',
-    storageBucket: 'ai-werewofl-prod.appspot.com',
+    apiKey: 'AIzaSyC9IgqqDL62XxpRvMChr7TVR_L5hJ6tNSc',
+    appId: '1:673045133489:android:3c927fa10efd3ee2dd4a90',
+    messagingSenderId: '673045133489',
+    projectId: 'ai-werewolf',
+    storageBucket: 'ai-werewolf.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAM-q5YHMqeEEZca94ARBW_L51kKIGOl2g',
-    appId: '1:418359697356:ios:2cef9095804e987d558769',
-    messagingSenderId: '418359697356',
-    projectId: 'ai-werewofl-prod',
-    storageBucket: 'ai-werewofl-prod.appspot.com',
+    apiKey: 'AIzaSyDruAb-OGbnPdheqp8QdeZjKfGegeymqfQ',
+    appId: '1:673045133489:ios:80cd75fbb2ce25f3dd4a90',
+    messagingSenderId: '673045133489',
+    projectId: 'ai-werewolf',
+    storageBucket: 'ai-werewolf.appspot.com',
     iosBundleId: 'com.AI.werewolf',
   );
 }
