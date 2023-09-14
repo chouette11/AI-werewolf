@@ -63,7 +63,7 @@ final roomStreamProvider = StreamProvider.family(
       ref.watch(roomRepositoryProvider).getRoomStream(roomId),
 );
 
-final answerRadioValueProvider = StateProvider<String>((ref) => '');
+final answerAssignedIdProvider = StateProvider<int>((ref) => 404);
 
 final maxMemberProvider = StateProvider<int>((ref) => 3);
 
