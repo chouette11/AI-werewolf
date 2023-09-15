@@ -60,12 +60,23 @@ dev:
 prod:
 	flutterfire configure --project=ai-werewolf --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios,web --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
 
-.PHONY: web
-web:
+.PHONY: web-dev
+web-dev:
+	fvm flutter clean
+	fvm flutter build web --no-tree-shake-icons --dart-define-from-file=dart_defines/dev.json
+	cd build/web;echo "google.com, pub-3443545166967285, DIRECT, f08c47fec0942fa0" > ads.txt
+	sed -i '' '3d' firebase.json
+	ex -s -c '2a|"site": "ai-werewolf-dev",' -c 'x' firebase.json
+	firebase deploy --only hosting:ai-werewolf-dev
+
+.PHONY: web-prod
+web-prod:
 	fvm flutter clean
 	fvm flutter build web --no-tree-shake-icons --dart-define-from-file=dart_defines/prod.json
 	cd build/web;echo "google.com, pub-3443545166967285, DIRECT, f08c47fec0942fa0" > ads.txt
-	firebase deploy
+	sed -i '' '3d' firebase.json
+	ex -s -c '2a|"site": "ai-werewolf",' -c 'x' firebase.json
+	cd web-prod;firebase deploy
 
 .PHONY: release-android
 release-android:
