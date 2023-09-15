@@ -54,11 +54,11 @@ pod-install:
 
 .PHONY: dev
 dev: 
-	flutterfire configure --project=wordwolf-1f53d --out=lib/util/environment/src/firebase_options_dev.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf.dev --android-package-name=com.AI.werewolf.dev
+	flutterfire configure --project=wordwolf-1f53d --out=lib/util/environment/src/firebase_options_dev.dart --platforms=android,ios,web --ios-bundle-id=com.AI.werewolf.dev --android-package-name=com.AI.werewolf.dev
 
 .PHONY: prod
 prod:
-	flutterfire configure --project=ai-werewolf --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
+	flutterfire configure --project=ai-werewolf --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios,web --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
 
 .PHONY: web
 web:
