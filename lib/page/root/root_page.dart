@@ -12,11 +12,26 @@ import 'package:wordwolf/util/constant/color_constant.dart';
 import 'package:wordwolf/page/root/component/join_dialog.dart';
 import 'package:wordwolf/util/play.dart';
 
-class RootPage extends ConsumerWidget {
-  const RootPage({super.key});
+class RootPage extends ConsumerStatefulWidget {
+  const RootPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RootPage> createState() => _RootPageState();
+}
+
+class _RootPageState extends ConsumerState<RootPage> {
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 1), () {
+      final path = ref.read(titleSoundProvider);
+      play(ref, path);
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -30,8 +30,12 @@ class _MyAppState extends ConsumerState<MyApp> {
       final cache = ref.read(audioCacheProvider);
       final path = await cache.load("audios/button7.mp3");
       final path2 = await cache.load("audios/button8.mp3");
+      final path3 = await cache.load('audios/title.mp3');
+      final path4 = await cache.load('audios/wait.mp3');
       ref.read(buttonSoundProvider.notifier).update((state) => path.path);
       ref.read(notSoundProvider.notifier).update((state) => path2.path);
+      ref.read(titleSoundProvider.notifier).update((state) => path3.path);
+      ref.read(waitSoundProvider.notifier).update((state) => path4.path);
     });
     super.initState();
   }
