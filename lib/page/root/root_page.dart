@@ -46,7 +46,7 @@ class RootPage extends ConsumerWidget {
                       context.go('/chat/$roomId/1');
                       return;
                     }
-                    context.go("/make/$roomId/1");
+                    context.go("/wait/$roomId/1");
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: ColorConstant.main,

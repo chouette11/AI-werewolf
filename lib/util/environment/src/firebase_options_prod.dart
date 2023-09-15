@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,20 +46,30 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCa6Lxfo7RRSve7PRrD86WWC3XYEoZ70Qc',
+    appId: '1:673045133489:web:ba6772abc0bb9437dd4a90',
+    messagingSenderId: '673045133489',
+    projectId: 'ai-werewolf',
+    authDomain: 'ai-werewolf.firebaseapp.com',
+    storageBucket: 'ai-werewolf.appspot.com',
+    measurementId: 'G-9ZY9MK5LCP',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCYkNRJMsRvex4SdqPCTmfEC9AHUIDSrP0',
-    appId: '1:418359697356:android:dd4e08a7bd92522f558769',
-    messagingSenderId: '418359697356',
-    projectId: 'ai-werewofl-prod',
-    storageBucket: 'ai-werewofl-prod.appspot.com',
+    apiKey: 'AIzaSyC9IgqqDL62XxpRvMChr7TVR_L5hJ6tNSc',
+    appId: '1:673045133489:android:3c927fa10efd3ee2dd4a90',
+    messagingSenderId: '673045133489',
+    projectId: 'ai-werewolf',
+    storageBucket: 'ai-werewolf.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAM-q5YHMqeEEZca94ARBW_L51kKIGOl2g',
-    appId: '1:418359697356:ios:2cef9095804e987d558769',
-    messagingSenderId: '418359697356',
-    projectId: 'ai-werewofl-prod',
-    storageBucket: 'ai-werewofl-prod.appspot.com',
+    apiKey: 'AIzaSyDruAb-OGbnPdheqp8QdeZjKfGegeymqfQ',
+    appId: '1:673045133489:ios:80cd75fbb2ce25f3dd4a90',
+    messagingSenderId: '673045133489',
+    projectId: 'ai-werewolf',
+    storageBucket: 'ai-werewolf.appspot.com',
     iosBundleId: 'com.AI.werewolf',
   );
 }

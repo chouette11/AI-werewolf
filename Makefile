@@ -54,16 +54,16 @@ pod-install:
 
 .PHONY: dev
 dev: 
-	flutterfire configure --project=wordwolf-1f53d --out=lib/util/environment/src/firebase_options_dev.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf.dev --android-package-name=com.AI.werewolf.dev
+	flutterfire configure --project=wordwolf-1f53d --out=lib/util/environment/src/firebase_options_dev.dart --platforms=android,ios,web --ios-bundle-id=com.AI.werewolf.dev --android-package-name=com.AI.werewolf.dev
 
 .PHONY: prod
 prod:
-	flutterfire configure --project=ai-werewofl-prod --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
+	flutterfire configure --project=ai-werewolf --out=lib/util/environment/src/firebase_options_prod.dart --platforms=android,ios,web --ios-bundle-id=com.AI.werewolf --android-package-name=com.AI.werewolf
 
 .PHONY: web
 web:
 	fvm flutter clean
-	fvm flutter build web
+	fvm flutter build web --no-tree-shake-icons --dart-define-from-file=dart_defines/prod.json
 	cd build/web;echo "google.com, pub-3443545166967285, DIRECT, f08c47fec0942fa0" > ads.txt
 	firebase deploy
 

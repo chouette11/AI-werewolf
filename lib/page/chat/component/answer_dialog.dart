@@ -19,7 +19,7 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final value = ref.watch(answerRadioValueProvider);
+    final value = ref.watch(answerAssignedIdProvider);
     final members = ref.watch(membersStreamProvider(widget.roomId));
     final room = ref.watch(roomStreamProvider(widget.roomId));
 
@@ -32,58 +32,131 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
         return room.when(
           data: (room) {
             return AlertDialog(
-              backgroundColor: ColorConstant.back,
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
+              contentPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              content: Stack(
+                alignment: Alignment.topCenter,
                 children: [
-                  const Text(
-                    '誰を処刑しますか？',
-                    style: TextStyleConstant.normal20,
-                  ),
-                  ...livingMem
-                      .map(
-                        (member) => ListTile(
-                          title: Text(
-                            'プレイヤー${member.assignedId}',
-                            style: TextStyleConstant.normal16,
-                          ),
-                          leading: Radio<String>(
-                            activeColor: ColorConstant.main,
-                            value: 'プレイヤー${member.assignedId}',
-                            groupValue: value,
-                            onChanged: (String? value) {
-                              if (value != null) {
-                                ref
-                                    .read(answerRadioValueProvider.notifier)
-                                    .update((state) => value);
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  isSend
-                      ? Text(
-                          '全員が投票するまでおまちください',
-                          style: TextStyleConstant.normal12
-                              .copyWith(color: ColorConstant.accent),
-                        )
-                      : const SizedBox.shrink(),
-                  ElevatedButton(
-                    onPressed: value == '' || isSend
-                        ? null
-                        : () {
-                            ref.read(memberRepositoryProvider).voteForMember(
-                                widget.roomId, value[value.length - 1]);
-                            isSend = true;
-                            setState(() {});
-                          },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: ColorConstant.main,
-                      backgroundColor: ColorConstant.accent,
+                  Container(
+                    margin: const EdgeInsets.all(24),
+                    decoration: const BoxDecoration(
+                      color: ColorConstant.back,
                     ),
-                    child: const Text('決定'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(height: 16),
+                          ...livingMem
+                              .map((member) => Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          ref
+                                              .read(answerAssignedIdProvider
+                                                  .notifier)
+                                              .update(
+                                                  (state) => member.assignedId);
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.topCenter,
+                                          children: [
+                                            Stack(
+                                              children: [
+                                                Positioned(
+                                                  top: 3.5,
+                                                  left: 1,
+                                                  child: Image.asset(
+                                                      'assets/images/shadow.png'),
+                                                ),
+                                                value == member.assignedId
+                                                    ? Image.asset(
+                                                        'assets/images/selected.png')
+                                                    : Image.asset(
+                                                        'assets/images/not_selected.png'),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 32,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.redAccent,
+                                                    ),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 2, top: 2),
+                                                    width: 16,
+                                                    height: 16,
+                                                  ),
+                                                  Text(
+                                                    'プレイヤー${member.assignedId}',
+                                                    style: TextStyleConstant
+                                                        .normal16
+                                                        .copyWith(
+                                                      color:
+                                                          ColorConstant.black0,
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.transparent,
+                                                    ),
+                                                    width: 16,
+                                                    height: 16,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16)
+                                    ],
+                                  ))
+                              .toList(),
+                          const SizedBox(height: 4),
+                          isSend
+                              ? Text(
+                                  '全員が投票するまでおまちください',
+                                  style: TextStyleConstant.normal12
+                                      .copyWith(color: ColorConstant.accent),
+                                )
+                              : const SizedBox.shrink(),
+                          const SizedBox(height: 4),
+                          ElevatedButton(
+                            onPressed: value == 404 || isSend
+                                ? null
+                                : () {
+                                    ref
+                                        .read(memberRepositoryProvider)
+                                        .voteForMember(widget.roomId, value);
+                                    isSend = true;
+                                    setState(() {});
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: ColorConstant.main,
+                              backgroundColor: ColorConstant.accent,
+                            ),
+                            child: const Text('決定'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                  Image.asset('assets/images/vote.png')
                 ],
               ),
             );
