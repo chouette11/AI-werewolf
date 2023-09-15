@@ -6,7 +6,7 @@ import 'package:wordwolf/model/entity/member/member_entity.dart';
 import 'package:wordwolf/repository/room_repository.dart';
 
 final memberRepositoryProvider =
-Provider<MemberRepository>((ref) => MemberRepository(ref));
+    Provider<MemberRepository>((ref) => MemberRepository(ref));
 
 class MemberRepository {
   MemberRepository(this.ref);
@@ -26,7 +26,7 @@ class MemberRepository {
     final firestore = ref.read(firestoreProvider);
     return firestore.fetchMembersStream(roomId).map(
           (event) => event.map((e) => MemberEntity.fromDoc(e)).toList(),
-    );
+        );
   }
 
   /// ルームが満員か判定
@@ -57,12 +57,11 @@ class MemberRepository {
   }
 
   /// 処刑するメンバー投票
-  Future<void> voteForMember(String roomId, String assignedId) async {
+  Future<void> voteForMember(String roomId, int assignedId) async {
     final firestore = ref.read(firestoreProvider);
     final members = await firestore.fetchMembers(roomId);
-    final userId = members[
-    members.indexWhere((e) => e.assignedId.toString() == assignedId)]
-        .userId;
+    final userId =
+        members[members.indexWhere((e) => e.assignedId == assignedId)].userId;
     await firestore.voteForMember(roomId, userId);
     await firestore.addVoteToRoom(roomId);
   }
@@ -88,5 +87,4 @@ class MemberRepository {
     await firestore.killMember(roomId, livingMembers[random].userId);
     await firestore.updateKilledId(roomId, livingMembers[random].assignedId);
   }
-
 }

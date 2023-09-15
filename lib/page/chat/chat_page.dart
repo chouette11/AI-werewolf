@@ -119,7 +119,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   child: Container(
                     height: 40,
                     width: 40,
-                    color: ColorConstant.accent,
+                    decoration: const BoxDecoration(
+                      color: ColorConstant.accent,
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorConstant.black0,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
                     child: const Icon(Icons.arrow_downward_sharp, size: 28),
                   ),
                 ),
