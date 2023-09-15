@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,10 +24,8 @@ class _RootPageState extends ConsumerState<RootPage> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1), () {
-      final path = ref.read(titleSoundProvider);
-      play(ref, path);
-    });
+    final audio = ref.read(audioProvider);
+    audio.play(AssetSource('audios/title.mp3'));
     super.initState();
   }
 
@@ -52,12 +51,13 @@ class _RootPageState extends ConsumerState<RootPage> {
                   onPressed: () async {
                     final rng = Random();
                     final roomId =
-                        rng.nextInt(100000).toString().padLeft(5, '0');
+                    rng.nextInt(100000).toString().padLeft(5, '0');
                     final uuid = const Uuid().v4();
                     ref.read(uidProvider.notifier).update((state) => uuid);
                     await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
                     await ref.read(roomRepositoryProvider).joinRoom(roomId);
-                    ref.read(isMakeRoomProvider.notifier).update((state) => true);
+                    ref.read(isMakeRoomProvider.notifier).update((
+                        state) => true);
                     const flavor = String.fromEnvironment('flavor');
                     if (flavor == 'tes') {
                       context.go('/chat/$roomId/1');
