@@ -6,8 +6,11 @@ import 'package:wordwolf/page/chat/chat_page.dart';
 import 'package:wordwolf/page/night/night_page.dart';
 import 'package:wordwolf/page/root/root_page.dart';
 import 'package:wordwolf/page/wait/make_room_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
+
+final firebaseAuthProvider = Provider((_) => FirebaseAuth.instance);
 
 final uuidProvider = Provider((_) => const Uuid());
 
