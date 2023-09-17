@@ -54,6 +54,11 @@ class TextStyleConstant {
       fontWeight: FontWeight.bold,
       fontSize: 48,
       color: ColorConstant.text);
+  static const bold60 = TextStyle(
+      fontFamily: 'NotoSans',
+      fontWeight: FontWeight.bold,
+      fontSize: 60,
+      color: ColorConstant.text);
   static const normal12 = TextStyle(
       fontFamily: 'NotoSans',
       fontWeight: FontWeight.normal,
