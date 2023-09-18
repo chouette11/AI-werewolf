@@ -104,6 +104,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         child: Scaffold(
           appBar: ChatAppBar(roomId: widget.roomId),
           backgroundColor: ColorConstant.back,
+          bottomSheet: CustomBottomSheet(
+            roomId: widget.roomId,
+            counter: counter,
+          ),
           floatingActionButton: SizedBox(
             height: 100,
             child: Column(
@@ -136,78 +140,64 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           body: messages.when(
             data: (data) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: ScrollConfiguration(
-                      behavior: NoEffectScrollBehavior(),
-                      child: ListView.builder(
-                        controller: _controller,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: data.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(
-                                    height: 16,
-                                    width: 80,
-                                    child: Divider(
-                                      color: ColorConstant.accent,
-                                      thickness: 2,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    'ゲーム開始',
-                                    style: TextStyleConstant.normal16
-                                        .copyWith(color: ColorConstant.accent),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  const SizedBox(
-                                    height: 16,
-                                    width: 80,
-                                    child: Divider(
-                                      color: ColorConstant.accent,
-                                      thickness: 2,
-                                    ),
-                                  ),
-                                ],
+              return ScrollConfiguration(
+                behavior: NoEffectScrollBehavior(),
+                child: ListView.builder(
+                  controller: _controller,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: data.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 16,
+                              width: 80,
+                              child: Divider(
+                                color: ColorConstant.accent,
+                                thickness: 2,
                               ),
-                            );
-                          }
-                          data.sort((a, b) {
-                            //sorting in descending order
-                            return a.createdAt.compareTo(b.createdAt);
-                          });
-                          final message = data[index - 1];
-                          if (message.userId == uid) {
-                            return SendMessageBubble(
-                              messageEntity: message,
-                              roomId: widget.roomId,
-                            );
-                          } else {
-                            return ReceiveMessageBubble(
-                              messageEntity: message,
-                              roomId: widget.roomId,
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: CustomBottomSheet(
-                      roomId: widget.roomId,
-                      counter: counter,
-                    ),
-                  ),
-                ],
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              'ゲーム開始',
+                              style: TextStyleConstant.normal16
+                                  .copyWith(color: ColorConstant.accent),
+                            ),
+                            const SizedBox(width: 16),
+                            const SizedBox(
+                              height: 16,
+                              width: 80,
+                              child: Divider(
+                                color: ColorConstant.accent,
+                                thickness: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    data.sort((a, b) {
+                      //sorting in descending order
+                      return a.createdAt.compareTo(b.createdAt);
+                    });
+                    final message = data[index - 1];
+                    if (message.userId == uid) {
+                      return SendMessageBubble(
+                        messageEntity: message,
+                        roomId: widget.roomId,
+                      );
+                    } else {
+                      return ReceiveMessageBubble(
+                        messageEntity: message,
+                        roomId: widget.roomId,
+                      );
+                    }
+                  },
+                ),
               );
             },
             error: (error, stackTrace) {
