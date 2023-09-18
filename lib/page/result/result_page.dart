@@ -52,6 +52,7 @@ class ResultPage extends ConsumerWidget {
                         .read(roomRepositoryProvider)
                         .resetKilledId(roomId);
                     ref.read(limitTimeProvider.notifier).reset();
+                    ref.refresh(answerAssignedIdProvider);
                     context.go('/');
                   },
                   child: const Text('タイトルに戻る'),
