@@ -87,17 +87,27 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
-                                                  Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.redAccent,
-                                                    ),
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            left: 2, top: 2),
-                                                    width: 16,
-                                                    height: 16,
+                                                  Stack(
+                                                    alignment: Alignment.center,
+                                                    children: [
+                                                      Container(
+                                                        decoration: const BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: ColorConstant.black90,
+                                                        ),
+                                                        width: 16.5,
+                                                        height: 16.5,
+                                                      ),
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: getChatColor(
+                                                              member.assignedId),
+                                                        ),
+                                                        width: 16,
+                                                        height: 16,
+                                                      ),
+                                                    ],
                                                   ),
                                                   Text(
                                                     'プレイヤー${member.assignedId}',
@@ -127,7 +137,6 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                     ],
                                   ))
                               .toList(),
-                          const SizedBox(height: 4),
                           isSend
                               ? Text(
                                   '全員が投票するまでおまちください',
@@ -135,9 +144,9 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                       .copyWith(color: ColorConstant.accent),
                                 )
                               : const SizedBox.shrink(),
-                          const SizedBox(height: 4),
-                          ElevatedButton(
-                            onPressed: value == 404 || isSend
+                          const SizedBox(height: 12),
+                          GestureDetector(
+                            onTap: value == 404 || isSend
                                 ? null
                                 : () {
                                     ref
@@ -146,11 +155,26 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                     isSend = true;
                                     setState(() {});
                                   },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: ColorConstant.main,
-                              backgroundColor: ColorConstant.accent,
+                            child: Container(
+                              width: 56,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                color: value == 404 || isSend
+                                    ? ColorConstant.black20
+                                    : ColorConstant.accent,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: ColorConstant.black10,
+                                    offset: Offset(2, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const Center(
+                                  child: Text(
+                                '決定',
+                                style: TextStyleConstant.normal12,
+                              )),
                             ),
-                            child: const Text('決定'),
                           ),
                         ],
                       ),

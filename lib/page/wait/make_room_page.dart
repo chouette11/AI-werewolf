@@ -81,8 +81,14 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Share.share(
-                            'https://wordwolf-main.web.app/#/wait/${widget.roomId}/0');
+                        const flavor = String.fromEnvironment('flavor');
+                        if (flavor == 'prod') {
+                          Share.share(
+                              'https://ai-werewolf.web.app/#/wait/${widget.roomId}/0');
+                        } else {
+                          Share.share(
+                              'https://ai-werewolf-dev.web.app/#/wait/${widget.roomId}/0');
+                        }
                       },
                       child: const Icon(Icons.share, color: ColorConstant.main),
                     ),

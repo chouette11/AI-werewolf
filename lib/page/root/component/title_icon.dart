@@ -9,10 +9,15 @@ class TitleIcon extends StatelessWidget {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Image.asset('assets/images/title_icon.png', height: 270),
-        const Text(
+        Column(
+          children: [
+            const SizedBox(height: 48),
+            Image.asset('assets/images/title_icon.png', height: 252),
+          ],
+        ),
+        Text(
           'AI人狼',
-          style: TextStyleConstant.bold48,
+          style: TextStyleConstant.bold60.copyWith(fontFamily: 'zen'),
         )
       ],
     );

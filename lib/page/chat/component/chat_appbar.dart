@@ -31,78 +31,88 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: topic.when(
         data: (topic) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
+                children: [
+                  const Text(
+                    'お題',
+                    style: TextStyleConstant.normal12,
+                  ),
+                  Text(
+                    '「$topic」',
+                    style: TextStyleConstant.normal16,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'お題',
-                        style: TextStyleConstant.normal12,
-                      ),
-                      Text(
-                        '「$topic」',
-                        style: TextStyleConstant.normal16,
-                      ),
-                    ],
+                  SizedBox(
+                    width: 88,
+                    child: Text(
+                      'ID $roomId',
+                      style: TextStyleConstant.normal12,
+                    ),
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ID $roomId',
-                        style: TextStyleConstant.normal12,
-                      ),
-                      SizedBox(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 4),
-                            Container(
-                              decoration: const BoxDecoration(
-                                color: ColorConstant.black100,
-                              ),
-                              child: Stack(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/images/timer_box.svg'),
-                                  Positioned(
-                                    top: 6,
-                                    child: SizedBox(
-                                      width: 80,
-                                      child: Center(
-                                        child: Text(
-                                          counter.toString(),
-                                          style: TextStyleConstant.normal28
-                                              .copyWith(
-                                                  color: ColorConstant.black30),
-                                        ),
-                                      ),
+                  SizedBox(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 4),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: ColorConstant.black100,
+                          ),
+                          child: Stack(
+                            children: [
+                              SvgPicture.asset(
+                                  'assets/images/timer_box.svg'),
+                              Positioned(
+                                top: 6,
+                                child: SizedBox(
+                                  width: 80,
+                                  child: Center(
+                                    child: Text(
+                                      counter.toString(),
+                                      style: TextStyleConstant.normal28
+                                          .copyWith(
+                                              color: ColorConstant.black30),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
                           showDialog(
                             context: context,
                             builder: (context) => RoleDialog(roomId, true),
                           );
                         },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: ColorConstant.main,
-                          backgroundColor: ColorConstant.accent,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/role_button2.png',
+                              height: 32,
+                            ),
+                            const Text(
+                              '役職',
+                              style: TextStyleConstant.normal16,
+                            ),
+                          ],
                         ),
-                        child: const Text('役職'),
                       ),
+                      const SizedBox(width: 16),
                     ],
                   ),
                 ],

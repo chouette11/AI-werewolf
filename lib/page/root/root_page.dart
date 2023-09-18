@@ -26,7 +26,7 @@ class RootPage extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const TitleIcon(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 80),
               MainButton(
                 onTap: () async {
                   final rng = Random();
@@ -45,7 +45,7 @@ class RootPage extends ConsumerWidget {
                 },
                 text: '部屋作成',
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 32),
               MainButton(
                 onTap: () {
                   showDialog(
@@ -57,6 +57,7 @@ class RootPage extends ConsumerWidget {
                 },
                 text: '参加する',
               ),
+              const SizedBox(height: 32)
             ],
           ),
         ),
