@@ -29,3 +29,20 @@ class ColorConstant {
   static const black10 = Color(0xFF1C1C1C);
   static const black0 = Color(0xFF000000);
 }
+
+Color getChatColor(int assignedId) {
+  switch(assignedId) {
+    case 1:
+      return ColorConstant.chat1;
+    case 2:
+      return ColorConstant.chat2;
+    case 3:
+      return ColorConstant.chat3;
+    case 4:
+      return ColorConstant.chat4;
+    case 5:
+      return ColorConstant.chat5;
+    default:
+      return ColorConstant.black100;
+  }
+}
