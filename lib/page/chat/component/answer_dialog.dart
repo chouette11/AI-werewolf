@@ -53,86 +53,15 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       GestureDetector(
-                                        onTap: () {
-                                          ref
-                                              .read(answerAssignedIdProvider
-                                                  .notifier)
-                                              .update(
-                                                  (state) => member.assignedId);
-                                        },
-                                        child: Stack(
-                                          alignment: Alignment.topCenter,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3.5,
-                                                  left: 1,
-                                                  child: Image.asset(
-                                                      'assets/images/shadow.png'),
-                                                ),
-                                                value == member.assignedId
-                                                    ? Image.asset(
-                                                        'assets/images/selected.png')
-                                                    : Image.asset(
-                                                        'assets/images/not_selected.png'),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 32,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: ColorConstant.black90,
-                                                        ),
-                                                        width: 16.5,
-                                                        height: 16.5,
-                                                      ),
-                                                      Container(
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: getChatColor(
-                                                              member.assignedId),
-                                                        ),
-                                                        width: 16,
-                                                        height: 16,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    'プレイヤー${member.assignedId}',
-                                                    style: TextStyleConstant
-                                                        .normal16
-                                                        .copyWith(
-                                                      color:
-                                                          ColorConstant.black0,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.transparent,
-                                                    ),
-                                                    width: 16,
-                                                    height: 16,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                          onTap: () {
+                                            ref
+                                                .read(answerAssignedIdProvider
+                                                    .notifier)
+                                                .update((state) =>
+                                                    member.assignedId);
+                                          },
+                                          child: ChoicesWidget(
+                                              assignedId: member.assignedId)),
                                       const SizedBox(height: 16)
                                     ],
                                   ))
@@ -195,6 +124,86 @@ class _AnswerDialogState extends ConsumerState<AnswerDialog> {
         return const Text('エラーが発生しました');
       },
       loading: () => const CircularProgressIndicator(),
+    );
+  }
+}
+
+class ChoicesWidget extends ConsumerWidget {
+  const ChoicesWidget({Key? key, required this.assignedId}) : super(key: key);
+  final int assignedId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(answerAssignedIdProvider);
+
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        SizedBox(
+          height: 40,
+          width: 200,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 1,
+                left: 3,
+                child: SizedBox(
+                    height: 40,
+                    width: 180,
+                    child: Image.asset('assets/images/shadow.png')),
+              ),
+              value == assignedId
+                  ? Image.asset('assets/images/selected.png')
+                  : Image.asset('assets/images/not_selected.png'),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 32,
+          width: 200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorConstant.black90,
+                    ),
+                    width: 16.5,
+                    height: 16.5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: getChatColor(assignedId),
+                    ),
+                    width: 16,
+                    height: 16,
+                  ),
+                ],
+              ),
+              Text(
+                'プレイヤー$assignedId',
+                style: TextStyleConstant.normal16.copyWith(
+                  color: ColorConstant.black0,
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                ),
+                width: 16,
+                height: 16,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

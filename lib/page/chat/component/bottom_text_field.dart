@@ -69,7 +69,7 @@ class _BottomTextField extends ConsumerWidget {
           return data.size.width; //これでWidthを取得
         }
       }
-      return 1;
+      return double.infinity;
     }
 
     int maxLine = (_localTextWidth ~/ _checkWidth()) + 1;

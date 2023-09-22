@@ -89,11 +89,11 @@ class LimitTime extends _$LimitTime {
     if (flavor == 'tes') {
       return 10;
     }
-    return 200;
+    return 100;
   }
 
   void reset() {
-    state = 200;
+    state = 100;
     const flavor = String.fromEnvironment('flavor');
     if (flavor == 'tes') {
       state = 10;
@@ -105,7 +105,7 @@ class LimitTime extends _$LimitTime {
       const flavor = String.fromEnvironment('flavor');
       final time = DateTime.now().difference(startTime);
       state =
-          (flavor == 'tes' ? 10 : 200) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
+          (flavor == 'tes' ? 10 : 100) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
       if (state < 1) {
         timer.cancel();
       }
