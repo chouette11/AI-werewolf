@@ -31,6 +31,7 @@ class NightPage extends ConsumerWidget {
             } else if (livingMem.length <= 2) {
               return ResultPage(roomId: roomId, winner: RoleEnum.humanoid.displayName);
             } else {
+              return ResultPage(roomId: roomId, winner: RoleEnum.humanoid.displayName);
               return kill.when(
                 data: (data) {
                   // 惨殺で試合が決まるかどうか

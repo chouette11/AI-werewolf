@@ -66,20 +66,18 @@ class ChatAppBar extends ConsumerWidget implements PreferredSizeWidget {
                             color: ColorConstant.black100,
                           ),
                           child: Stack(
+                            alignment: Alignment.center,
                             children: [
                               SvgPicture.asset(
                                   'assets/images/timer_box.svg'),
-                              Positioned(
-                                top: 6,
-                                child: SizedBox(
-                                  width: 80,
-                                  child: Center(
-                                    child: Text(
-                                      counter.toString(),
-                                      style: TextStyleConstant.normal28
-                                          .copyWith(
-                                              color: ColorConstant.black30),
-                                    ),
+                              SizedBox(
+                                width: 80,
+                                child: Center(
+                                  child: Text(
+                                    counter >= 0 ? counter.toString() : '0',
+                                    style: TextStyleConstant.normal28
+                                        .copyWith(
+                                            color: ColorConstant.black30),
                                   ),
                                 ),
                               ),
