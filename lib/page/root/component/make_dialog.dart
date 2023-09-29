@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
 
 class StartDialog extends ConsumerWidget {
   const StartDialog({super.key, required this.roomId});

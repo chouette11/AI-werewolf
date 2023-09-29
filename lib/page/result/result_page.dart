@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/page/root/component/main_button.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/enum/role.dart';
 
 class ResultPage extends ConsumerWidget {
   const ResultPage({
@@ -26,35 +28,44 @@ class ResultPage extends ConsumerWidget {
       body: Center(
         child: members.when(
           data: (members) {
-            final member =
-                members[members.indexWhere((e) => e.userId == uid)];
+            final member = members[members.indexWhere((e) => e.userId == uid)];
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  member.role,
-                  style: TextStyleConstant.bold32,
-                ),
-                Text(
                   winner == member.role ? '勝利' : '敗北',
                   style: TextStyleConstant.bold48,
                 ),
-                ElevatedButton(
-                  onPressed: () async {
+                const SizedBox(height: 32),
+                Text(
+                  member.role,
+                  style: TextStyleConstant.bold32,
+                ),
+                Icon(
+                  member.role == RoleEnum.human.displayName
+                      ? Icons.diversity_3
+                      : Icons.psychology_outlined,
+                  color: member.role == RoleEnum.human.displayName
+                      ? ColorConstant.main
+                      : ColorConstant.accent,
+                  size: 120,
+                ),
+                const SizedBox(height: 32),
+                MainButton(
+                  onTap: () async {
                     await ref
                         .read(messageRepositoryProvider)
                         .deleteAllMessage(roomId);
-                    await ref
-                        .read(memberRepositoryProvider)
-                        .resetVoted(roomId);
+                    await ref.read(memberRepositoryProvider).resetVoted(roomId);
                     await ref
                         .read(roomRepositoryProvider)
                         .resetKilledId(roomId);
                     ref.read(limitTimeProvider.notifier).reset();
+                    ref.refresh(answerAssignedIdProvider);
                     context.go('/');
                   },
-                  child: const Text('タイトルに戻る'),
+                  text: 'タイトルへ戻る',
                 ),
               ],
             );

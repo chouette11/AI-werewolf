@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/data/api_data_source.dart';
-import 'package:wordwolf/data/firestore_data_source.dart';
-import 'package:wordwolf/model/entity/message/message_entity.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/data/api_data_source.dart';
+import 'package:ai_werewolf/data/firestore_data_source.dart';
+import 'package:ai_werewolf/model/entity/message/message_entity.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 final messageRepositoryProvider =
     Provider<MessageRepository>((ref) => MessageRepository(ref));

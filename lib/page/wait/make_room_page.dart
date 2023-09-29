@@ -7,13 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wordwolf/page/wait/component/polygon.dart';
-import 'package:wordwolf/provider/audio_provider.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/play.dart';
+import 'package:ai_werewolf/page/wait/component/polygon.dart';
+import 'package:ai_werewolf/provider/audio_provider.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/play.dart';
 
 class WaitPage extends ConsumerStatefulWidget {
   const WaitPage({
@@ -85,8 +85,14 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Share.share(
-                            'https://wordwolf-main.web.app/#/wait/${widget.roomId}/0');
+                        const flavor = String.fromEnvironment('flavor');
+                        if (flavor == 'prod') {
+                          Share.share(
+                              'https://ai-werewolf.web.app/#/wait/${widget.roomId}/0');
+                        } else {
+                          Share.share(
+                              'https://ai-werewolf-dev.web.app/#/wait/${widget.roomId}/0');
+                        }
                       },
                       child: const Icon(Icons.share, color: ColorConstant.main),
                     ),
