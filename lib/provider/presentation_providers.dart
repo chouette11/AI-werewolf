@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:wordwolf/model/entity/member/member_entity.dart';
-import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/constant/const.dart';
+import 'package:ai_werewolf/model/entity/member/member_entity.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/const.dart';
 
 part 'presentation_providers.g.dart';
 
@@ -89,11 +89,11 @@ class LimitTime extends _$LimitTime {
     if (flavor == 'tes') {
       return 10;
     }
-    return 200;
+    return 100;
   }
 
   void reset() {
-    state = 200;
+    state = 100;
     const flavor = String.fromEnvironment('flavor');
     if (flavor == 'tes') {
       state = 10;
@@ -105,7 +105,7 @@ class LimitTime extends _$LimitTime {
       const flavor = String.fromEnvironment('flavor');
       final time = DateTime.now().difference(startTime);
       state =
-          (flavor == 'tes' ? 10 : 200) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
+          (flavor == 'tes' ? 10 : 100) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
       if (state < 1) {
         timer.cancel();
       }

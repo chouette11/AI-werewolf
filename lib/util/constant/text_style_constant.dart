@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
 
 class TextStyleConstant {
   TextStyleConstant._();
@@ -53,6 +53,11 @@ class TextStyleConstant {
       fontFamily: 'NotoSans',
       fontWeight: FontWeight.bold,
       fontSize: 48,
+      color: ColorConstant.text);
+  static const bold60 = TextStyle(
+      fontFamily: 'NotoSans',
+      fontWeight: FontWeight.bold,
+      fontSize: 60,
       color: ColorConstant.text);
   static const normal12 = TextStyle(
       fontFamily: 'NotoSans',

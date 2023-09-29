@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/page/chat/component/answer_dialog.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:ai_werewolf/page/chat/component/answer_dialog.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+
+const textFieldkey = GlobalObjectKey('text');
 
 class CustomBottomSheet extends ConsumerWidget {
   const CustomBottomSheet({
@@ -24,7 +26,7 @@ class CustomBottomSheet extends ConsumerWidget {
     return member.when(
       data: (data) {
         // 残り時間がない場合
-        if (counter <= 0 ) {
+        if (counter <= 0) {
           return _EndBottomSheet(roomId: roomId, role: data.role);
         }
         // 死んでいる場合
@@ -45,8 +47,38 @@ class _BottomTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final text = ref.watch(messageTextFieldController).text;
+    final textSpan = TextSpan(
+      text: text, // Widthを知りたい文字
+      style: TextStyleConstant.normal16
+          .copyWith(color: ColorConstant.black30), // Widthを計測する種のスタイル
+    );
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr, //　右始まりか左始まりか
+    )..layout(); // layoutでビルドして、サイズなを取得できるようになる。
+    final _localTextWidth = textPainter.size.width + 32;
+
+    double _checkWidth() {
+      final box = textFieldkey.currentContext;
+      if (box != null) {
+        final data = box.findRenderObject();
+        // これでrendaring情報を取得できます。
+        if (data is RenderBox) {
+          // abstractくらすなのでisでクラスを指定
+          return data.size.width; //これでWidthを取得
+        }
+      }
+      return double.infinity;
+    }
+
+    int maxLine = (_localTextWidth ~/ _checkWidth()) + 1;
+    if (maxLine != 1) {
+      maxLine = ((_localTextWidth + maxLine * 32) ~/ _checkWidth()) + 1;
+    }
+
     return Container(
-      height: 64,
+      height: 64 + (28.0 * (maxLine - 1)),
       decoration: const BoxDecoration(
         color: ColorConstant.back,
         boxShadow: [
@@ -62,45 +94,23 @@ class _BottomTextField extends ConsumerWidget {
         child: Row(
           children: [
             Flexible(
-              child: TextFormField(
-                controller: ref.read(messageTextFieldController),
-                textAlign: TextAlign.left,
-                autofocus: true,
-                cursorColor: ColorConstant.black30,
-                decoration: const InputDecoration(
-                  fillColor: ColorConstant.black90,
-                  filled: true,
-                  hintText: 'メッセージを入力',
-                  hintStyle: TextStyle(
-                      fontSize: 16, color: ColorConstant.black50),
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: ColorConstant.black30,
-                ),
-              ),
+              key: textFieldkey,
+              child: CustomTextBox(maxLine),
             ),
             const SizedBox(width: 8),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () async {
-                  final content =
-                      ref.read(messageTextFieldController).text;
+                  final content = ref.read(messageTextFieldController).text;
 
                   // 空文字の場合
                   if (content.isEmpty) {
                     return;
                   }
 
-                  final room = await ref
-                      .read(roomRepositoryProvider)
-                      .getRoom(roomId);
+                  final room =
+                      await ref.read(roomRepositoryProvider).getRoom(roomId);
                   ref
                       .read(messageRepositoryProvider)
                       .addMessage(content, roomId, room.topic);
@@ -118,7 +128,6 @@ class _BottomTextField extends ConsumerWidget {
     );
   }
 }
-
 
 class _DiedBottomSheet extends StatelessWidget {
   const _DiedBottomSheet({Key? key, required this.role}) : super(key: key);
@@ -196,5 +205,33 @@ class _EndBottomSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CustomTextBox extends ConsumerWidget {
+  const CustomTextBox(this.maxLine, {Key? key}) : super(key: key);
+  final int maxLine;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    return TextFormField(
+        controller: ref.read(messageTextFieldController),
+        textAlign: TextAlign.left,
+        autofocus: true,
+        cursorColor: ColorConstant.black30,
+        maxLines: maxLine,
+        decoration: const InputDecoration(
+          fillColor: ColorConstant.black90,
+          filled: true,
+          hintText: 'メッセージを入力',
+          hintStyle: TextStyle(fontSize: 16, color: ColorConstant.black50),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        style:
+            TextStyleConstant.normal16.copyWith(color: ColorConstant.black30));
   }
 }

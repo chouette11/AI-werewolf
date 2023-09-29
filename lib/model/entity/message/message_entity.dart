@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wordwolf/model/document/message/message_document.dart';
+import 'package:ai_werewolf/model/document/message/message_document.dart';
 
 part 'message_entity.freezed.dart';
 part 'message_entity.g.dart';

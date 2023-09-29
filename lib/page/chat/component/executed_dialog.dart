@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/model/entity/member/member_entity.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/model/entity/member/member_entity.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 class ExecutedDialog extends ConsumerWidget {
   const ExecutedDialog({

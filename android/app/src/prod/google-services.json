@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "632237526803",
-    "project_id": "wordwolf-1f53d",
-    "storage_bucket": "wordwolf-1f53d.appspot.com"
+    "project_number": "673045133489",
+    "project_id": "ai-werewolf",
+    "storage_bucket": "ai-werewolf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:632237526803:android:a196338799ea76ca3754e6",
+        "mobilesdk_app_id": "1:673045133489:android:3c927fa10efd3ee2dd4a90",
         "android_client_info": {
           "package_name": "com.AI.werewolf"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC4C2BMh84GgFWlHDQFDmBQX24SpiEDJzQ"
+          "current_key": "AIzaSyC9IgqqDL62XxpRvMChr7TVR_L5hJ6tNSc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "632237526803-o4mgf6f9ipacjhpam562reudpgrgkos9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -1,5 +1,5 @@
+import 'package:ai_werewolf/provider/domain_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/provider/domain_providers.dart';
 
 final authProvider =
 Provider<FirebaseAuthDataSource>((ref) => FirebaseAuthDataSource(ref: ref));
