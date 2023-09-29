@@ -91,8 +91,8 @@ class JoinDialog extends ConsumerWidget {
 
                 /// ルームが満室の場合
                 final isLimit = await ref
-                    .read(memberRepositoryProvider)
-                    .isLimitMember(textValue);
+                    .read(roomRepositoryProvider)
+                    .isLimitRoom(textValue);
                 if (isLimit) {
                   ref
                       .read(errorTextProvider.notifier)
