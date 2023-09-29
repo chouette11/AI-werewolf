@@ -101,7 +101,7 @@ class RoomRepository {
   /// キルメンバーのリセット
   Future<void> resetKilledId(String roomId) async {
     final firestore = ref.read(firestoreProvider);
-    await firestore.updateKilledId(roomId, 404);
+    await firestore.updateRoom(id: roomId, killedId: 404);
   }
 
   /// ルームから退出
