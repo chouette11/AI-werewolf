@@ -1,4 +1,3 @@
-import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/data/api/gpt_api.dart';
 import 'package:ai_werewolf/model/entity/message/message_entity.dart';
@@ -9,25 +8,6 @@ class ApiDataSource {
   ApiDataSource({required this.ref});
 
   final Ref ref;
-
-  ///
-  /// Room
-  ///
-
-  /// オンラインのルームをチェック
-
-  Future<dynamic> checkOnlineRooms() async {
-    try {
-      final api = ref.read(apiClientProvider);
-      final uid = ref.read(uidProvider);
-      final message = await api.checkOnlineRooms(UserReq(uid: uid));
-      print(message);
-      return message;
-    } catch (e) {
-      print('api_checkOnline');
-      throw e;
-    }
-  }
 
   ///
   /// Message

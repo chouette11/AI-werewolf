@@ -26,14 +26,6 @@ Map<String, dynamic> _$TopicToJson(Topic instance) => <String, dynamic>{
       'topic': instance.topic,
     };
 
-UserReq _$UserReqFromJson(Map<String, dynamic> json) => UserReq(
-      uid: json['uid'] as String,
-    );
-
-Map<String, dynamic> _$UserReqToJson(UserReq instance) => <String, dynamic>{
-      'uid': instance.uid,
-    };
-
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
@@ -44,7 +36,9 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net';
+  }
 
   final Dio _dio;
 
@@ -64,7 +58,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/messages',
+              '/messages',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -72,29 +66,6 @@ class _RestClient implements RestClient {
     var value = _result.data!
         .map((dynamic i) => MessageDocument.fromJson(i as Map<String, dynamic>))
         .toList();
-    return value;
-  }
-
-  @override
-  Future<dynamic> checkOnlineRooms(UserReq user) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(user.toJson());
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'https://us-central1-wordwolf-1f53d.cloudfunctions.net/checkOnlineRooms',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
     return value;
   }
 
@@ -113,7 +84,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/make_topic_answer_friend',
+              '/make_topic_answer_friend',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -137,7 +108,7 @@ class _RestClient implements RestClient {
     )
             .compose(
               _dio.options,
-              'https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/make_question_answer',
+              '/make_question_answer',
               queryParameters: queryParameters,
               data: _data,
             )

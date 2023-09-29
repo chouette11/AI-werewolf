@@ -8,20 +8,17 @@ part 'gpt_api.g.dart';
 
 final apiClientProvider = Provider((ref) => RestClient(Dio()));
 
-@RestApi()
+@RestApi(baseUrl: "https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net")
 abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
-  @GET("https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/messages")
+  @GET("/messages")
   Future<List<MessageDocument>> getMessages();
 
-  @POST('https://us-central1-wordwolf-1f53d.cloudfunctions.net/checkOnlineRooms')
-  Future<dynamic> checkOnlineRooms(@Body() UserReq user);
-
-  @POST('https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/make_topic_answer_friend')
+  @POST('/make_topic_answer_friend')
   Future<Message> fetchTopicAnswerMessage(@Body() Topic topic);
 
-  @POST('https://asia-northeast1-wordwolf-1f53d.cloudfunctions.net/make_question_answer')
+  @POST('/make_question_answer')
   Future<Message> fetchQuestionAnswerMessage(@Body() Message message);
 }
 
@@ -45,14 +42,4 @@ class Topic {
 
   factory Topic.fromJson(Map<String, dynamic> json) => _$TopicFromJson(json);
   Map<String, dynamic> toJson() => _$TopicToJson(this);
-}
-
-@JsonSerializable()
-class UserReq {
-  String uid;
-
-  UserReq({required this.uid});
-
-  factory UserReq.fromJson(Map<String, dynamic> json) => _$UserReqFromJson(json);
-  Map<String, dynamic> toJson() => _$UserReqToJson(this);
 }
