@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 
 class TitleIcon extends StatelessWidget {
   const TitleIcon({Key? key}) : super(key: key);

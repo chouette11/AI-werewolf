@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordwolf/page/result/result_page.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/util/enum/role.dart';
+import 'package:ai_werewolf/page/result/result_page.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/util/enum/role.dart';
 
 class NightPage extends ConsumerWidget {
   const NightPage({Key? key, required this.roomId}) : super(key: key);

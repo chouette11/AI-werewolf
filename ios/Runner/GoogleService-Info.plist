@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>632237526803-pk47ifbshkicepc9v68g5qvc1uqit80p.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.632237526803-pk47ifbshkicepc9v68g5qvc1uqit80p</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCurKg5Hx1JE0yxUXvkT3Fl2EV3UoeS3Ao</string>
+	<string>AIzaSyDruAb-OGbnPdheqp8QdeZjKfGegeymqfQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>632237526803</string>
+	<string>673045133489</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.wordwolf</string>
+	<string>com.AI.werewolf</string>
 	<key>PROJECT_ID</key>
-	<string>wordwolf-1f53d</string>
+	<string>ai-werewolf</string>
 	<key>STORAGE_BUCKET</key>
-	<string>wordwolf-1f53d.appspot.com</string>
+	<string>ai-werewolf.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:632237526803:ios:d632d8b73d6946063754e6</string>
+	<string>1:673045133489:ios:80cd75fbb2ce25f3dd4a90</string>
 </dict>
 </plist>

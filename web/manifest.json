@@ -1,6 +1,6 @@
 {
-    "name": "wordwolf",
-    "short_name": "wordwolf",
+    "name": "ai_werewolf",
+    "short_name": "ai_werewolf",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

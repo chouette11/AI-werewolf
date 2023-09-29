@@ -7,11 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wordwolf/page/wait/component/polygon.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:ai_werewolf/page/wait/component/polygon.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
 
 class WaitPage extends ConsumerStatefulWidget {
   const WaitPage({

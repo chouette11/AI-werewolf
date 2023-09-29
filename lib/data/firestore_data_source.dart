@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/model/document/member/member_document.dart';
-import 'package:wordwolf/model/document/message/message_document.dart';
-import 'package:wordwolf/model/document/room/room_document.dart';
+import 'package:ai_werewolf/model/document/member/member_document.dart';
+import 'package:ai_werewolf/model/document/message/message_document.dart';
+import 'package:ai_werewolf/model/document/room/room_document.dart';
 
-import 'package:wordwolf/provider/domain_providers.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/provider/domain_providers.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 final firestoreProvider =
     Provider<FirestoreDataSource>((ref) => FirestoreDataSource(ref: ref));

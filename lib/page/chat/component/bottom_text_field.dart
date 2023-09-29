@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/page/chat/component/answer_dialog.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:ai_werewolf/page/chat/component/answer_dialog.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
 
 const textFieldkey = GlobalObjectKey('text');
 

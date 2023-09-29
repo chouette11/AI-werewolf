@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:wordwolf/model/entity/member/member_entity.dart';
-import 'package:wordwolf/repository/member_repository.dart';
-import 'package:wordwolf/repository/message_repository.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/constant/const.dart';
+import 'package:ai_werewolf/model/entity/member/member_entity.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
+import 'package:ai_werewolf/repository/message_repository.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/const.dart';
 
 part 'presentation_providers.g.dart';
 

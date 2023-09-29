@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wordwolf/page/root/component/main_button.dart';
-import 'package:wordwolf/page/root/component/title_icon.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/room_repository.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/page/root/component/join_dialog.dart';
+import 'package:ai_werewolf/page/root/component/main_button.dart';
+import 'package:ai_werewolf/page/root/component/title_icon.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/page/root/component/join_dialog.dart';
 
 class RootPage extends ConsumerWidget {
   const RootPage({super.key});
