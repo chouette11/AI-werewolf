@@ -6,6 +6,7 @@ import 'package:ai_werewolf/model/entity/member/member_entity.dart';
 import 'package:ai_werewolf/model/entity/room/room_entity.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/util/enum/role.dart';
+import 'package:uuid/uuid.dart';
 
 final roomRepositoryProvider =
     Provider<RoomRepository>((ref) => RoomRepository(ref));
@@ -16,7 +17,7 @@ class RoomRepository {
   final Ref ref;
 
   /// 新規ルーム追加
-  Future<void> makeRoom(String roomId, int maxNum) async {
+  Future<void> makeRoom(String roomId, int maxNum, {bool? isOnline}) async {
     final firestore = ref.read(firestoreProvider);
     //gptの分を追加する
     final newMaxNum = maxNum + 1;
@@ -49,7 +50,12 @@ class RoomRepository {
       killedId: 404,
       startTime: DateTime.now(),
     );
-    await firestore.createRoom(entity.toRoomDocument());
+
+    if (isOnline == true) {
+      await firestore.createOnlineRoom(entity.toRoomDocument());
+    } else {
+      await firestore.createRoom(entity.toRoomDocument());
+    }
 
     final assignedId = rng.nextInt(newMaxNum) + 1;
     final memberEntity = MemberEntity(
@@ -74,6 +80,15 @@ class RoomRepository {
       voted: 0,
     );
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
+  }
+
+  /// ルームが満員か判定
+  Future<bool> isLimitRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+    final maxNum = room.maxNum;
+    final members = await firestore.fetchMembers(roomId);
+    return maxNum == members.length;
   }
 
   /// ルームのストリーム取得
@@ -115,5 +130,23 @@ class RoomRepository {
     }
   }
 
-
+  /// オンラインルームを作成
+  Future<String> makeOnlineRoom(int maxNum) async {
+    final firestore = ref.read(firestoreProvider);
+    final latestRoom = await firestore.fetchLatestOnlineRoom();
+    if (latestRoom == null) {
+      final roomId = const Uuid().v4();
+      await makeRoom(roomId, maxNum, isOnline: true);
+      ref.read(isMakeRoomProvider.notifier).update((state) => true);
+      return roomId;
+    }
+    final members = await firestore.fetchMembers(latestRoom.id);
+    if (members.length == latestRoom.maxNum) {
+      final roomId = const Uuid().v4();
+      await makeRoom(roomId, maxNum, isOnline: true);
+      ref.read(isMakeRoomProvider.notifier).update((state) => true);
+      return roomId;
+    }
+    return latestRoom.id;
+  }
 }

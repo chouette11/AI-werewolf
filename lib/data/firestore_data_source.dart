@@ -68,11 +68,34 @@ class FirestoreDataSource {
         .set(roomDocument.copyWith.call().toJson());
   }
 
+  /// 新規オンラインルーム追加
+  Future<void> createOnlineRoom(RoomDocument roomDocument) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final collection = db.collection('rooms');
+    await collection
+        .doc(roomDocument.id)
+        .set(roomDocument.copyWith(createdAt: DateTime.now()).toJson());
+  }
+
   /// ルームを取得
   Future<RoomDocument> fetchRoom(String roomId) async {
     final db = ref.read(firebaseFirestoreProvider);
     final room = await db.collection('rooms').doc(roomId).get();
     return RoomDocument.fromJson(room.data()!);
+  }
+
+  /// 最新のオンラインルームを取得
+  Future<RoomDocument?> fetchLatestOnlineRoom() async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final room = await db
+        .collection('rooms')
+        .orderBy('createdAt', descending: true)
+        .limit(1)
+        .get();
+    if (room.size == 0) {
+      return null;
+    }
+    return RoomDocument.fromJson(room.docs.first.data());
   }
 
   /// ルームののストリームを取得
@@ -108,8 +131,7 @@ class FirestoreDataSource {
     int? votedSum,
     int? killedId,
     DateTime? startTime,
-  }
-  ) async {
+  }) async {
     try {
       final db = ref.read(firebaseFirestoreProvider);
       final docRef = db.collection('rooms').doc(id);
@@ -119,14 +141,18 @@ class FirestoreDataSource {
         final room = RoomDocument.fromJson(snapshot.data()!);
 
         // ドキュメントを更新する
-        transaction.update(docRef, room.copyWith.call(
-          topic: topic ?? room.topic,
-          maxNum: maxNum ?? room.maxNum,
-          roles: roles ?? room.roles,
-          votedSum: votedSum ?? room.votedSum,
-          killedId: killedId ?? room.killedId,
-          startTime: startTime ?? room.startTime,
-        ).toJson());
+        transaction.update(
+            docRef,
+            room.copyWith
+                .call(
+                  topic: topic ?? room.topic,
+                  maxNum: maxNum ?? room.maxNum,
+                  roles: roles ?? room.roles,
+                  votedSum: votedSum ?? room.votedSum,
+                  killedId: killedId ?? room.killedId,
+                  startTime: startTime ?? room.startTime,
+                )
+                .toJson());
       });
     } catch (e) {
       print('update_room');
@@ -235,17 +261,6 @@ class FirestoreDataSource {
       await db.collection('rooms/$roomId/members').doc(uid).delete();
     } catch (e) {
       print('delete_member');
-      throw e;
-    }
-  }
-
-  /// オンラインのwaitingに追加
-  Future<void> addMemberToWaiting(UserDocument user) async {
-    try {
-      final db = ref.read(firebaseFirestoreProvider);
-      await db.collection('waiting').doc(user.uid).set(user.toJson());
-    } catch (e) {
-      print('add_member_to_waiting');
       throw e;
     }
   }
