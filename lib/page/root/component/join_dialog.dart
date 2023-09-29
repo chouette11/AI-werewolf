@@ -4,11 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
+import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/member_repository.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/play.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 class JoinDialog extends ConsumerWidget {
   const JoinDialog({super.key});
@@ -81,6 +86,7 @@ class JoinDialog extends ConsumerWidget {
                   ref
                       .read(errorTextProvider.notifier)
                       .update((state) => 'ルームが見つかりません');
+                  await play(ref, ref.read(notSoundProvider));
                   Timer(const Duration(seconds: 2), () {
                     ref.refresh(errorTextProvider);
                   });

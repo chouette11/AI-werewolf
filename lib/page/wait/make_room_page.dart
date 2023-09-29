@@ -8,10 +8,12 @@ import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/page/wait/component/polygon.dart';
+import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
+import 'package:ai_werewolf/util/play.dart';
 
 class WaitPage extends ConsumerStatefulWidget {
   const WaitPage({
@@ -39,6 +41,8 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
         await ref.read(roomRepositoryProvider).joinRoom(widget.roomId);
       }
     });
+    final path = ref.read(waitSoundProvider);
+    play(ref, path);
     ref
         .read(roomRepositoryProvider)
         .getRoom(widget.roomId)
