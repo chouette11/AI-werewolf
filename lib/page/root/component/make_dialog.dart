@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
@@ -68,8 +67,6 @@ class StartDialog extends ConsumerWidget {
             width: 120,
             child: ElevatedButton(
               onPressed: () async {
-                final uuid = const Uuid().v4();
-                ref.read(uidProvider.notifier).update((state) => uuid);
                 await ref.read(roomRepositoryProvider).makeRoom(roomId, value);
                 await ref.read(roomRepositoryProvider).joinRoom(roomId);
                 ref.read(isMakeRoomProvider.notifier).update((state) => true);

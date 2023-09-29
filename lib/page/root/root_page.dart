@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:ai_werewolf/data/api_data_source.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
@@ -35,6 +35,12 @@ class _RootPageState extends ConsumerState<RootPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final api = ref.read(apiProvider);
+            api.checkOnlineRooms();
+          },
+        ),
         backgroundColor: ColorConstant.back,
         body: Center(
           child: Column(
@@ -46,8 +52,6 @@ class _RootPageState extends ConsumerState<RootPage> {
                 onTap: () async {
                   final rng = Random();
                   final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
-                  final uuid = const Uuid().v4();
-                  ref.read(uidProvider.notifier).update((state) => uuid);
                   await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
                   await ref.read(roomRepositoryProvider).joinRoom(roomId);
                   ref.read(isMakeRoomProvider.notifier).update((state) => true);
@@ -76,7 +80,23 @@ class _RootPageState extends ConsumerState<RootPage> {
                 },
                 text: '参加する',
               ),
-              const SizedBox(height: 32)
+              const SizedBox(height: 32),
+              MainButton(
+                onTap: () async {
+                  final rng = Random();
+                  final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
+                  await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
+                  await ref.read(roomRepositoryProvider).joinRoom(roomId);
+                  ref.read(isMakeRoomProvider.notifier).update((state) => true);
+                  const flavor = String.fromEnvironment('flavor');
+                  if (flavor == 'tes') {
+                    context.go('/chat/$roomId/1');
+                    return;
+                  }
+                  context.go("/wait/$roomId/1");
+                },
+                text: 'オンライン',
+              ),
             ],
           ),
         ),

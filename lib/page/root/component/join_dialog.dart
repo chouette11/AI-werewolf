@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
@@ -104,8 +103,6 @@ class JoinDialog extends ConsumerWidget {
                   return;
                 }
 
-                final uuid = const Uuid().v4();
-                ref.read(uidProvider.notifier).update((state) => uuid);
                 await ref.read(roomRepositoryProvider).joinRoom(textValue);
                 context.go("/wait/$textValue/1");
               },

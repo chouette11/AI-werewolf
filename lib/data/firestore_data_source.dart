@@ -151,7 +151,7 @@ class FirestoreDataSource {
   Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
     final db = ref.read(firebaseFirestoreProvider);
     final collection = db.collection('rooms/$roomId/members');
-    await collection.doc(member.userId).set(member.copyWith.call().toJson());
+    await collection.doc(member.uid).set(member.copyWith.call().toJson());
   }
 
   /// メンバーのストリームを取得
@@ -243,7 +243,7 @@ class FirestoreDataSource {
   Future<void> addMemberToWaiting(UserDocument user) async {
     try {
       final db = ref.read(firebaseFirestoreProvider);
-      await db.collection('waiting').add(user.toJson());
+      await db.collection('waiting').doc(user.uid).set(user.toJson());
     } catch (e) {
       print('add_member_to_waiting');
       throw e;

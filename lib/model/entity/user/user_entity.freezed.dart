@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserEntity {
-  String get userId => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserEntityCopyWith<UserEntity> get copyWith =>
@@ -29,7 +29,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String userId});
+  $Res call({String uid});
 }
 
 /// @nodoc
@@ -45,12 +45,12 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? uid = null,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -64,7 +64,7 @@ abstract class _$$_UserEntityCopyWith<$Res>
       __$$_UserEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userId});
+  $Res call({String uid});
 }
 
 /// @nodoc
@@ -78,12 +78,12 @@ class __$$_UserEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? uid = null,
   }) {
     return _then(_$_UserEntity(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -92,14 +92,14 @@ class __$$_UserEntityCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserEntity extends _UserEntity {
-  const _$_UserEntity({required this.userId}) : super._();
+  const _$_UserEntity({required this.uid}) : super._();
 
   @override
-  final String userId;
+  final String uid;
 
   @override
   String toString() {
-    return 'UserEntity(userId: $userId)';
+    return 'UserEntity(uid: $uid)';
   }
 
   @override
@@ -107,11 +107,11 @@ class _$_UserEntity extends _UserEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserEntity &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId);
+  int get hashCode => Object.hash(runtimeType, uid);
 
   @JsonKey(ignore: true)
   @override
@@ -121,11 +121,11 @@ class _$_UserEntity extends _UserEntity {
 }
 
 abstract class _UserEntity extends UserEntity {
-  const factory _UserEntity({required final String userId}) = _$_UserEntity;
+  const factory _UserEntity({required final String uid}) = _$_UserEntity;
   const _UserEntity._() : super._();
 
   @override
-  String get userId;
+  String get uid;
   @override
   @JsonKey(ignore: true)
   _$$_UserEntityCopyWith<_$_UserEntity> get copyWith =>

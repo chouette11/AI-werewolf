@@ -62,16 +62,16 @@ class MemberRepository {
   Future<void> voteForMember(String roomId, int assignedId) async {
     final firestore = ref.read(firestoreProvider);
     final members = await firestore.fetchMembers(roomId);
-    final userId =
-        members[members.indexWhere((e) => e.assignedId == assignedId)].userId;
-    await firestore.voteForMember(roomId, userId);
+    final uid =
+        members[members.indexWhere((e) => e.assignedId == assignedId)].uid;
+    await firestore.voteForMember(roomId, uid);
     await firestore.addVoteToRoom(roomId);
   }
 
   /// メンバーを消滅
-  Future<void> killMember(String roomId, String userId) async {
+  Future<void> killMember(String roomId, String uid) async {
     final firestore = ref.read(firestoreProvider);
-    await firestore.killMember(roomId, userId);
+    await firestore.killMember(roomId, uid);
   }
 
   /// 投票をリセット
@@ -84,9 +84,9 @@ class MemberRepository {
   Future<void> randomKill(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final livingMembers = await getLivingMembersFromDB(roomId);
-    livingMembers.removeWhere((e) => e.userId == 'gpt');
+    livingMembers.removeWhere((e) => e.uid == 'gpt');
     int random = Random().nextInt(livingMembers.length - 1);
-    await firestore.killMember(roomId, livingMembers[random].userId);
+    await firestore.killMember(roomId, livingMembers[random].uid);
     await firestore.updateRoom(
         id: roomId, killedId: livingMembers[random].assignedId);
   }
@@ -98,7 +98,7 @@ class MemberRepository {
     if (uid == null) {
       return;
     }
-    final user = UserEntity(userId: uid);
+    final user = UserEntity(uid: uid);
     await firestore.addMemberToWaiting(user.toUserDocument());
   }
 }

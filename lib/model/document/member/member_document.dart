@@ -9,7 +9,7 @@ class MemberDocument with _$MemberDocument {
   const MemberDocument._();
 
   const factory MemberDocument({
-    @JsonKey(name: 'userId') required String userId,
+    @JsonKey(name: 'uid') required String uid,
     @JsonKey(name: 'assignedId') required int assignedId,
     @JsonKey(name: 'role') required String role,
     @JsonKey(name: 'isLive') required bool isLive,

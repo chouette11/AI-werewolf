@@ -22,7 +22,6 @@ class RoomRepository {
     final newMaxNum = maxNum + 1;
     final rng = Random();
     // 割り当てるidから0を取り除く
-    final assignedId = rng.nextInt(newMaxNum) + 1;
     List<String> roles = [
       RoleEnum.human.displayName,
       RoleEnum.human.displayName,
@@ -50,10 +49,11 @@ class RoomRepository {
       killedId: 404,
       startTime: DateTime.now(),
     );
-    final roomDoc = entity.toRoomDocument();
-    await firestore.createRoom(roomDoc);
+    await firestore.createRoom(entity.toRoomDocument());
+
+    final assignedId = rng.nextInt(newMaxNum) + 1;
     final memberEntity = MemberEntity(
-      userId: 'gpt',
+      uid: 'gpt',
       assignedId: assignedId,
       role: '',
       isLive: true,
@@ -67,7 +67,7 @@ class RoomRepository {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
     final entity = MemberEntity(
-      userId: uid,
+      uid: uid,
       assignedId: 0,
       role: '',
       isLive: true,
@@ -114,4 +114,6 @@ class RoomRepository {
       firestore.deleteRoom(roomId);
     }
   }
+
+
 }

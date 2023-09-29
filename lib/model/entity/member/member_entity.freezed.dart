@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MemberEntity {
-  String get userId => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
   int get assignedId => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
   bool get isLive => throw _privateConstructorUsedError;
@@ -33,8 +33,7 @@ abstract class $MemberEntityCopyWith<$Res> {
           MemberEntity value, $Res Function(MemberEntity) then) =
       _$MemberEntityCopyWithImpl<$Res, MemberEntity>;
   @useResult
-  $Res call(
-      {String userId, int assignedId, String role, bool isLive, int voted});
+  $Res call({String uid, int assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -50,16 +49,16 @@ class _$MemberEntityCopyWithImpl<$Res, $Val extends MemberEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? uid = null,
     Object? assignedId = null,
     Object? role = null,
     Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       assignedId: null == assignedId
           ? _value.assignedId
@@ -89,8 +88,7 @@ abstract class _$$_MemberEntityCopyWith<$Res>
       __$$_MemberEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String userId, int assignedId, String role, bool isLive, int voted});
+  $Res call({String uid, int assignedId, String role, bool isLive, int voted});
 }
 
 /// @nodoc
@@ -104,16 +102,16 @@ class __$$_MemberEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? uid = null,
     Object? assignedId = null,
     Object? role = null,
     Object? isLive = null,
     Object? voted = null,
   }) {
     return _then(_$_MemberEntity(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       assignedId: null == assignedId
           ? _value.assignedId
@@ -139,7 +137,7 @@ class __$$_MemberEntityCopyWithImpl<$Res>
 
 class _$_MemberEntity extends _MemberEntity {
   const _$_MemberEntity(
-      {required this.userId,
+      {required this.uid,
       required this.assignedId,
       required this.role,
       required this.isLive,
@@ -147,7 +145,7 @@ class _$_MemberEntity extends _MemberEntity {
       : super._();
 
   @override
-  final String userId;
+  final String uid;
   @override
   final int assignedId;
   @override
@@ -159,7 +157,7 @@ class _$_MemberEntity extends _MemberEntity {
 
   @override
   String toString() {
-    return 'MemberEntity(userId: $userId, assignedId: $assignedId, role: $role, isLive: $isLive, voted: $voted)';
+    return 'MemberEntity(uid: $uid, assignedId: $assignedId, role: $role, isLive: $isLive, voted: $voted)';
   }
 
   @override
@@ -167,7 +165,7 @@ class _$_MemberEntity extends _MemberEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MemberEntity &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.assignedId, assignedId) ||
                 other.assignedId == assignedId) &&
             (identical(other.role, role) || other.role == role) &&
@@ -177,7 +175,7 @@ class _$_MemberEntity extends _MemberEntity {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, userId, assignedId, role, isLive, voted);
+      Object.hash(runtimeType, uid, assignedId, role, isLive, voted);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +186,7 @@ class _$_MemberEntity extends _MemberEntity {
 
 abstract class _MemberEntity extends MemberEntity {
   const factory _MemberEntity(
-      {required final String userId,
+      {required final String uid,
       required final int assignedId,
       required final String role,
       required final bool isLive,
@@ -196,7 +194,7 @@ abstract class _MemberEntity extends MemberEntity {
   const _MemberEntity._() : super._();
 
   @override
-  String get userId;
+  String get uid;
   @override
   int get assignedId;
   @override

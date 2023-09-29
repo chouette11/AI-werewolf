@@ -8,18 +8,18 @@ class UserEntity with _$UserEntity {
   const UserEntity._();
 
   const factory UserEntity({
-    required String userId,
+    required String uid,
   }) = _UserEntity;
 
   static UserEntity fromDoc(UserDocument memberDoc) {
     return UserEntity(
-      userId: memberDoc.userId,
+      uid: memberDoc.uid,
     );
   }
 
   UserDocument toUserDocument() {
     return UserDocument(
-      userId: userId,
+      uid: uid,
     );
   }
 }

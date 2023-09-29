@@ -8,7 +8,7 @@ class MemberEntity with _$MemberEntity {
   const MemberEntity._();
 
   const factory MemberEntity({
-    required String userId,
+    required String uid,
     required int assignedId,
     required String role,
     required bool isLive,
@@ -17,7 +17,7 @@ class MemberEntity with _$MemberEntity {
 
   static MemberEntity fromDoc(MemberDocument memberDoc) {
     return MemberEntity(
-      userId: memberDoc.userId,
+      uid: memberDoc.uid,
       assignedId: memberDoc.assignedId,
       role: memberDoc.role,
       isLive: memberDoc.isLive,
@@ -27,7 +27,7 @@ class MemberEntity with _$MemberEntity {
 
   MemberDocument toMemberDocument() {
     return MemberDocument(
-      userId: userId,
+      uid: uid,
       assignedId: assignedId,
       role: role,
       isLive: isLive,

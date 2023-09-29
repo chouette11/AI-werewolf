@@ -59,7 +59,7 @@ class _RoleDialogState extends ConsumerState<RoleDialog> {
             child: members.when(
               data: (members) {
                 final member =
-                    members[members.indexWhere((e) => e.userId == uid)];
+                    members[members.indexWhere((e) => e.uid == uid)];
                 if (member.assignedId == 0) {
                   return const Text(
                     '配役決め中です...',

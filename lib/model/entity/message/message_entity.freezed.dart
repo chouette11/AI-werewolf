@@ -21,7 +21,7 @@ MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MessageEntity {
   String get content => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $MessageEntityCopyWith<$Res> {
           MessageEntity value, $Res Function(MessageEntity) then) =
       _$MessageEntityCopyWithImpl<$Res, MessageEntity>;
   @useResult
-  $Res call({String content, String userId, DateTime createdAt});
+  $Res call({String content, String uid, DateTime createdAt});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$MessageEntityCopyWithImpl<$Res, $Val extends MessageEntity>
   @override
   $Res call({
     Object? content = null,
-    Object? userId = null,
+    Object? uid = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -61,9 +61,9 @@ class _$MessageEntityCopyWithImpl<$Res, $Val extends MessageEntity>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -81,7 +81,7 @@ abstract class _$$_MessageEntityCopyWith<$Res>
       __$$_MessageEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String content, String userId, DateTime createdAt});
+  $Res call({String content, String uid, DateTime createdAt});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$_MessageEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? content = null,
-    Object? userId = null,
+    Object? uid = null,
     Object? createdAt = null,
   }) {
     return _then(_$_MessageEntity(
@@ -104,9 +104,9 @@ class __$$_MessageEntityCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -120,7 +120,7 @@ class __$$_MessageEntityCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageEntity extends _MessageEntity {
   const _$_MessageEntity(
-      {required this.content, required this.userId, required this.createdAt})
+      {required this.content, required this.uid, required this.createdAt})
       : super._();
 
   factory _$_MessageEntity.fromJson(Map<String, dynamic> json) =>
@@ -129,13 +129,13 @@ class _$_MessageEntity extends _MessageEntity {
   @override
   final String content;
   @override
-  final String userId;
+  final String uid;
   @override
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'MessageEntity(content: $content, userId: $userId, createdAt: $createdAt)';
+    return 'MessageEntity(content: $content, uid: $uid, createdAt: $createdAt)';
   }
 
   @override
@@ -144,14 +144,14 @@ class _$_MessageEntity extends _MessageEntity {
         (other.runtimeType == runtimeType &&
             other is _$_MessageEntity &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, content, userId, createdAt);
+  int get hashCode => Object.hash(runtimeType, content, uid, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +170,7 @@ class _$_MessageEntity extends _MessageEntity {
 abstract class _MessageEntity extends MessageEntity {
   const factory _MessageEntity(
       {required final String content,
-      required final String userId,
+      required final String uid,
       required final DateTime createdAt}) = _$_MessageEntity;
   const _MessageEntity._() : super._();
 
@@ -180,7 +180,7 @@ abstract class _MessageEntity extends MessageEntity {
   @override
   String get content;
   @override
-  String get userId;
+  String get uid;
   @override
   DateTime get createdAt;
   @override

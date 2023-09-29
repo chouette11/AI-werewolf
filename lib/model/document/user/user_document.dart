@@ -9,7 +9,7 @@ class UserDocument with _$UserDocument {
   const UserDocument._();
 
   const factory UserDocument({
-    @JsonKey(name: 'userId') required String userId,
+    @JsonKey(name: 'uid') required String uid,
   }) = _UserDocument;
 
   factory UserDocument.fromJson(Map<String, dynamic> json) =>

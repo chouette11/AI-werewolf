@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/page/wait/component/polygon.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
@@ -36,8 +35,6 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
   void initState() {
     Future(() async {
       if (kIsWeb && !widget.isJoin) {
-        final uuid = const Uuid().v4();
-        ref.read(uidProvider.notifier).update((state) => uuid);
         await ref.read(roomRepositoryProvider).joinRoom(widget.roomId);
       }
     });

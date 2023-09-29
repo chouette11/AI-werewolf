@@ -11,7 +11,7 @@ class MessageEntity with _$MessageEntity {
 
   const factory MessageEntity({
     required String content,
-    required String userId,
+    required String uid,
     required DateTime createdAt,
   }) = _MessageEntity;
 
@@ -21,7 +21,7 @@ class MessageEntity with _$MessageEntity {
   static MessageEntity fromDoc(MessageDocument taskDoc) {
     return MessageEntity(
       content: taskDoc.content,
-      userId: taskDoc.userId,
+      uid: taskDoc.uid,
       createdAt: taskDoc.createdAt,
     );
   }
@@ -29,7 +29,7 @@ class MessageEntity with _$MessageEntity {
   MessageDocument toMessageDocument() {
     return MessageDocument(
       content: content,
-      userId: userId,
+      uid: uid,
       createdAt: createdAt,
     );
   }

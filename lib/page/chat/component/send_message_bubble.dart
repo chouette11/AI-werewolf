@@ -80,12 +80,12 @@ class SendMessageBubble extends ConsumerWidget {
             const SizedBox(width: 12),
             members.when(
               data: (data) {
-                if (data.indexWhere((e) => e.userId == messageEntity.userId) ==
+                if (data.indexWhere((e) => e.uid == messageEntity.uid) ==
                     -1) {
                   return const SizedBox.shrink();
                 }
                 final member = data[
-                    data.indexWhere((e) => e.userId == messageEntity.userId)];
+                    data.indexWhere((e) => e.uid == messageEntity.uid)];
                 return Container(
                   height: 36,
                   width: 36,

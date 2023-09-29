@@ -8,7 +8,7 @@ part of 'member_document.dart';
 
 _$_MemberDocument _$$_MemberDocumentFromJson(Map<String, dynamic> json) =>
     _$_MemberDocument(
-      userId: json['userId'] as String,
+      uid: json['uid'] as String,
       assignedId: json['assignedId'] as int,
       role: json['role'] as String,
       isLive: json['isLive'] as bool,
@@ -17,7 +17,7 @@ _$_MemberDocument _$$_MemberDocumentFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_MemberDocumentToJson(_$_MemberDocument instance) =>
     <String, dynamic>{
-      'userId': instance.userId,
+      'uid': instance.uid,
       'assignedId': instance.assignedId,
       'role': instance.role,
       'isLive': instance.isLive,
