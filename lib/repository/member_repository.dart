@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:ai_werewolf/model/entity/user/user_entity.dart';
+import 'package:ai_werewolf/provider/domain_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/data/firestore_data_source.dart';
 import 'package:ai_werewolf/model/entity/member/member_entity.dart';
@@ -85,6 +87,18 @@ class MemberRepository {
     livingMembers.removeWhere((e) => e.userId == 'gpt');
     int random = Random().nextInt(livingMembers.length - 1);
     await firestore.killMember(roomId, livingMembers[random].userId);
-    await firestore.updateKilledId(roomId, livingMembers[random].assignedId);
+    await firestore.updateRoom(
+        id: roomId, killedId: livingMembers[random].assignedId);
+  }
+
+  /// オンラインのマッチングに追加
+  Future<void> addWaiting() async {
+    final firestore = ref.read(firestoreProvider);
+    final uid = ref.read(firebaseAuthProvider).currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+    final user = UserEntity(userId: uid);
+    await firestore.addMemberToWaiting(user.toUserDocument());
   }
 }

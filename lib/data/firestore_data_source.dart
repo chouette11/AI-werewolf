@@ -1,3 +1,4 @@
+import 'package:ai_werewolf/model/document/user/user_document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/model/document/member/member_document.dart';
@@ -67,13 +68,6 @@ class FirestoreDataSource {
         .set(roomDocument.copyWith.call().toJson());
   }
 
-  /// ルームに参加
-  Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
-    final db = ref.read(firebaseFirestoreProvider);
-    final collection = db.collection('rooms/$roomId/members');
-    await collection.doc(member.userId).set(member.copyWith.call().toJson());
-  }
-
   /// ルームを取得
   Future<RoomDocument> fetchRoom(String roomId) async {
     final db = ref.read(firebaseFirestoreProvider);
@@ -101,17 +95,6 @@ class FirestoreDataSource {
       return rooms.docs.map((e) => RoomDocument.fromJson(e.data())).toList();
     } catch (e) {
       print('firestore_getStream');
-      throw e;
-    }
-  }
-
-  /// キルメンバーの更新
-  Future<void> updateKilledId(String roomId, int assignedId) async {
-    try {
-      final db = ref.read(firebaseFirestoreProvider);
-      await db.collection('rooms').doc(roomId).update({'killedId': assignedId});
-    } catch (e) {
-      print('update_killed_id');
       throw e;
     }
   }
@@ -163,6 +146,13 @@ class FirestoreDataSource {
   }
 
   ///Member
+
+  /// ルームに参加
+  Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final collection = db.collection('rooms/$roomId/members');
+    await collection.doc(member.userId).set(member.copyWith.call().toJson());
+  }
 
   /// メンバーのストリームを取得
   Stream<List<MemberDocument>> fetchMembersStream(String roomId) {
@@ -245,6 +235,17 @@ class FirestoreDataSource {
       await db.collection('rooms/$roomId/members').doc(uid).delete();
     } catch (e) {
       print('delete_member');
+      throw e;
+    }
+  }
+
+  /// オンラインのwaitingに追加
+  Future<void> addMemberToWaiting(UserDocument user) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('waiting').add(user.toJson());
+    } catch (e) {
+      print('add_member_to_waiting');
       throw e;
     }
   }
