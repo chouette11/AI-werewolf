@@ -1,3 +1,4 @@
+import 'package:ai_werewolf/data/firebase_auth_data_source.dart';
 import 'package:ai_werewolf/util/environment/environment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     Future(() async {
+      ref.read(authProvider).autoLogin();
       final cache = ref.read(audioCacheProvider);
       final path = await cache.load("audios/button7.mp3");
       final path2 = await cache.load("audios/button8.mp3");
