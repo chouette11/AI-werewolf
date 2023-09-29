@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
 
 class TextStyleConstant {
   TextStyleConstant._();

@@ -2,18 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/page/chat/component/role_dialog.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/model/entity/room/room_entity.dart';
-import 'package:wordwolf/page/chat/component/answer_dialog.dart';
-import 'package:wordwolf/page/chat/component/bottom_text_field.dart';
-import 'package:wordwolf/page/chat/component/chat_appbar.dart';
-import 'package:wordwolf/page/chat/component/executed_dialog.dart';
-import 'package:wordwolf/page/chat/component/receive_message_bubble.dart';
-import 'package:wordwolf/page/chat/component/send_message_bubble.dart';
-import 'package:wordwolf/provider/presentation_providers.dart';
-import 'package:wordwolf/repository/member_repository.dart';
+import 'package:ai_werewolf/page/chat/component/role_dialog.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/model/entity/room/room_entity.dart';
+import 'package:ai_werewolf/page/chat/component/answer_dialog.dart';
+import 'package:ai_werewolf/page/chat/component/bottom_text_field.dart';
+import 'package:ai_werewolf/page/chat/component/chat_appbar.dart';
+import 'package:ai_werewolf/page/chat/component/executed_dialog.dart';
+import 'package:ai_werewolf/page/chat/component/receive_message_bubble.dart';
+import 'package:ai_werewolf/page/chat/component/send_message_bubble.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({

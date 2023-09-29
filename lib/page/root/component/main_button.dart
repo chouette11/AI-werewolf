@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/util/constant/text_style_constant.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 
 class MainButton extends StatelessWidget {
   const MainButton({

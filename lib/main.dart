@@ -1,15 +1,16 @@
+import 'package:ai_werewolf/util/environment/environment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/provider/domain_providers.dart';
-import 'package:wordwolf/util/constant/color_constant.dart';
-import 'package:wordwolf/util/environment/src/firebase_options_dev.dart';
-
+import 'package:ai_werewolf/provider/domain_providers.dart';
+import 'package:ai_werewolf/util/constant/color_constant.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  const flavorName = String.fromEnvironment('flavor');
+  final flavor = Flavor.values.byName(flavorName);
+  await Firebase.initializeApp(
+    options: firebaseOptionsWithFlavor(flavor),
   );
   runApp(const ProviderScope(child: MyApp()));
 }

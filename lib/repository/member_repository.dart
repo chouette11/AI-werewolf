@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wordwolf/data/firestore_data_source.dart';
-import 'package:wordwolf/model/entity/member/member_entity.dart';
-import 'package:wordwolf/repository/room_repository.dart';
+import 'package:ai_werewolf/data/firestore_data_source.dart';
+import 'package:ai_werewolf/model/entity/member/member_entity.dart';
+import 'package:ai_werewolf/repository/room_repository.dart';
 
 final memberRepositoryProvider =
     Provider<MemberRepository>((ref) => MemberRepository(ref));
