@@ -5,9 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/provider/domain_providers.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
-import 'package:ai_werewolf/util/environment/src/firebase_options_dev.dart';
-import 'package:ai_werewolf/provider/domain_providers.dart';
-import 'package:ai_werewolf/util/constant/color_constant.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -11,9 +11,6 @@ import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/member_repository.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
 import 'package:ai_werewolf/util/play.dart';
-import 'package:ai_werewolf/util/constant/text_style_constant.dart';
-import 'package:ai_werewolf/util/constant/color_constant.dart';
-import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 class JoinDialog extends ConsumerWidget {
   const JoinDialog({super.key});
