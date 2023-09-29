@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:ai_werewolf/data/api_data_source.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,12 +34,6 @@ class _RootPageState extends ConsumerState<RootPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            final api = ref.read(apiProvider);
-            api.checkOnlineRooms();
-          },
-        ),
         backgroundColor: ColorConstant.back,
         body: Center(
           child: Column(
@@ -83,11 +76,8 @@ class _RootPageState extends ConsumerState<RootPage> {
               const SizedBox(height: 32),
               MainButton(
                 onTap: () async {
-                  final rng = Random();
-                  final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
-                  await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
+                  final roomId = await ref.read(roomRepositoryProvider).makeOnlineRoom(4);
                   await ref.read(roomRepositoryProvider).joinRoom(roomId);
-                  ref.read(isMakeRoomProvider.notifier).update((state) => true);
                   const flavor = String.fromEnvironment('flavor');
                   if (flavor == 'tes') {
                     context.go('/chat/$roomId/1');
