@@ -57,7 +57,7 @@ class _RootPageState extends ConsumerState<RootPage> {
                 },
                 text: '部屋作成',
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 32),
               MainButton(
                 onTap: () async {
                   final path = ref.read(buttonSoundProvider);
