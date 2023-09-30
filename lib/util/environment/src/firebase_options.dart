@@ -12,5 +12,7 @@ FirebaseOptions firebaseOptionsWithFlavor(Flavor flavor) {
       return dev.DefaultFirebaseOptions.currentPlatform;
     case Flavor.prod:
       return prod.DefaultFirebaseOptions.currentPlatform;
+    case Flavor.tes:
+      return dev.DefaultFirebaseOptions.currentPlatform;
   }
 }

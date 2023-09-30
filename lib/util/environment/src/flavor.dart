@@ -15,4 +15,7 @@ enum Flavor {
 
   /// Production.
   prod,
+
+  /// Test
+  tes,
 }
