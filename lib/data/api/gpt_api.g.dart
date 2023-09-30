@@ -9,13 +9,13 @@ part of 'gpt_api.dart';
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       topic: json['topic'] as String?,
       content: json['content'] as String,
-      userId: json['userId'] as String,
+      uid: json['uid'] as String,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'topic': instance.topic,
       'content': instance.content,
-      'userId': instance.userId,
+      'uid': instance.uid,
     };
 
 Topic _$TopicFromJson(Map<String, dynamic> json) => Topic(

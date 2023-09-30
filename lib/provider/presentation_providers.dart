@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ai_werewolf/provider/domain_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,6 +9,7 @@ import 'package:ai_werewolf/repository/member_repository.dart';
 import 'package:ai_werewolf/repository/message_repository.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
 import 'package:ai_werewolf/util/constant/const.dart';
+import 'package:uuid/uuid.dart';
 
 part 'presentation_providers.g.dart';
 
@@ -17,7 +19,8 @@ final idTextFieldProvider = StateProvider<String>((ref) => '');
 
 final startTextFieldProvider = StateProvider((ref) => '');
 
-final uidProvider = StateProvider<String>((ref) => '');
+final uidProvider = StateProvider<String>((ref) =>
+    ref.read(firebaseAuthProvider).currentUser?.uid ?? const Uuid().v4());
 
 final errorTextProvider = StateProvider((ref) => '');
 
@@ -44,7 +47,7 @@ final randomKillProvider =
       await ref.watch(memberRepositoryProvider).getLivingMembersFromDB(roomId);
   if (killedUserAssignedId == 404) {
     return 404;
-  } else if (livingMem.indexWhere((e) => e.userId == 'gpt') == -1) {
+  } else if (livingMem.indexWhere((e) => e.uid == 'gpt') == -1) {
     return 100;
   } else if (livingMem.length <= 2) {
     return 200;

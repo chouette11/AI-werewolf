@@ -6,6 +6,7 @@ import 'package:ai_werewolf/model/entity/member/member_entity.dart';
 import 'package:ai_werewolf/model/entity/room/room_entity.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/util/enum/role.dart';
+import 'package:uuid/uuid.dart';
 
 final roomRepositoryProvider =
     Provider<RoomRepository>((ref) => RoomRepository(ref));
@@ -16,13 +17,12 @@ class RoomRepository {
   final Ref ref;
 
   /// 新規ルーム追加
-  Future<void> makeRoom(String roomId, int maxNum) async {
+  Future<void> makeRoom(String roomId, int maxNum, {bool? isOnline}) async {
     final firestore = ref.read(firestoreProvider);
     //gptの分を追加する
     final newMaxNum = maxNum + 1;
     final rng = Random();
     // 割り当てるidから0を取り除く
-    final assignedId = rng.nextInt(newMaxNum) + 1;
     List<String> roles = [
       RoleEnum.human.displayName,
       RoleEnum.human.displayName,
@@ -50,10 +50,16 @@ class RoomRepository {
       killedId: 404,
       startTime: DateTime.now(),
     );
-    final roomDoc = entity.toRoomDocument();
-    await firestore.createRoom(roomDoc);
+
+    if (isOnline == true) {
+      await firestore.createOnlineRoom(entity.toRoomDocument());
+    } else {
+      await firestore.createRoom(entity.toRoomDocument());
+    }
+
+    final assignedId = rng.nextInt(newMaxNum) + 1;
     final memberEntity = MemberEntity(
-      userId: 'gpt',
+      uid: 'gpt',
       assignedId: assignedId,
       role: '',
       isLive: true,
@@ -67,13 +73,22 @@ class RoomRepository {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
     final entity = MemberEntity(
-      userId: uid,
+      uid: uid,
       assignedId: 0,
       role: '',
       isLive: true,
       voted: 0,
     );
     await firestore.addMemberToRoom(roomId, entity.toMemberDocument());
+  }
+
+  /// ルームが満員か判定
+  Future<bool> isLimitRoom(String roomId) async {
+    final firestore = ref.read(firestoreProvider);
+    final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
+    final maxNum = room.maxNum;
+    final members = await firestore.fetchMembers(roomId);
+    return maxNum == members.length;
   }
 
   /// ルームのストリーム取得
@@ -101,7 +116,7 @@ class RoomRepository {
   /// キルメンバーのリセット
   Future<void> resetKilledId(String roomId) async {
     final firestore = ref.read(firestoreProvider);
-    await firestore.updateKilledId(roomId, 404);
+    await firestore.updateRoom(id: roomId, killedId: 404);
   }
 
   /// ルームから退出
@@ -113,5 +128,25 @@ class RoomRepository {
     if (members.isEmpty) {
       firestore.deleteRoom(roomId);
     }
+  }
+
+  /// オンラインルームを作成
+  Future<String> makeOnlineRoom(int maxNum) async {
+    final firestore = ref.read(firestoreProvider);
+    final latestRoom = await firestore.fetchLatestOnlineRoom();
+    if (latestRoom == null) {
+      final roomId = const Uuid().v4();
+      await makeRoom(roomId, maxNum, isOnline: true);
+      ref.read(isMakeRoomProvider.notifier).update((state) => true);
+      return roomId;
+    }
+    final members = await firestore.fetchMembers(latestRoom.id);
+    if (members.length == latestRoom.maxNum) {
+      final roomId = const Uuid().v4();
+      await makeRoom(roomId, maxNum, isOnline: true);
+      ref.read(isMakeRoomProvider.notifier).update((state) => true);
+      return roomId;
+    }
+    return latestRoom.id;
   }
 }

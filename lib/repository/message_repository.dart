@@ -19,7 +19,7 @@ class MessageRepository {
     final firestore = ref.read(firestoreProvider);
     final uid = ref.read(uidProvider);
     final entity =
-        MessageEntity(content: content, userId: uid, createdAt: DateTime.now());
+        MessageEntity(content: content, uid: uid, createdAt: DateTime.now());
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
     addMessageFromGptToQuestion(entity, roomId, topic);
@@ -34,7 +34,7 @@ class MessageRepository {
     final random = Random().nextInt(delayList.length);
     final entity = MessageEntity(
         content: message.content,
-        userId: message.userId,
+        uid: message.uid,
         createdAt: DateTime.now().add(Duration(seconds: delayList[random])));
     final messageDoc = entity.toMessageDocument();
     await firestore.insertMessage(messageDoc, roomId);
@@ -49,7 +49,7 @@ class MessageRepository {
     final resMessage = await api.fetchQuestionAnswerMessage(message, topic);
     final resEntity = MessageEntity(
       content: resMessage.content,
-      userId: resMessage.userId,
+      uid: resMessage.uid,
       createdAt: DateTime.now(),
     );
     // 疑問文でない場合何も保存しない

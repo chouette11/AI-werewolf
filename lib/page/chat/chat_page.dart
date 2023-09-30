@@ -36,7 +36,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final livingMem = await ref
         .read(memberRepositoryProvider)
         .getLivingMembersFromDB(widget.roomId);
-    if (!livingMem.map((e) => e.userId).contains(ref.read(uidProvider))) {
+    if (!livingMem.map((e) => e.uid).contains(ref.read(uidProvider))) {
       return;
     }
     // gptの分を引く
@@ -47,7 +47,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         final mem = livingMem[0];
         await ref.read(memberRepositoryProvider).killMember(
               widget.roomId,
-              mem.userId,
+              mem.uid,
             );
       }
       // ignore: use_build_context_synchronously
@@ -185,7 +185,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       return a.createdAt.compareTo(b.createdAt);
                     });
                     final message = data[index - 1];
-                    if (message.userId == uid) {
+                    if (message.uid == uid) {
                       return SendMessageBubble(
                         messageEntity: message,
                         roomId: widget.roomId,

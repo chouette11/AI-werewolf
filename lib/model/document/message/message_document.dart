@@ -12,7 +12,7 @@ class MessageDocument with _$MessageDocument {
 
   const factory MessageDocument({
     @JsonKey(name: 'content') required String content,
-    @JsonKey(name: 'userId') required String userId,
+    @JsonKey(name: 'uid') required String uid,
     @TimestampConverter() @JsonKey(name: 'createdAt') required DateTime createdAt,
   }) = _MessageDocument;
 

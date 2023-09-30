@@ -28,7 +28,7 @@ class ResultPage extends ConsumerWidget {
       body: Center(
         child: members.when(
           data: (members) {
-            final member = members[members.indexWhere((e) => e.userId == uid)];
+            final member = members[members.indexWhere((e) => e.uid == uid)];
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

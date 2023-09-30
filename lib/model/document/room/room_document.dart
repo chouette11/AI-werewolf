@@ -18,6 +18,7 @@ class RoomDocument with _$RoomDocument {
     @JsonKey(name: 'votedSum') required int votedSum,
     @JsonKey(name: 'killedId') required int killedId,
     @TimestampConverter() @JsonKey(name: 'startTime') required DateTime startTime,
+    @TimestampConverter() @JsonKey(name: 'createdAt') DateTime? createdAt,
 
   }) = _RoomDocument;
 

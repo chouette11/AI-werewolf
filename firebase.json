@@ -1,6 +1,6 @@
 {
   "hosting": {
-"site": "ai-werewolf",
+"site": "ai-werewolf-dev",
     "public": "build/web",
     "ignore": [
       "firebase.json",

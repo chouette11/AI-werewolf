@@ -29,15 +29,6 @@ class MemberRepository {
         );
   }
 
-  /// ルームが満員か判定
-  Future<bool> isLimitMember(String roomId) async {
-    final firestore = ref.read(firestoreProvider);
-    final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
-    final maxNum = room.maxNum;
-    final members = await firestore.fetchMembers(roomId);
-    return maxNum == members.length;
-  }
-
   /// membersから生きているのを取得
   List<MemberEntity> getLivingMembers(List<MemberEntity> members) {
     final List<MemberEntity> liveMem = [];
@@ -60,16 +51,16 @@ class MemberRepository {
   Future<void> voteForMember(String roomId, int assignedId) async {
     final firestore = ref.read(firestoreProvider);
     final members = await firestore.fetchMembers(roomId);
-    final userId =
-        members[members.indexWhere((e) => e.assignedId == assignedId)].userId;
-    await firestore.voteForMember(roomId, userId);
+    final uid =
+        members[members.indexWhere((e) => e.assignedId == assignedId)].uid;
+    await firestore.voteForMember(roomId, uid);
     await firestore.addVoteToRoom(roomId);
   }
 
   /// メンバーを消滅
-  Future<void> killMember(String roomId, String userId) async {
+  Future<void> killMember(String roomId, String uid) async {
     final firestore = ref.read(firestoreProvider);
-    await firestore.killMember(roomId, userId);
+    await firestore.killMember(roomId, uid);
   }
 
   /// 投票をリセット
@@ -82,9 +73,10 @@ class MemberRepository {
   Future<void> randomKill(String roomId) async {
     final firestore = ref.read(firestoreProvider);
     final livingMembers = await getLivingMembersFromDB(roomId);
-    livingMembers.removeWhere((e) => e.userId == 'gpt');
+    livingMembers.removeWhere((e) => e.uid == 'gpt');
     int random = Random().nextInt(livingMembers.length - 1);
-    await firestore.killMember(roomId, livingMembers[random].userId);
-    await firestore.updateKilledId(roomId, livingMembers[random].assignedId);
+    await firestore.killMember(roomId, livingMembers[random].uid);
+    await firestore.updateRoom(
+        id: roomId, killedId: livingMembers[random].assignedId);
   }
 }

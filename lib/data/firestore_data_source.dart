@@ -1,3 +1,4 @@
+import 'package:ai_werewolf/model/document/user/user_document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/model/document/member/member_document.dart';
@@ -67,11 +68,13 @@ class FirestoreDataSource {
         .set(roomDocument.copyWith.call().toJson());
   }
 
-  /// ルームに参加
-  Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
+  /// 新規オンラインルーム追加
+  Future<void> createOnlineRoom(RoomDocument roomDocument) async {
     final db = ref.read(firebaseFirestoreProvider);
-    final collection = db.collection('rooms/$roomId/members');
-    await collection.doc(member.userId).set(member.copyWith.call().toJson());
+    final collection = db.collection('rooms');
+    await collection
+        .doc(roomDocument.id)
+        .set(roomDocument.copyWith(createdAt: DateTime.now()).toJson());
   }
 
   /// ルームを取得
@@ -79,6 +82,20 @@ class FirestoreDataSource {
     final db = ref.read(firebaseFirestoreProvider);
     final room = await db.collection('rooms').doc(roomId).get();
     return RoomDocument.fromJson(room.data()!);
+  }
+
+  /// 最新のオンラインルームを取得
+  Future<RoomDocument?> fetchLatestOnlineRoom() async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final room = await db
+        .collection('rooms')
+        .orderBy('createdAt', descending: true)
+        .limit(1)
+        .get();
+    if (room.size == 0) {
+      return null;
+    }
+    return RoomDocument.fromJson(room.docs.first.data());
   }
 
   /// ルームののストリームを取得
@@ -105,17 +122,6 @@ class FirestoreDataSource {
     }
   }
 
-  /// キルメンバーの更新
-  Future<void> updateKilledId(String roomId, int assignedId) async {
-    try {
-      final db = ref.read(firebaseFirestoreProvider);
-      await db.collection('rooms').doc(roomId).update({'killedId': assignedId});
-    } catch (e) {
-      print('update_killed_id');
-      throw e;
-    }
-  }
-
   /// ルームの更新
   Future<void> updateRoom({
     required String id,
@@ -125,8 +131,7 @@ class FirestoreDataSource {
     int? votedSum,
     int? killedId,
     DateTime? startTime,
-  }
-  ) async {
+  }) async {
     try {
       final db = ref.read(firebaseFirestoreProvider);
       final docRef = db.collection('rooms').doc(id);
@@ -136,14 +141,18 @@ class FirestoreDataSource {
         final room = RoomDocument.fromJson(snapshot.data()!);
 
         // ドキュメントを更新する
-        transaction.update(docRef, room.copyWith.call(
-          topic: topic ?? room.topic,
-          maxNum: maxNum ?? room.maxNum,
-          roles: roles ?? room.roles,
-          votedSum: votedSum ?? room.votedSum,
-          killedId: killedId ?? room.killedId,
-          startTime: startTime ?? room.startTime,
-        ).toJson());
+        transaction.update(
+            docRef,
+            room.copyWith
+                .call(
+                  topic: topic ?? room.topic,
+                  maxNum: maxNum ?? room.maxNum,
+                  roles: roles ?? room.roles,
+                  votedSum: votedSum ?? room.votedSum,
+                  killedId: killedId ?? room.killedId,
+                  startTime: startTime ?? room.startTime,
+                )
+                .toJson());
       });
     } catch (e) {
       print('update_room');
@@ -163,6 +172,13 @@ class FirestoreDataSource {
   }
 
   ///Member
+
+  /// ルームに参加
+  Future<void> addMemberToRoom(String roomId, MemberDocument member) async {
+    final db = ref.read(firebaseFirestoreProvider);
+    final collection = db.collection('rooms/$roomId/members');
+    await collection.doc(member.uid).set(member.copyWith.call().toJson());
+  }
 
   /// メンバーのストリームを取得
   Stream<List<MemberDocument>> fetchMembersStream(String roomId) {

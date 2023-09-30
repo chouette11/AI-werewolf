@@ -26,7 +26,7 @@ class NightPage extends ConsumerWidget {
             final livingMem =
                 ref.read(memberRepositoryProvider).getLivingMembers(mem);
             // 処刑で試合が決まるかどうか
-            if (livingMem.indexWhere((e) => e.userId == 'gpt') == -1) {
+            if (livingMem.indexWhere((e) => e.uid == 'gpt') == -1) {
               return ResultPage(roomId: roomId, winner: RoleEnum.human.displayName);
             } else if (livingMem.length <= 2) {
               return ResultPage(roomId: roomId, winner: RoleEnum.humanoid.displayName);

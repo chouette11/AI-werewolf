@@ -34,7 +34,7 @@ class ApiDataSource {
         Message(
           topic: topic,
           content: message.content,
-          userId: message.userId,
+          uid: message.uid,
         ),
       );
       print(resMessage.content);

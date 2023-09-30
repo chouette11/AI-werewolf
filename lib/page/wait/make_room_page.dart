@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/page/wait/component/polygon.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
@@ -36,8 +35,6 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
   void initState() {
     Future(() async {
       if (kIsWeb && !widget.isJoin) {
-        final uuid = const Uuid().v4();
-        ref.read(uidProvider.notifier).update((state) => uuid);
         await ref.read(roomRepositoryProvider).joinRoom(widget.roomId);
       }
     });
@@ -72,84 +69,135 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
           onWillPop: () async => false,
           child: Scaffold(
             backgroundColor: ColorConstant.back,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text('ROOM ID', style: TextStyleConstant.normal24),
-                const SizedBox(height: 8),
-                Text(widget.roomId, style: TextStyleConstant.bold48),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        const flavor = String.fromEnvironment('flavor');
-                        if (flavor == 'prod') {
-                          Share.share(
-                              'https://ai-werewolf.web.app/#/wait/${widget.roomId}/0');
-                        } else {
-                          Share.share(
-                              'https://ai-werewolf-dev.web.app/#/wait/${widget.roomId}/0');
-                        }
-                      },
-                      child: const Icon(Icons.share, color: ColorConstant.main),
-                    ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () {
-                        Clipboard.setData(ClipboardData(text: widget.roomId));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('テキストがクリップボードに保存されました'),
-                          ),
-                        );
-                      },
-                      child: const Icon(Icons.copy, color: ColorConstant.main),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 56),
-                const Text('メンバー待機中...', style: TextStyleConstant.normal18),
-                const SizedBox(height: 24),
-                RichText(
-                  text: TextSpan(
+            body: widget.roomId.length > 10
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextSpan(
-                          text: '${data.length - 1}',
-                          style: TextStyleConstant.bold32),
-                      const WidgetSpan(child: SizedBox(width: 8)),
-                      const TextSpan(
-                          text: '/', style: TextStyleConstant.normal28),
-                      const WidgetSpan(child: SizedBox(width: 8)),
-                      const TextSpan(
-                          text: '4', style: TextStyleConstant.normal18),
-                      const WidgetSpan(child: SizedBox(width: 4)),
-                      const TextSpan(
-                          text: '人', style: TextStyleConstant.normal14),
+                      const Text('オンライン',
+                          style: TextStyleConstant.bold18),
+                      const SizedBox(height: 40),
+                      const Text('マッチング中...',
+                          style: TextStyleConstant.normal28),
+                      const SizedBox(height: 48),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: '${data.length - 1}',
+                                style: TextStyleConstant.bold32),
+                            const WidgetSpan(child: SizedBox(width: 8)),
+                            const TextSpan(
+                                text: '/', style: TextStyleConstant.normal32),
+                            const WidgetSpan(child: SizedBox(width: 8)),
+                            const TextSpan(
+                                text: '4', style: TextStyleConstant.normal24),
+                            const WidgetSpan(child: SizedBox(width: 4)),
+                            const TextSpan(
+                                text: '人', style: TextStyleConstant.normal18),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 48),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.person_outline,
+                              color: ColorConstant.main, size: 40),
+                          const SizedBox(width: 32),
+                          PolygonWidget(0, count),
+                          const SizedBox(width: 16),
+                          PolygonWidget(1, count),
+                          const SizedBox(width: 16),
+                          PolygonWidget(2, count),
+                          const SizedBox(width: 32),
+                          const Icon(Icons.group_outlined,
+                              color: ColorConstant.main, size: 40),
+                        ],
+                      )
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('ROOM ID', style: TextStyleConstant.normal24),
+                      const SizedBox(height: 8),
+                      Text(widget.roomId, style: TextStyleConstant.bold48),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              const flavor = String.fromEnvironment('flavor');
+                              if (flavor == 'prod') {
+                                Share.share(
+                                    'https://ai-werewolf.web.app/#/wait/${widget.roomId}/0');
+                              } else {
+                                Share.share(
+                                    'https://ai-werewolf-dev.web.app/#/wait/${widget.roomId}/0');
+                              }
+                            },
+                            child: const Icon(Icons.share,
+                                color: ColorConstant.main),
+                          ),
+                          const SizedBox(width: 20),
+                          GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: widget.roomId));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('テキストがクリップボードに保存されました'),
+                                ),
+                              );
+                            },
+                            child: const Icon(Icons.copy,
+                                color: ColorConstant.main),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 56),
+                      const Text('メンバー待機中...',
+                          style: TextStyleConstant.normal18),
+                      const SizedBox(height: 24),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: '${data.length - 1}',
+                                style: TextStyleConstant.bold32),
+                            const WidgetSpan(child: SizedBox(width: 8)),
+                            const TextSpan(
+                                text: '/', style: TextStyleConstant.normal28),
+                            const WidgetSpan(child: SizedBox(width: 8)),
+                            const TextSpan(
+                                text: '4', style: TextStyleConstant.normal18),
+                            const WidgetSpan(child: SizedBox(width: 4)),
+                            const TextSpan(
+                                text: '人', style: TextStyleConstant.normal14),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.person_outline,
+                              color: ColorConstant.main, size: 40),
+                          const SizedBox(width: 32),
+                          PolygonWidget(0, count),
+                          const SizedBox(width: 16),
+                          PolygonWidget(1, count),
+                          const SizedBox(width: 16),
+                          PolygonWidget(2, count),
+                          const SizedBox(width: 32),
+                          const Icon(Icons.group_outlined,
+                              color: ColorConstant.main, size: 40),
+                        ],
+                      )
                     ],
                   ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.person_outline,
-                        color: ColorConstant.main, size: 40),
-                    const SizedBox(width: 32),
-                    PolygonWidget(0, count),
-                    const SizedBox(width: 16),
-                    PolygonWidget(1, count),
-                    const SizedBox(width: 16),
-                    PolygonWidget(2, count),
-                    const SizedBox(width: 32),
-                    const Icon(Icons.group_outlined,
-                        color: ColorConstant.main, size: 40),
-                  ],
-                )
-              ],
-            ),
           ),
         );
       },

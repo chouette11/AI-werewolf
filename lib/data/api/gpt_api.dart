@@ -26,9 +26,9 @@ abstract class RestClient {
 class Message {
   String? topic;
   String content;
-  String userId;
+  String uid;
 
-  Message({required this.topic, required this.content, required this.userId});
+  Message({required this.topic, required this.content, required this.uid});
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
