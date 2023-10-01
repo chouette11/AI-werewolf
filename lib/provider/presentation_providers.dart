@@ -78,12 +78,6 @@ final topicProvider =
 
 final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 
-final limitTimerProvider = StateProvider.family((ref, DateTime startTime) {
-  final now = new DateTime.now();
-  print(now);
-  return now.difference(startTime);
-});
-
 @riverpod
 class LimitTime extends _$LimitTime {
   @override
