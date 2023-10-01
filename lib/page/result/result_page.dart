@@ -54,7 +54,7 @@ class ResultPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 ResultUsers(roomId: roomId),
-                const SizedBox(height: 24),
+                const SizedBox(height: 48),
                 BackTitleButton(
                   onTap: () async {
                     await ref
