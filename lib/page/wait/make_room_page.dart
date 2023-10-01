@@ -30,6 +30,7 @@ class WaitPage extends ConsumerStatefulWidget {
 class _MakeRoomPageState extends ConsumerState<WaitPage> {
   int maxNum = 404;
   int count = 100;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -58,11 +59,18 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
   @override
   Widget build(BuildContext context) {
     final members = ref.watch(membersStreamProvider(widget.roomId));
+    final room = ref.watch(roomStreamProvider(widget.roomId));
     return members.when(
       data: (data) {
         if (data.length == maxNum) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go('/chat/${widget.roomId}/1');
+          isLoading = true;
+          setState(() {});
+          room.whenData((value) {
+            if (value.startTime.year != 2017) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.go('/chat/${widget.roomId}/1');
+              });
+            }
           });
         }
         return WillPopScope(
@@ -73,10 +81,9 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('オンライン',
-                          style: TextStyleConstant.bold18),
+                      const Text('オンライン', style: TextStyleConstant.bold18),
                       const SizedBox(height: 40),
-                      const Text('マッチング中...',
+                      Text(isLoading ? '役職割り当て中...' : 'マッチング中...',
                           style: TextStyleConstant.normal28),
                       const SizedBox(height: 48),
                       RichText(
@@ -158,7 +165,7 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
                         ],
                       ),
                       const SizedBox(height: 56),
-                      const Text('メンバー待機中...',
+                      Text(isLoading ? '役職割り当て中...' : 'マッチング中...',
                           style: TextStyleConstant.normal18),
                       const SizedBox(height: 24),
                       RichText(

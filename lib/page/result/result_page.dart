@@ -1,7 +1,8 @@
+import 'package:ai_werewolf/page/result/component/result_users.dart';
+import 'package:ai_werewolf/page/result/component/back_title_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ai_werewolf/page/root/component/main_button.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/member_repository.dart';
 import 'package:ai_werewolf/repository/message_repository.dart';
@@ -34,13 +35,13 @@ class ResultPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  winner == member.role ? '勝利' : '敗北',
-                  style: TextStyleConstant.bold48,
-                ),
-                const SizedBox(height: 32),
-                Text(
                   member.role,
-                  style: TextStyleConstant.bold32,
+                  style: TextStyleConstant.normal32,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  winner == member.role ? '勝利' : '敗北',
+                  style: TextStyleConstant.bold60,
                 ),
                 Icon(
                   member.role == RoleEnum.human.displayName
@@ -49,10 +50,12 @@ class ResultPage extends ConsumerWidget {
                   color: member.role == RoleEnum.human.displayName
                       ? ColorConstant.main
                       : ColorConstant.accent,
-                  size: 120,
+                  size: 152,
                 ),
-                const SizedBox(height: 32),
-                MainButton(
+                const SizedBox(height: 8),
+                ResultUsers(roomId: roomId),
+                const SizedBox(height: 48),
+                BackTitleButton(
                   onTap: () async {
                     await ref
                         .read(messageRepositoryProvider)
@@ -65,7 +68,6 @@ class ResultPage extends ConsumerWidget {
                     ref.refresh(answerAssignedIdProvider);
                     context.go('/');
                   },
-                  text: 'タイトルへ戻る',
                 ),
               ],
             );

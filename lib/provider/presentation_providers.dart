@@ -78,12 +78,6 @@ final topicProvider =
 
 final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 
-final limitTimerProvider = StateProvider.family((ref, DateTime startTime) {
-  final now = new DateTime.now();
-  print(now);
-  return now.difference(startTime);
-});
-
 @riverpod
 class LimitTime extends _$LimitTime {
   @override
@@ -107,8 +101,9 @@ class LimitTime extends _$LimitTime {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       const flavor = String.fromEnvironment('flavor');
       final time = DateTime.now().difference(startTime);
-      state =
-          (flavor == 'tes' ? 10 : 100) + ROLE_DIALOG_TIME + 1 - time.inSeconds;
+      final value =
+          (flavor == 'tes' ? 10 : 100) + ROLE_DIALOG_TIME + 3 - time.inSeconds;
+      state = value > 100 ? 100 : value;
       if (state < 1) {
         timer.cancel();
       }
