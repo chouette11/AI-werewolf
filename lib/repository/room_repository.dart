@@ -48,7 +48,7 @@ class RoomRepository {
       roles: roles,
       votedSum: 0,
       killedId: 404,
-      startTime: DateTime.now(),
+      startTime: DateTime(2017, 9, 7, 17, 30),
     );
 
     if (isOnline == true) {
