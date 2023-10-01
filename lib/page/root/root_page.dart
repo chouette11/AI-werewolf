@@ -40,7 +40,7 @@ class _RootPageState extends ConsumerState<RootPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const TitleIcon(),
-              const SizedBox(height: 80),
+              const SizedBox(height: 52),
               MainButton(
                 onTap: () async {
                   final rng = Random();
