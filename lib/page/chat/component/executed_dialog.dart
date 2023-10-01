@@ -35,32 +35,38 @@ class ExecutedDialog extends ConsumerWidget {
               height: 200,
               child: Column(
                 children: [
-                  const Spacer(),
+                  const Text('処刑', style: TextStyleConstant.normal14),
                   Text(
                     'プレイヤー${decidedExecuteMem().assignedId}',
-                    style: TextStyleConstant.normal18,
-                  ),
-                  const Text(
-                    'を処刑しました',
-                    style: TextStyleConstant.normal14,
+                    style: TextStyleConstant.normal20,
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: ColorConstant.main,
-                      backgroundColor: ColorConstant.accent,
-                    ),
-                    onPressed: () {
+                  Image.asset('assets/images/execute.png'),
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
                       context.pop();
                       context.go('/night', extra: roomId);
                     },
-                    child: Text(
-                      'OK',
-                      style: TextStyleConstant.bold12
-                          .copyWith(color: ColorConstant.black100),
+                    child: Container(
+                      width: 56,
+                      height: 32,
+                      decoration: const BoxDecoration(
+                        color: ColorConstant.accent,
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorConstant.black10,
+                            offset: Offset(2, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                          child: Text(
+                        'OK',
+                        style: TextStyleConstant.normal12,
+                      )),
                     ),
                   ),
-                  const Spacer(),
                 ],
               ),
             ),
