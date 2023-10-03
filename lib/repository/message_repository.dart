@@ -25,21 +25,6 @@ class MessageRepository {
     addMessageFromGptToQuestion(entity, roomId, topic);
   }
 
-  /// topicに対するAIの返答
-  Future<void> addMessageFromGptToTopic(String topic, String roomId) async {
-    final api = ref.read(apiProvider);
-    final firestore = ref.read(firestoreProvider);
-    final message = await api.fetchTopicAnswerMessage(topic);
-    final delayList = [-500, -5, -1, 0,  5, 6];
-    final random = Random().nextInt(delayList.length);
-    final entity = MessageEntity(
-        content: message.content,
-        uid: message.uid,
-        createdAt: DateTime.now().add(Duration(seconds: delayList[random])));
-    final messageDoc = entity.toMessageDocument();
-    await firestore.insertMessage(messageDoc, roomId);
-  }
-
   /// 他のユーザーが疑問文で送ったときに対するAIの返答
   Future<void> addMessageFromGptToQuestion(
       MessageEntity message, String roomId, String topic) async {

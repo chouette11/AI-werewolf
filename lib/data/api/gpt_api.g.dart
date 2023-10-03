@@ -70,30 +70,6 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Message> fetchTopicAnswerMessage(Topic topic) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(topic.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Message>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/make_topic_answer_friend',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Message.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
   Future<Message> fetchQuestionAnswerMessage(Message message) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
