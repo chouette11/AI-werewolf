@@ -31,6 +31,7 @@ class ChatPage extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
+  final ScrollController _controller = ScrollController();
 
   Future<void> _showExecutedDialog(RoomEntity room, bool isMake) async {
     final livingMem = await ref
@@ -95,8 +96,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     // 投票数が生きているメンバー数と一致するとき、処刑
     room.whenData((value) => _showExecutedDialog(value, isMake));
 
-    ScrollController _controller = ScrollController();
-
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(
@@ -108,96 +107,56 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             roomId: widget.roomId,
             counter: counter,
           ),
-          floatingActionButton: SizedBox(
-            height: 100,
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _controller.animateTo(
-                      _controller.position.maxScrollExtent,
-                      duration: const Duration(milliseconds: 100),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      color: ColorConstant.accent,
-                      boxShadow: [
-                        BoxShadow(
-                          color: ColorConstant.black0,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.arrow_downward_sharp, size: 28),
-                  ),
-                ),
-              ],
-            ),
+          floatingActionButton: _ScrollButton(
+            onTap: () {
+              _controller.animateTo(
+                _controller.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 100),
+                curve: Curves.easeInOut,
+              );
+            },
           ),
           body: messages.when(
             data: (data) {
-              return ScrollConfiguration(
-                behavior: NoEffectScrollBehavior(),
-                child: ListView.builder(
-                  controller: _controller,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: data.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == 0) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 16,
-                              width: 80,
-                              child: Divider(
-                                color: ColorConstant.accent,
-                                thickness: 2,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Text(
-                              'ゲーム開始',
-                              style: TextStyleConstant.normal16
-                                  .copyWith(color: ColorConstant.accent),
-                            ),
-                            const SizedBox(width: 16),
-                            const SizedBox(
-                              height: 16,
-                              width: 80,
-                              child: Divider(
-                                color: ColorConstant.accent,
-                                thickness: 2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    data.sort((a, b) {
-                      //sorting in descending order
-                      return a.createdAt.compareTo(b.createdAt);
-                    });
-                    final message = data[index - 1];
-                    if (message.uid == uid) {
-                      return SendMessageBubble(
-                        messageEntity: message,
-                        roomId: widget.roomId,
-                      );
-                    } else {
-                      return ReceiveMessageBubble(
-                        messageEntity: message,
-                        roomId: widget.roomId,
-                      );
-                    }
-                  },
-                ),
+              return Column(
+                children: [
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: ListView.builder(
+                        controller: _controller,
+                        itemCount: data.length + 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0) {
+                            return const _IntroWidget();
+                          }
+                          if (index == data.length) {
+                            _controller.animateTo(
+                              _controller.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 100),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                          data.sort(
+                              (a, b) => a.createdAt.compareTo(b.createdAt));
+                          final message = data[index - 1];
+                          if (message.uid == uid) {
+                            return SendMessageBubble(
+                              messageEntity: message,
+                              roomId: widget.roomId,
+                            );
+                          } else {
+                            return ReceiveMessageBubble(
+                              messageEntity: message,
+                              roomId: widget.roomId,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                ],
               );
             },
             error: (error, stackTrace) {
@@ -220,5 +179,86 @@ class NoEffectScrollBehavior extends ScrollBehavior {
     AxisDirection axisDirection,
   ) {
     return child;
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
+class _IntroWidget extends StatelessWidget {
+  const _IntroWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 16,
+            width: 80,
+            child: Divider(
+              color: ColorConstant.accent,
+              thickness: 2,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            'ゲーム開始',
+            style: TextStyleConstant.normal16
+                .copyWith(color: ColorConstant.accent),
+          ),
+          const SizedBox(width: 16),
+          const SizedBox(
+            height: 16,
+            width: 80,
+            child: Divider(
+              color: ColorConstant.accent,
+              thickness: 2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ScrollButton extends StatelessWidget {
+  const _ScrollButton({super.key, required this.onTap});
+
+  final void Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: const BoxDecoration(
+                color: ColorConstant.accent,
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorConstant.black0,
+                    offset: Offset(2, 2),
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.arrow_downward_sharp, size: 28),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
