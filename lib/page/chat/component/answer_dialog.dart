@@ -145,12 +145,9 @@ class ChoicesWidget extends ConsumerWidget {
           child: Stack(
             children: [
               Positioned(
-                top: 1,
-                left: 3,
-                child: SizedBox(
-                    height: 40,
-                    width: 180,
-                    child: Image.asset('assets/images/shadow.png')),
+                top: 2,
+                right: 0,
+                child: SizedBox(child: Image.asset('assets/images/shadow.png')),
               ),
               value == assignedId
                   ? Image.asset('assets/images/selected.png')
