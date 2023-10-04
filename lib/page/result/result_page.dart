@@ -42,6 +42,7 @@ class _ResultPageState extends ConsumerState<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
+    controller.play();
     final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
     return Scaffold(
@@ -50,42 +51,31 @@ class _ResultPageState extends ConsumerState<ResultPage> {
         child: members.when(
           data: (members) {
             final member = members[members.indexWhere((e) => e.uid == uid)];
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            return Stack(
+              alignment: Alignment.topCenter,
               children: [
-                Text(
-                  member.role,
-                  style: TextStyleConstant.normal32,
+                ConfettiWidget(
+                  confettiController: controller,
+                  blastDirection: 0, // radial value - RIGHT
+                  emissionFrequency: 0.1,
+                  numberOfParticles: 10,
+                  gravity: 0,
+                  colors: const [ColorConstant.black100, ColorConstant.accent],
+                  blastDirectionality: BlastDirectionality
+                      .explosive, // don't specify a direction, blast randomly
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  widget.winner == member.role ? '勝利' : '敗北',
-                  style: TextStyleConstant.bold60,
-                ),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: ConfettiWidget(
-                        confettiController: controller,
-                        blastDirection: 0, // radial value - RIGHT
-                        emissionFrequency: 0.1,
-                        numberOfParticles: 10,
-                        gravity: 0,
-                        colors: const [ColorConstant.black100, ColorConstant.accent],
-                        blastDirectionality: BlastDirectionality
-                            .explosive, // don't specify a direction, blast randomly
-                      ),
+                    Text(
+                      member.role,
+                      style: TextStyleConstant.normal32,
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                          onPressed: () {
-                            controller.play();
-                          },
-                          child: const Text('singles')),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.winner == member.role ? '勝利' : '敗北',
+                      style: TextStyleConstant.bold60,
                     ),
                     Icon(
                       member.role == RoleEnum.human.displayName
@@ -96,26 +86,26 @@ class _ResultPageState extends ConsumerState<ResultPage> {
                           : ColorConstant.accent,
                       size: 152,
                     ),
+                    const SizedBox(height: 8),
+                    ResultUsers(roomId: widget.roomId),
+                    const SizedBox(height: 48),
+                    BackTitleButton(
+                      onTap: () async {
+                        await ref
+                            .read(messageRepositoryProvider)
+                            .deleteAllMessage(widget.roomId);
+                        await ref
+                            .read(memberRepositoryProvider)
+                            .resetVoted(widget.roomId);
+                        await ref
+                            .read(roomRepositoryProvider)
+                            .resetKilledId(widget.roomId);
+                        ref.read(limitTimeProvider.notifier).reset();
+                        ref.refresh(answerAssignedIdProvider);
+                        context.go('/');
+                      },
+                    ),
                   ],
-                ),
-                const SizedBox(height: 8),
-                ResultUsers(roomId: widget.roomId),
-                const SizedBox(height: 48),
-                BackTitleButton(
-                  onTap: () async {
-                    await ref
-                        .read(messageRepositoryProvider)
-                        .deleteAllMessage(widget.roomId);
-                    await ref
-                        .read(memberRepositoryProvider)
-                        .resetVoted(widget.roomId);
-                    await ref
-                        .read(roomRepositoryProvider)
-                        .resetKilledId(widget.roomId);
-                    ref.read(limitTimeProvider.notifier).reset();
-                    ref.refresh(answerAssignedIdProvider);
-                    context.go('/');
-                  },
                 ),
               ],
             );
