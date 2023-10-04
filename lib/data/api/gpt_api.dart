@@ -15,11 +15,11 @@ abstract class RestClient {
   @GET("/messages")
   Future<List<MessageDocument>> getMessages();
 
-  @POST('/make_topic_answer_friend')
-  Future<Message> fetchTopicAnswerMessage(@Body() Topic topic);
-
   @POST('/make_question_answer')
   Future<Message> fetchQuestionAnswerMessage(@Body() Message message);
+
+  @POST('/make_question_answer_dev')
+  Future<Message> fetchQuestionAnswerMessageDev(@Body() Message message);
 }
 
 @JsonSerializable()

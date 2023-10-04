@@ -13,31 +13,21 @@ class ApiDataSource {
   /// Message
   ///
 
-  Future<Message> fetchTopicAnswerMessage(String topic) async {
-    try {
-      final api = ref.read(apiClientProvider);
-      final message = await api.fetchTopicAnswerMessage(Topic(topic: topic));
-      return message;
-    } catch (e) {
-      print('api_getMessageWithPrompt');
-      throw e;
-    }
-  }
-
   Future<Message> fetchQuestionAnswerMessage(
-    MessageEntity message,
+    MessageEntity messageEntity,
     String topic,
   ) async {
     try {
       final api = ref.read(apiClientProvider);
-      final resMessage = await api.fetchQuestionAnswerMessage(
-        Message(
-          topic: topic,
-          content: message.content,
-          uid: message.uid,
-        ),
+      const flavor = String.fromEnvironment('flavor');
+      final message = Message(
+        topic: topic,
+        content: messageEntity.content,
+        uid: messageEntity.uid,
       );
-      print(resMessage.content);
+      final resMessage = flavor == 'prod'
+          ? await api.fetchQuestionAnswerMessage(message)
+          : await api.fetchQuestionAnswerMessageDev(message);
       return resMessage;
     } catch (e) {
       print('api_getMessageWithPrompt');

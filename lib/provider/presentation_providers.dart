@@ -101,9 +101,8 @@ class LimitTime extends _$LimitTime {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       const flavor = String.fromEnvironment('flavor');
       final time = DateTime.now().difference(startTime);
-      final value =
-          (flavor == 'tes' ? 10 : 100) + ROLE_DIALOG_TIME + 3 - time.inSeconds;
-      state = value > 100 ? 100 : value;
+      final value = 100 + ROLE_DIALOG_TIME + 3 - time.inSeconds;
+      state = flavor == 'tes' ? state - 1 : (value > 100 ? 100 : value);
       if (state < 1) {
         timer.cancel();
       }
