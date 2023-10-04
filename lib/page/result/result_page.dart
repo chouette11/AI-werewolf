@@ -56,13 +56,13 @@ class _ResultPageState extends ConsumerState<ResultPage> {
               children: [
                 ConfettiWidget(
                   confettiController: controller,
-                  blastDirection: 0, // radial value - RIGHT
+                  blastDirection: 0,
                   emissionFrequency: 0.1,
                   numberOfParticles: 10,
-                  gravity: 0,
+                  gravity: 1,
                   colors: const [ColorConstant.black100, ColorConstant.accent],
-                  blastDirectionality: BlastDirectionality
-                      .explosive, // don't specify a direction, blast randomly
+                  blastDirectionality: BlastDirectionality.explosive,
+                  minBlastForce: 10,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
