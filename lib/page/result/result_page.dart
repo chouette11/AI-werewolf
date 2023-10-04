@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ai_werewolf/page/result/component/result_users.dart';
 import 'package:ai_werewolf/page/result/component/back_title_button.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +74,7 @@ class _ResultPageState extends ConsumerState<ResultPage> {
                         emissionFrequency: 0.1,
                         numberOfParticles: 10,
                         gravity: 0,
-                        colors: [Colors.white, Color(0xff74AA9C)],
+                        colors: const [ColorConstant.black100, ColorConstant.accent],
                         blastDirectionality: BlastDirectionality
                             .explosive, // don't specify a direction, blast randomly
                       ),
