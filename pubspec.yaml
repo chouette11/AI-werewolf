@@ -30,6 +30,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   firebase_auth: ^4.9.0
   audioplayers: ^5.1.0
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:
