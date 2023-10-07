@@ -10,8 +10,9 @@ import 'package:ai_werewolf/repository/room_repository.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/enum/role.dart';
+import 'package:confetti/confetti.dart';
 
-class ResultPage extends ConsumerWidget {
+class ResultPage extends ConsumerStatefulWidget {
   const ResultPage({
     Key? key,
     required this.roomId,
@@ -21,8 +22,28 @@ class ResultPage extends ConsumerWidget {
   final String winner;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final members = ref.watch(membersStreamProvider(roomId));
+  ConsumerState<ResultPage> createState() => _ResultPageState();
+}
+
+class _ResultPageState extends ConsumerState<ResultPage> {
+  late ConfettiController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ConfettiController(duration: const Duration(seconds: 3));
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    controller.play();
+    final members = ref.watch(membersStreamProvider(widget.roomId));
     final uid = ref.watch(uidProvider);
     return Scaffold(
       backgroundColor: ColorConstant.back,
@@ -30,44 +51,65 @@ class ResultPage extends ConsumerWidget {
         child: members.when(
           data: (members) {
             final member = members[members.indexWhere((e) => e.uid == uid)];
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            return Stack(
+              alignment: Alignment.topCenter,
               children: [
-                Text(
-                  member.role,
-                  style: TextStyleConstant.normal32,
+                Visibility(
+                  visible: widget.winner == member.role,
+                  child: ConfettiWidget(
+                    confettiController: controller,
+                    blastDirection: 0,
+                    emissionFrequency: 0.1,
+                    numberOfParticles: 10,
+                    gravity: 1,
+                    colors: const [ColorConstant.black100, ColorConstant.accent],
+                    blastDirectionality: BlastDirectionality.explosive,
+                    minBlastForce: 10,
+                    shouldLoop: true,
+                  ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  winner == member.role ? '勝利' : '敗北',
-                  style: TextStyleConstant.bold60,
-                ),
-                Icon(
-                  member.role == RoleEnum.human.displayName
-                      ? Icons.diversity_3
-                      : Icons.psychology_outlined,
-                  color: member.role == RoleEnum.human.displayName
-                      ? ColorConstant.main
-                      : ColorConstant.accent,
-                  size: 152,
-                ),
-                const SizedBox(height: 8),
-                ResultUsers(roomId: roomId),
-                const SizedBox(height: 48),
-                BackTitleButton(
-                  onTap: () async {
-                    await ref
-                        .read(messageRepositoryProvider)
-                        .deleteAllMessage(roomId);
-                    await ref.read(memberRepositoryProvider).resetVoted(roomId);
-                    await ref
-                        .read(roomRepositoryProvider)
-                        .resetKilledId(roomId);
-                    ref.read(limitTimeProvider.notifier).reset();
-                    ref.refresh(answerAssignedIdProvider);
-                    context.go('/');
-                  },
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      member.role,
+                      style: TextStyleConstant.normal32,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.winner == member.role ? '勝利' : '敗北',
+                      style: TextStyleConstant.bold60,
+                    ),
+                    Icon(
+                      member.role == RoleEnum.human.displayName
+                          ? Icons.diversity_3
+                          : Icons.psychology_outlined,
+                      color: member.role == RoleEnum.human.displayName
+                          ? ColorConstant.main
+                          : ColorConstant.accent,
+                      size: 152,
+                    ),
+                    const SizedBox(height: 8),
+                    ResultUsers(roomId: widget.roomId),
+                    const SizedBox(height: 48),
+                    BackTitleButton(
+                      onTap: () async {
+                        await ref
+                            .read(messageRepositoryProvider)
+                            .deleteAllMessage(widget.roomId);
+                        await ref
+                            .read(memberRepositoryProvider)
+                            .resetVoted(widget.roomId);
+                        await ref
+                            .read(roomRepositoryProvider)
+                            .resetKilledId(widget.roomId);
+                        ref.read(limitTimeProvider.notifier).reset();
+                        ref.refresh(answerAssignedIdProvider);
+                        context.go('/');
+                      },
+                    ),
+                  ],
                 ),
               ],
             );
