@@ -54,16 +54,19 @@ class _ResultPageState extends ConsumerState<ResultPage> {
             return Stack(
               alignment: Alignment.topCenter,
               children: [
-                ConfettiWidget(
-                  confettiController: controller,
-                  blastDirection: 0,
-                  emissionFrequency: 0.1,
-                  numberOfParticles: 10,
-                  gravity: 1,
-                  colors: const [ColorConstant.black100, ColorConstant.accent],
-                  blastDirectionality: BlastDirectionality.explosive,
-                  minBlastForce: 10,
-                  shouldLoop: true,
+                Visibility(
+                  visible: widget.winner == member.role,
+                  child: ConfettiWidget(
+                    confettiController: controller,
+                    blastDirection: 0,
+                    emissionFrequency: 0.1,
+                    numberOfParticles: 10,
+                    gravity: 1,
+                    colors: const [ColorConstant.black100, ColorConstant.accent],
+                    blastDirectionality: BlastDirectionality.explosive,
+                    minBlastForce: 10,
+                    shouldLoop: true,
+                  ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
