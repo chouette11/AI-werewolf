@@ -63,6 +63,7 @@ class _ResultPageState extends ConsumerState<ResultPage> {
                   colors: const [ColorConstant.black100, ColorConstant.accent],
                   blastDirectionality: BlastDirectionality.explosive,
                   minBlastForce: 10,
+                  shouldLoop: true,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
