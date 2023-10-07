@@ -47,7 +47,6 @@ class _RootPageState extends ConsumerState<RootPage> {
                   final roomId = rng.nextInt(100000).toString().padLeft(5, '0');
                   await ref.read(roomRepositoryProvider).makeRoom(roomId, 4);
                   await ref.read(roomRepositoryProvider).joinRoom(roomId);
-                  ref.read(isMakeRoomProvider.notifier).update((state) => true);
                   const flavor = String.fromEnvironment('flavor');
                   if (flavor == 'tes') {
                     context.go('/chat/$roomId/1');

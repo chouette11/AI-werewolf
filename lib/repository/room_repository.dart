@@ -137,14 +137,12 @@ class RoomRepository {
     if (latestRoom == null) {
       final roomId = const Uuid().v4();
       await makeRoom(roomId, maxNum, isOnline: true);
-      ref.read(isMakeRoomProvider.notifier).update((state) => true);
       return roomId;
     }
     final members = await firestore.fetchMembers(latestRoom.id);
     if (members.length == latestRoom.maxNum) {
       final roomId = const Uuid().v4();
       await makeRoom(roomId, maxNum, isOnline: true);
-      ref.read(isMakeRoomProvider.notifier).update((state) => true);
       return roomId;
     }
     return latestRoom.id;
