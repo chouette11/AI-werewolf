@@ -114,6 +114,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     child: ScrollConfiguration(
                       behavior: MyBehavior(),
                       child: ListView.builder(
+                        physics: const ClampingScrollPhysics(),
                         controller: _controller,
                         itemCount: data.length + 1,
                         itemBuilder: (BuildContext context, int index) {
