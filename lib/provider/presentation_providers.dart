@@ -36,9 +36,8 @@ final membersStreamProvider = StreamProvider.family<List<MemberEntity>, String>(
 
 final randomKillProvider =
     FutureProvider.family<int, String>((ref, String roomId) async {
-  final isHost = ref.read(isMakeRoomProvider);
   int killedUserAssignedId = 404;
-  if (isHost) {
+  if (false) {
     print('kill_before');
     await ref.read(memberRepositoryProvider).randomKill(roomId);
     print('kill_after');
@@ -75,8 +74,6 @@ final topicProvider =
   final room = await ref.read(roomRepositoryProvider).getRoom(roomId);
   return room.topic;
 });
-
-final isMakeRoomProvider = StateProvider<bool>((ref) => false);
 
 @riverpod
 class LimitTime extends _$LimitTime {
