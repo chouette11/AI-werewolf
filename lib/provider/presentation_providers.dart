@@ -15,6 +15,10 @@ part 'presentation_providers.g.dart';
 
 final messageTextFieldController = Provider((_) => TextEditingController());
 
+final tutorialTextFieldController = Provider((_) => TextEditingController());
+
+final tutorialTextBoolProvider = StateProvider((ref) => false);
+
 final idTextFieldProvider = StateProvider<String>((ref) => '');
 
 final startTextFieldProvider = StateProvider((ref) => '');

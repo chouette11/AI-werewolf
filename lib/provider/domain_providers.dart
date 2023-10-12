@@ -1,5 +1,8 @@
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_1.dart';
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
@@ -17,6 +20,7 @@ final uuidProvider = Provider((_) => const Uuid());
 /// ページ遷移のプロバイダ
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
@@ -49,8 +53,34 @@ final routerProvider = Provider<GoRouter>(
             builder: (context, state) =>
                 NightPage(roomId: state.extra! as String),
           ),
+          GoRoute(
+            path: 'tutorial',
+            builder: (context, state) => const TutorialPage1(),
+            routes: [
+              GoRoute(
+                path: '1',
+                builder: (context, state) => const TutorialPage1(),
+              ),
+              GoRoute(
+                path: '2',
+                pageBuilder: (context, state) => _buildPageWithAnimation(
+                  const TutorialPage2(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     ],
   ),
 );
+
+CustomTransitionPage _buildPageWithAnimation(Widget page) {
+  return CustomTransitionPage(
+    child: page,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
+    },
+    transitionDuration: const Duration(milliseconds: 0),
+  );
+}
