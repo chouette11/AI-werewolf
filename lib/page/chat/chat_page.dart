@@ -1,19 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ai_werewolf/page/chat/component/role_dialog.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
-import 'package:ai_werewolf/model/entity/room/room_entity.dart';
-import 'package:ai_werewolf/page/chat/component/answer_dialog.dart';
 import 'package:ai_werewolf/page/chat/component/bottom_text_field.dart';
 import 'package:ai_werewolf/page/chat/component/chat_appbar.dart';
-import 'package:ai_werewolf/page/chat/component/executed_dialog.dart';
 import 'package:ai_werewolf/page/chat/component/receive_message_bubble.dart';
 import 'package:ai_werewolf/page/chat/component/send_message_bubble.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
-import 'package:ai_werewolf/repository/member_repository.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({
@@ -33,34 +26,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
   final ScrollController _controller = ScrollController();
 
-  Future<void> _showExecutedDialog(RoomEntity room) async {
-    final livingMem = await ref
-        .read(memberRepositoryProvider)
-        .getLivingMembersFromDB(widget.roomId);
-    if (!livingMem.map((e) => e.uid).contains(ref.read(uidProvider))) {
-      return;
-    }
-    // gptの分を引く
-    if (room.votedSum == livingMem.length - 1) {
-      // ignore: use_build_context_synchronously
-      return showDialog<void>(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return ExecutedDialog(roomId: room.id, members: livingMem);
-        },
-      );
-    }
-  }
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(
-        context: context,
-        builder: (context) => RoleDialog(widget.roomId, false),
-      );
-    });
     super.initState();
   }
 
@@ -69,22 +36,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final messages = ref.watch(messagesStreamProvider(widget.roomId));
     final counter = ref.watch(limitTimeProvider);
     final uid = ref.watch(uidProvider);
-    final room = ref.watch(roomStreamProvider(widget.roomId));
-
-    if (counter <= 0 && !isDialog) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showDialog(
-          context: context,
-          builder: (context) => AnswerDialog(
-            roomId: widget.roomId,
-          ),
-        );
-        isDialog = true;
-      });
-    }
-
-    // 投票数が生きているメンバー数と一致するとき、処刑
-    room.whenData((value) => _showExecutedDialog(value));
 
     return WillPopScope(
       onWillPop: () async => false,
