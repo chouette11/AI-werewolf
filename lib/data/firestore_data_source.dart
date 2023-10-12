@@ -1,4 +1,3 @@
-import 'package:ai_werewolf/model/document/user/user_document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/model/document/member/member_document.dart';
