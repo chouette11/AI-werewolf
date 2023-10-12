@@ -35,7 +35,7 @@ class MessageRepository {
     final random = Random().nextInt(2000);
     final delay = message.content.length * 2 * 1000 + random;
     final resEntity = MessageEntity(
-      content: resMessage.content ?? '',
+      content: resMessage.content,
       uid: resMessage.uid,
       createdAt: DateTime.now().add(Duration(milliseconds: delay)),
     );
