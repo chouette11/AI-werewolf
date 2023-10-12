@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ai_werewolf/provider/audio_provider.dart';
-import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/repository/room_repository.dart';
 import 'package:ai_werewolf/page/root/component/join_dialog.dart';
 import 'package:ai_werewolf/util/play.dart';
@@ -25,7 +24,7 @@ class _RootPageState extends ConsumerState<RootPage> {
   @override
   void initState() {
     final audio = ref.read(audioProvider);
-    audio.play(AssetSource('audios/title.mp3'));
+    audio.play(AssetSource('audios/title2.mp3'));
     super.initState();
   }
 
