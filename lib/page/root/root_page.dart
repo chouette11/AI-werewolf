@@ -76,7 +76,7 @@ class _RootPageState extends ConsumerState<RootPage> {
               MainButton(
                 onTap: () async {
                   final roomId = await ref.read(roomRepositoryProvider).makeOnlineRoom(4);
-                  await ref.read(roomRepositoryProvider).joinRoom(roomId);
+                  ref.read(roomRepositoryProvider).joinRoom(roomId);
                   const flavor = String.fromEnvironment('flavor');
                   if (flavor == 'tes') {
                     context.go('/chat/$roomId/1');
