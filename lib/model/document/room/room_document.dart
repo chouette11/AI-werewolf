@@ -11,7 +11,7 @@ class RoomDocument with _$RoomDocument {
   const RoomDocument._();
 
   const factory RoomDocument({
-    @JsonKey(name: 'id') required String id,
+    @JsonKey(name: 'id') String? id,
     @JsonKey(name: 'topic') required String topic,
     @JsonKey(name: 'maxNum') required int maxNum,
     @JsonKey(name: 'roles') required List<String> roles,

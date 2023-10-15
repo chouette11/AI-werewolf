@@ -9,17 +9,20 @@ class UserEntity with _$UserEntity {
 
   const factory UserEntity({
     required String uid,
+    String? roomId,
   }) = _UserEntity;
 
-  static UserEntity fromDoc(UserDocument memberDoc) {
+  static UserEntity fromDoc(UserDocument userDoc) {
     return UserEntity(
-      uid: memberDoc.uid,
+      uid: userDoc.uid,
+      roomId: userDoc.roomId
     );
   }
 
   UserDocument toUserDocument() {
     return UserDocument(
       uid: uid,
+      roomId: roomId,
     );
   }
 }
