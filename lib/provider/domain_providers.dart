@@ -1,3 +1,4 @@
+import 'package:ai_werewolf/page/wait/online_waiting_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +7,7 @@ import 'package:uuid/uuid.dart';
 import 'package:ai_werewolf/page/chat/chat_page.dart';
 import 'package:ai_werewolf/page/night/night_page.dart';
 import 'package:ai_werewolf/page/root/root_page.dart';
-import 'package:ai_werewolf/page/wait/make_room_page.dart';
+import 'package:ai_werewolf/page/wait/waiting_page.dart';
 
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
@@ -30,6 +31,15 @@ final routerProvider = Provider<GoRouter>(
               return ChatPage(
                 roomId: roomId!,
                 isFirst: isFirst! == '1' ? true : false,
+              );
+            },
+          ),
+          GoRoute(
+            path: 'online_wait/:roomId/:isJoin',
+            builder: (context, state) {
+              final isJoin = state.pathParameters['isJoin'];
+              return OnlineWaitPage(
+                isJoin: isJoin! == '1' ? true : false,
               );
             },
           ),
