@@ -56,7 +56,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          return ExecutedDialog(roomId: room.id, members: livingMem);
+          return ExecutedDialog(roomId: widget.roomId, members: livingMem);
         },
       );
     }
