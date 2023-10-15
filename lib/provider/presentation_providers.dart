@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ai_werewolf/provider/domain_providers.dart';
+import 'package:ai_werewolf/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -64,6 +65,11 @@ final memberStreamProvider = StreamProvider.family<MemberEntity, String>(
 final roomStreamProvider = StreamProvider.family(
   (ref, String roomId) =>
       ref.watch(roomRepositoryProvider).getRoomStream(roomId),
+);
+
+final userStreamProvider = StreamProvider(
+  (ref) =>
+      ref.watch(userRepositoryProvider).getUserStream(),
 );
 
 final answerAssignedIdProvider = StateProvider<int>((ref) => 404);
