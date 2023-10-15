@@ -59,18 +59,17 @@ class _MakeRoomPageState extends ConsumerState<WaitPage> {
   @override
   Widget build(BuildContext context) {
     final members = ref.watch(membersStreamProvider(widget.roomId));
-    final room = ref.watch(roomStreamProvider(widget.roomId));
     return members.when(
       data: (data) {
-        if (data.length == maxNum) {
+        if (data.length == maxNum){
           isLoading = true;
           setState(() {});
-          room.whenData((value) {
-            if (value.startTime.year != 2017) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.go('/chat/${widget.roomId}/1');
-              });
-            }
+        }
+        if (!data.map((e) => e.assignedId).toList().contains(0) &&
+            data.length == maxNum) {
+          Future.delayed(const Duration(seconds: 3));
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/chat/${widget.roomId}/1');
           });
         }
         return WillPopScope(
