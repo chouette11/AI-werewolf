@@ -1,4 +1,5 @@
 import 'package:ai_werewolf/model/document/user/user_document.dart';
+import 'package:ai_werewolf/model/entity/user/user_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/model/document/member/member_document.dart';
@@ -308,5 +309,44 @@ class FirestoreDataSource {
         }
       });
     } catch (e) {}
+  }
+
+  /// Waiting
+
+  /// ウェイティングリストに追加
+  Future<void> addWaiting(UserEntity userEntity) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db
+          .collection('waiting')
+          .doc(userEntity.uid)
+          .set(userEntity.toUserDocument().toJson());
+    } catch (e) {
+      print('count_vote');
+      throw e;
+    }
+  }
+
+  /// ウェイティングリストから削除
+  Future<void> deleteWaiting(String uid) async {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      await db.collection('waiting').doc(uid).delete();
+    } catch (e) {
+      print('count_vote');
+      throw e;
+    }
+  }
+
+  Stream<UserDocument> fetchWaitingStream() {
+    try {
+      final db = ref.read(firebaseFirestoreProvider);
+      final uid = ref.read(uidProvider);
+      final stream = db.collection('waiting').doc(uid).snapshots();
+      return stream.map((event) => UserDocument.fromJson(event.data()!));
+    } catch (e) {
+      print('firestore_getMemberStream');
+      throw e;
+    }
   }
 }
