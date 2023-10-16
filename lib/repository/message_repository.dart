@@ -32,7 +32,7 @@ class MessageRepository {
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
     final resMessage = await api.fetchQuestionAnswerMessage(message, topic);
-    final random = Random().nextInt(5000);
+    final random = Random().nextInt(2000);
     final delay = message.content.length * 2 * 1000 + random;
     final resEntity = MessageEntity(
       content: resMessage.content ?? '',

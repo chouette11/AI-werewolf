@@ -33,7 +33,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
   final ScrollController _controller = ScrollController();
 
-  Future<void> _showExecutedDialog(RoomEntity room, bool isMake) async {
+  Future<void> _showExecutedDialog(RoomEntity room) async {
     final livingMem = await ref
         .read(memberRepositoryProvider)
         .getLivingMembersFromDB(widget.roomId);
@@ -42,15 +42,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     }
     // gptの分を引く
     if (room.votedSum == livingMem.length - 1) {
-      if (isMake) {
-        /// 投票数が多い人間を処刑
-        livingMem.sort((a, b) => -a.voted.compareTo(b.voted));
-        final mem = livingMem[0];
-        await ref.read(memberRepositoryProvider).killMember(
-              widget.roomId,
-              mem.uid,
-            );
-      }
       // ignore: use_build_context_synchronously
       return showDialog<void>(
         barrierDismissible: false,
@@ -79,7 +70,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final counter = ref.watch(limitTimeProvider);
     final uid = ref.watch(uidProvider);
     final room = ref.watch(roomStreamProvider(widget.roomId));
-    final isMake = ref.watch(isMakeRoomProvider);
 
     if (counter <= 0 && !isDialog) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -94,7 +84,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     }
 
     // 投票数が生きているメンバー数と一致するとき、処刑
-    room.whenData((value) => _showExecutedDialog(value, isMake));
+    room.whenData((value) => _showExecutedDialog(value));
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -124,6 +114,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     child: ScrollConfiguration(
                       behavior: MyBehavior(),
                       child: ListView.builder(
+                        physics: const ClampingScrollPhysics(),
                         controller: _controller,
                         itemCount: data.length + 1,
                         itemBuilder: (BuildContext context, int index) {
