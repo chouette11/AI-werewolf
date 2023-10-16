@@ -129,22 +129,4 @@ class RoomRepository {
       firestore.deleteRoom(roomId);
     }
   }
-
-  /// オンラインルームを作成
-  Future<String> makeOnlineRoom(int maxNum) async {
-    final firestore = ref.read(firestoreProvider);
-    final latestRoom = await firestore.fetchLatestOnlineRoom();
-    if (latestRoom == null) {
-      final roomId = const Uuid().v4();
-      await makeRoom(roomId, maxNum, isOnline: true);
-      return roomId;
-    }
-    final members = await firestore.fetchMembers(latestRoom.id);
-    if (members.length == latestRoom.maxNum) {
-      final roomId = const Uuid().v4();
-      await makeRoom(roomId, maxNum, isOnline: true);
-      return roomId;
-    }
-    return latestRoom.id;
-  }
 }

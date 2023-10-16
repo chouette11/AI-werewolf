@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserEntity {
   String get uid => throw _privateConstructorUsedError;
+  String? get roomId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserEntityCopyWith<UserEntity> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String uid});
+  $Res call({String uid, String? roomId});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   @override
   $Res call({
     Object? uid = null,
+    Object? roomId = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$_UserEntityCopyWith<$Res>
       __$$_UserEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid});
+  $Res call({String uid, String? roomId});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$_UserEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = null,
+    Object? roomId = freezed,
   }) {
     return _then(_$_UserEntity(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -92,14 +103,16 @@ class __$$_UserEntityCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UserEntity extends _UserEntity {
-  const _$_UserEntity({required this.uid}) : super._();
+  const _$_UserEntity({required this.uid, this.roomId}) : super._();
 
   @override
   final String uid;
+  @override
+  final String? roomId;
 
   @override
   String toString() {
-    return 'UserEntity(uid: $uid)';
+    return 'UserEntity(uid: $uid, roomId: $roomId)';
   }
 
   @override
@@ -107,11 +120,12 @@ class _$_UserEntity extends _UserEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserEntity &&
-            (identical(other.uid, uid) || other.uid == uid));
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.roomId, roomId) || other.roomId == roomId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uid);
+  int get hashCode => Object.hash(runtimeType, uid, roomId);
 
   @JsonKey(ignore: true)
   @override
@@ -121,11 +135,14 @@ class _$_UserEntity extends _UserEntity {
 }
 
 abstract class _UserEntity extends UserEntity {
-  const factory _UserEntity({required final String uid}) = _$_UserEntity;
+  const factory _UserEntity({required final String uid, final String? roomId}) =
+      _$_UserEntity;
   const _UserEntity._() : super._();
 
   @override
   String get uid;
+  @override
+  String? get roomId;
   @override
   @JsonKey(ignore: true)
   _$$_UserEntityCopyWith<_$_UserEntity> get copyWith =>

@@ -21,7 +21,7 @@ RoomDocument _$RoomDocumentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RoomDocument {
   @JsonKey(name: 'id')
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'topic')
   String get topic => throw _privateConstructorUsedError;
   @JsonKey(name: 'maxNum')
@@ -52,7 +52,7 @@ abstract class $RoomDocumentCopyWith<$Res> {
       _$RoomDocumentCopyWithImpl<$Res, RoomDocument>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
+      {@JsonKey(name: 'id') String? id,
       @JsonKey(name: 'topic') String topic,
       @JsonKey(name: 'maxNum') int maxNum,
       @JsonKey(name: 'roles') List<String> roles,
@@ -75,7 +75,7 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? topic = null,
     Object? maxNum = null,
     Object? roles = null,
@@ -85,10 +85,10 @@ class _$RoomDocumentCopyWithImpl<$Res, $Val extends RoomDocument>
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       topic: null == topic
           ? _value.topic
           : topic // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ abstract class _$$_RoomDocumentCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
+      {@JsonKey(name: 'id') String? id,
       @JsonKey(name: 'topic') String topic,
       @JsonKey(name: 'maxNum') int maxNum,
       @JsonKey(name: 'roles') List<String> roles,
@@ -151,7 +151,7 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? topic = null,
     Object? maxNum = null,
     Object? roles = null,
@@ -161,10 +161,10 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
     Object? createdAt = freezed,
   }) {
     return _then(_$_RoomDocument(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       topic: null == topic
           ? _value.topic
           : topic // ignore: cast_nullable_to_non_nullable
@@ -201,7 +201,7 @@ class __$$_RoomDocumentCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RoomDocument extends _RoomDocument {
   const _$_RoomDocument(
-      {@JsonKey(name: 'id') required this.id,
+      {@JsonKey(name: 'id') this.id,
       @JsonKey(name: 'topic') required this.topic,
       @JsonKey(name: 'maxNum') required this.maxNum,
       @JsonKey(name: 'roles') required final List<String> roles,
@@ -217,7 +217,7 @@ class _$_RoomDocument extends _RoomDocument {
 
   @override
   @JsonKey(name: 'id')
-  final String id;
+  final String? id;
   @override
   @JsonKey(name: 'topic')
   final String topic;
@@ -302,7 +302,7 @@ class _$_RoomDocument extends _RoomDocument {
 abstract class _RoomDocument extends RoomDocument {
   const factory _RoomDocument(
       {@JsonKey(name: 'id')
-          required final String id,
+          final String? id,
       @JsonKey(name: 'topic')
           required final String topic,
       @JsonKey(name: 'maxNum')
@@ -326,7 +326,7 @@ abstract class _RoomDocument extends RoomDocument {
 
   @override
   @JsonKey(name: 'id')
-  String get id;
+  String? get id;
   @override
   @JsonKey(name: 'topic')
   String get topic;

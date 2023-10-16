@@ -24,7 +24,7 @@ class RoomEntity with _$RoomEntity {
 
   static RoomEntity fromDoc(RoomDocument roomDoc) {
     return RoomEntity(
-      id: roomDoc.id,
+      id: roomDoc.id ?? '00000',
       topic: roomDoc.topic,
       maxNum: roomDoc.maxNum,
       roles: roomDoc.roles,

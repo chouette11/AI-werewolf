@@ -9,9 +9,11 @@ part of 'user_document.dart';
 _$_UserDocument _$$_UserDocumentFromJson(Map<String, dynamic> json) =>
     _$_UserDocument(
       uid: json['uid'] as String,
+      roomId: json['roomId'] as String?,
     );
 
 Map<String, dynamic> _$$_UserDocumentToJson(_$_UserDocument instance) =>
     <String, dynamic>{
       'uid': instance.uid,
+      'roomId': instance.roomId,
     };
