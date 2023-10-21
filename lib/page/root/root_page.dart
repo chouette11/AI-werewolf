@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:ai_werewolf/model/entity/user/user_entity.dart';
+import 'package:ai_werewolf/repository/user_repository.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +13,7 @@ import 'package:ai_werewolf/util/play.dart';
 import 'package:ai_werewolf/page/root/component/main_button.dart';
 import 'package:ai_werewolf/page/root/component/title_icon.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
+import 'package:uuid/uuid.dart';
 
 class RootPage extends ConsumerStatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -74,14 +77,16 @@ class _RootPageState extends ConsumerState<RootPage> {
               const SizedBox(height: 32),
               MainButton(
                 onTap: () async {
-                  final roomId = await ref.read(roomRepositoryProvider).makeOnlineRoom(4);
-                  await ref.read(roomRepositoryProvider).joinRoom(roomId);
+                  final uid = ref.read(uidProvider);
+                  final user = UserEntity(uid: uid);
+                  await ref.read(userRepositoryProvider).addWaiting(user);
+                  final roomId = const Uuid().v4();
                   const flavor = String.fromEnvironment('flavor');
                   if (flavor == 'tes') {
                     context.go('/chat/$roomId/1');
                     return;
                   }
-                  context.go("/wait/$roomId/1");
+                  context.go("/online_wait/$roomId/1");
                 },
                 text: 'オンライン',
               ),

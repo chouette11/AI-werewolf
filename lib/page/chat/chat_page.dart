@@ -1,3 +1,6 @@
+import 'package:ai_werewolf/model/entity/room/room_entity.dart';
+import 'package:ai_werewolf/page/chat/component/executed_dialog.dart';
+import 'package:ai_werewolf/repository/member_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
@@ -25,6 +28,26 @@ class ChatPage extends ConsumerStatefulWidget {
 class _ChatPageState extends ConsumerState<ChatPage> {
   bool isDialog = false;
   final ScrollController _controller = ScrollController();
+
+  Future<void> _showExecutedDialog(RoomEntity room) async {
+    final livingMem = await ref
+        .read(memberRepositoryProvider)
+        .getLivingMembersFromDB(widget.roomId);
+    if (!livingMem.map((e) => e.uid).contains(ref.read(uidProvider))) {
+      return;
+    }
+    // gptの分を引く
+    if (room.votedSum == livingMem.length - 1) {
+      // ignore: use_build_context_synchronously
+      return showDialog<void>(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return ExecutedDialog(roomId: widget.roomId, members: livingMem);
+        },
+      );
+    }
+  }
 
   @override
   void initState() {

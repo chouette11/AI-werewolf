@@ -22,6 +22,8 @@ UserDocument _$UserDocumentFromJson(Map<String, dynamic> json) {
 mixin _$UserDocument {
   @JsonKey(name: 'uid')
   String get uid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'roomId')
+  String? get roomId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,9 @@ abstract class $UserDocumentCopyWith<$Res> {
           UserDocument value, $Res Function(UserDocument) then) =
       _$UserDocumentCopyWithImpl<$Res, UserDocument>;
   @useResult
-  $Res call({@JsonKey(name: 'uid') String uid});
+  $Res call(
+      {@JsonKey(name: 'uid') String uid,
+      @JsonKey(name: 'roomId') String? roomId});
 }
 
 /// @nodoc
@@ -52,12 +56,17 @@ class _$UserDocumentCopyWithImpl<$Res, $Val extends UserDocument>
   @override
   $Res call({
     Object? uid = null,
+    Object? roomId = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -70,7 +79,9 @@ abstract class _$$_UserDocumentCopyWith<$Res>
       __$$_UserDocumentCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'uid') String uid});
+  $Res call(
+      {@JsonKey(name: 'uid') String uid,
+      @JsonKey(name: 'roomId') String? roomId});
 }
 
 /// @nodoc
@@ -85,12 +96,17 @@ class __$$_UserDocumentCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = null,
+    Object? roomId = freezed,
   }) {
     return _then(_$_UserDocument(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      roomId: freezed == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -98,7 +114,10 @@ class __$$_UserDocumentCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserDocument extends _UserDocument {
-  const _$_UserDocument({@JsonKey(name: 'uid') required this.uid}) : super._();
+  const _$_UserDocument(
+      {@JsonKey(name: 'uid') required this.uid,
+      @JsonKey(name: 'roomId') this.roomId})
+      : super._();
 
   factory _$_UserDocument.fromJson(Map<String, dynamic> json) =>
       _$$_UserDocumentFromJson(json);
@@ -106,10 +125,13 @@ class _$_UserDocument extends _UserDocument {
   @override
   @JsonKey(name: 'uid')
   final String uid;
+  @override
+  @JsonKey(name: 'roomId')
+  final String? roomId;
 
   @override
   String toString() {
-    return 'UserDocument(uid: $uid)';
+    return 'UserDocument(uid: $uid, roomId: $roomId)';
   }
 
   @override
@@ -117,12 +139,13 @@ class _$_UserDocument extends _UserDocument {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserDocument &&
-            (identical(other.uid, uid) || other.uid == uid));
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.roomId, roomId) || other.roomId == roomId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid);
+  int get hashCode => Object.hash(runtimeType, uid, roomId);
 
   @JsonKey(ignore: true)
   @override
@@ -140,7 +163,8 @@ class _$_UserDocument extends _UserDocument {
 
 abstract class _UserDocument extends UserDocument {
   const factory _UserDocument(
-      {@JsonKey(name: 'uid') required final String uid}) = _$_UserDocument;
+      {@JsonKey(name: 'uid') required final String uid,
+      @JsonKey(name: 'roomId') final String? roomId}) = _$_UserDocument;
   const _UserDocument._() : super._();
 
   factory _UserDocument.fromJson(Map<String, dynamic> json) =
@@ -149,6 +173,9 @@ abstract class _UserDocument extends UserDocument {
   @override
   @JsonKey(name: 'uid')
   String get uid;
+  @override
+  @JsonKey(name: 'roomId')
+  String? get roomId;
   @override
   @JsonKey(ignore: true)
   _$$_UserDocumentCopyWith<_$_UserDocument> get copyWith =>
