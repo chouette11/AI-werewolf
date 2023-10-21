@@ -1,5 +1,6 @@
 import 'package:ai_werewolf/page/tutorial/children/tutorial_page_1.dart';
 import 'package:ai_werewolf/page/tutorial/children/tutorial_page_2.dart';
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_3.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,15 @@ final routerProvider = Provider<GoRouter>(
                 pageBuilder: (context, state) => _buildPageWithAnimation(
                   const TutorialPage2(),
                 ),
+              ),
+              GoRoute(
+                path: '3',
+                pageBuilder: (context, state) {
+                  final isWin = state.extra as bool;
+                  return _buildPageWithAnimation(
+                    TutorialPage3(isWin: isWin),
+                  );
+                }
               ),
             ],
           ),
