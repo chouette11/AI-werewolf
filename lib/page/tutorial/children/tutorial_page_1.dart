@@ -36,9 +36,6 @@ class TutorialPage1 extends ConsumerWidget {
               ref.read(tutorialTextBoolProvider.notifier).update((
                   state) => false);
               context.push('/tutorial/2');
-              Timer.periodic(const Duration(seconds: 1), (timer) {
-
-              });
             },
             child: Container(
               width: MediaQuery.of(context).size.width,

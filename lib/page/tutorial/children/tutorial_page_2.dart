@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ai_werewolf/page/tutorial/component/tutorial_answer_dialog.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_appbar.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_text_field.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -30,6 +31,11 @@ class _PageState extends ConsumerState<TutorialPage2> {
       setState(() => count++);
       if (count >= 0) {
         itemCount++;
+      }
+      if (count == 8) {
+        showDialog(
+            context: context,
+            builder: (context) => const TutorialAnswerDialog());
       }
     });
   }
@@ -172,7 +178,7 @@ class _IntroWidget extends StatelessWidget {
 }
 
 class _ScrollButton extends StatelessWidget {
-  const _ScrollButton({ required this.onTap});
+  const _ScrollButton({required this.onTap});
 
   final void Function() onTap;
 
