@@ -6,7 +6,6 @@ import 'package:ai_werewolf/model/entity/member/member_entity.dart';
 import 'package:ai_werewolf/model/entity/room/room_entity.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:ai_werewolf/util/enum/role.dart';
-import 'package:uuid/uuid.dart';
 
 final roomRepositoryProvider =
     Provider<RoomRepository>((ref) => RoomRepository(ref));
