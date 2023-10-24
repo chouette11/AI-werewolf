@@ -22,7 +22,7 @@ final uuidProvider = Provider((_) => const Uuid());
 /// ページ遷移のプロバイダ
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/',
+    initialLocation: '/tutorial',
     routes: [
       GoRoute(
         path: '/',
