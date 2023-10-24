@@ -18,7 +18,7 @@ class TutorialPage2 extends ConsumerStatefulWidget {
 
 class _PageState extends ConsumerState<TutorialPage2> {
   int count = 0;
-  int itemCount = 1;
+  int itemCount = 2;
   bool value = false;
   final List<Widget> children = [];
 
