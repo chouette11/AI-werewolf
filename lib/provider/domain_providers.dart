@@ -1,6 +1,9 @@
 import 'package:ai_werewolf/page/tutorial/children/tutorial_page_1.dart';
 import 'package:ai_werewolf/page/tutorial/children/tutorial_page_2.dart';
 import 'package:ai_werewolf/page/tutorial/children/tutorial_page_3.dart';
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_4.dart';
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_5.dart';
+import 'package:ai_werewolf/page/tutorial/children/tutorial_page_6.dart';
 import 'package:ai_werewolf/page/wait/online_waiting_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +25,7 @@ final uuidProvider = Provider((_) => const Uuid());
 /// ページ遷移のプロバイダ
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/tutorial',
+    initialLocation: '/tutorial/4',
     routes: [
       GoRoute(
         path: '/',
@@ -86,6 +89,24 @@ final routerProvider = Provider<GoRouter>(
                     TutorialPage3(isWin: isWin),
                   );
                 }
+              ),
+              GoRoute(
+                path: '4',
+                pageBuilder: (context, state) => _buildPageWithAnimation(
+                  const TutorialPage4(),
+                ),
+              ),
+              GoRoute(
+                path: '5',
+                pageBuilder: (context, state) => _buildPageWithAnimation(
+                  const TutorialPage5(),
+                ),
+              ),
+              GoRoute(
+                path: '6',
+                pageBuilder: (context, state) => _buildPageWithAnimation(
+                  const TutorialPage6(),
+                ),
               ),
             ],
           ),
