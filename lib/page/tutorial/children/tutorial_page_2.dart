@@ -33,11 +33,16 @@ class _PageState extends ConsumerState<TutorialPage2> {
         itemCount++;
       }
       if (count == 8) {
+        setState(() {
+          value = true;
+        });
+      }
+      if (count == 10) {
         showDialog(
             context: context,
             builder: (context) => const TutorialAnswerDialog(index: 3));
       }
-      if (count > 10) {
+      if (count > 12) {
         timer.cancel();
       }
     });

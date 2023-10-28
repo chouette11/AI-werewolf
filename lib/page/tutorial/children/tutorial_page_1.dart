@@ -10,11 +10,35 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:go_router/go_router.dart';
 
-class TutorialPage1 extends ConsumerWidget {
+class TutorialPage1 extends ConsumerStatefulWidget {
   const TutorialPage1({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TutorialPage1> createState() => _PageState();
+}
+
+class _PageState extends ConsumerState<TutorialPage1> {
+  int count = 0;
+  final List<Widget> children = [];
+
+  @override
+  void initState() {
+    children.add(Text(count.toString()));
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      print(count);
+      setState(() => count++);
+      if (count == 3) {
+        ref.read(tutorialTextBoolProvider.notifier).update((state) => true);
+      }
+      if (count > 5) {
+        timer.cancel();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     bool flag = false;
     return WillPopScope(
       onWillPop: () async => false,
@@ -23,18 +47,15 @@ class TutorialPage1 extends ConsumerWidget {
         child: Scaffold(
           appBar: const TutorialAppBar(120),
           backgroundColor: ColorConstant.back,
-          bottomSheet: const TutorialTextField(text: '何うどんが好き？',),
+          bottomSheet: const TutorialTextField(
+            text: '何うどんが好き？',
+          ),
           floatingActionButton: _ScrollButton(onTap: () {}),
           body: GestureDetector(
             onTap: () {
-              if (!flag) {
-                ref.read(tutorialTextBoolProvider.notifier).update((
-                    state) => true);
-                flag = true;
-                return;
-              }
-              ref.read(tutorialTextBoolProvider.notifier).update((
-                  state) => false);
+              ref
+                  .read(tutorialTextBoolProvider.notifier)
+                  .update((state) => false);
               context.push('/tutorial/2');
             },
             child: Container(
