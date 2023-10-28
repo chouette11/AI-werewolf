@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,28 +7,39 @@ import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 
-class TutorialTextField extends StatefulWidget {
+class TutorialTextField extends ConsumerStatefulWidget {
   const TutorialTextField({super.key, this.text});
+
   final String? text;
 
   @override
-  State<TutorialTextField> createState() => _TutorialTextFieldState();
+  ConsumerState<TutorialTextField> createState() => _TutorialTextFieldState();
 }
 
-class _TutorialTextFieldState extends State<TutorialTextField> with TickerProviderStateMixin {
+class _TutorialTextFieldState extends ConsumerState<TutorialTextField>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _color;
+  int count = 0;
 
   @override
   void initState() {
     super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() => count++);
+      if (count % 2 == 0) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    });
     _controller = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
     _color = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
+      begin: ColorConstant.accent,
+      end: ColorConstant.accent2,
     ).animate(_controller);
   }
 
@@ -53,7 +66,7 @@ class _TutorialTextFieldState extends State<TutorialTextField> with TickerProvid
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () async {_controller.forward();},
+                onTap: () async {},
                 child: AnimatedBuilder(
                   animation: _color,
                   builder: (context, child) {
