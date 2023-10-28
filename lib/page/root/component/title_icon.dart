@@ -15,9 +15,9 @@ class TitleIcon extends StatelessWidget {
             Image.asset('assets/images/title_icon.png', height: 252),
           ],
         ),
-        Text(
+        const Text(
           'AI人狼',
-          style: TextStyleConstant.bold60.copyWith(fontFamily: 'zen'),
+          style: TextStyleConstant.bold60,
         )
       ],
     );

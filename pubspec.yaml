@@ -45,9 +45,11 @@ dev_dependencies:
 flutter:
 
   fonts:
-     - family: zen
+     - family: Kaisei_Decol
        fonts:
-         - asset: assets/fonts/ZenOldMincho-Medium.ttf
+         - asset: assets/fonts/Kaisei_Decol/KaiseiDecol-Bold.ttf
+         - asset: assets/fonts/Kaisei_Decol/KaiseiDecol-Regular.ttf
+         - asset: assets/fonts/Kaisei_Decol/KaiseiDecol-Medium.ttf
   uses-material-design: true
 
   assets:
