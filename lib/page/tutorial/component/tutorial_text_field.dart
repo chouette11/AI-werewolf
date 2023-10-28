@@ -6,7 +6,8 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 
 class TutorialTextField extends StatefulWidget {
-  const TutorialTextField({super.key});
+  const TutorialTextField({super.key, this.text});
+  final String? text;
 
   @override
   State<TutorialTextField> createState() => _TutorialTextFieldState();
@@ -47,7 +48,7 @@ class _TutorialTextFieldState extends State<TutorialTextField> with TickerProvid
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            const Flexible(child: _CustomTextBox(1)),
+            Flexible(child: _CustomTextBox(1, widget.text ?? '')),
             const SizedBox(width: 8),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -72,8 +73,9 @@ class _TutorialTextFieldState extends State<TutorialTextField> with TickerProvid
 }
 
 class _CustomTextBox extends ConsumerWidget {
-  const _CustomTextBox(this.maxLine, {Key? key}) : super(key: key);
+  const _CustomTextBox(this.maxLine, this.text, {Key? key}) : super(key: key);
   final int maxLine;
+  final String text;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,7 +118,7 @@ class _CustomTextBox extends ConsumerWidget {
                   isRepeatingAnimation: false,
                   animatedTexts: [
                     TypewriterAnimatedText(
-                      '何うどんが好き？',
+                      text,
                       speed: const Duration(milliseconds: 120),
                       textAlign: TextAlign.center,
                       textStyle: const TextStyle(

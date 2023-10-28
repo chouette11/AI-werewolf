@@ -18,7 +18,7 @@ class TutorialPage5 extends ConsumerStatefulWidget {
 
 class _PageState extends ConsumerState<TutorialPage5> {
   int count = 0;
-  int itemCount = 1;
+  int itemCount = 2;
   bool value = false;
   final List<Widget> children = [];
 
@@ -32,10 +32,10 @@ class _PageState extends ConsumerState<TutorialPage5> {
       if (count >= 0) {
         itemCount++;
       }
-      if (count == 8) {
+      if (count == 10) {
         showDialog(
             context: context,
-            builder: (context) => const TutorialAnswerDialog());
+            builder: (context) => const TutorialAnswerDialog(index: 6));
       }
     });
   }
@@ -68,7 +68,7 @@ class _PageState extends ConsumerState<TutorialPage5> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 520,
+                  height: 540,
                   child: ScrollConfiguration(
                     behavior: MyBehavior(),
                     child: ListView.builder(
@@ -117,7 +117,7 @@ class _PageState extends ConsumerState<TutorialPage5> {
                     isRepeatingAnimation: false,
                     animatedTexts: [
                       TypewriterAnimatedText(
-                        'AIは電脳体陣営に紛れている\nどのユーザーがAIだろうか',
+                        'AIが紛れやすい回答を行い\n人間陣営を欺け！',
                         textAlign: TextAlign.center,
                         textStyle: TextStyleConstant.normal16,
                       ),

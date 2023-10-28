@@ -25,7 +25,7 @@ final uuidProvider = Provider((_) => const Uuid());
 /// ページ遷移のプロバイダ
 final routerProvider = Provider<GoRouter>(
   (ref) => GoRouter(
-    initialLocation: '/tutorial/4',
+    initialLocation: '/tutorial',
     routes: [
       GoRoute(
         path: '/',
@@ -104,9 +104,12 @@ final routerProvider = Provider<GoRouter>(
               ),
               GoRoute(
                 path: '6',
-                pageBuilder: (context, state) => _buildPageWithAnimation(
-                  const TutorialPage6(),
-                ),
+                pageBuilder: (context, state) {
+                  final isWin = state.extra as bool;
+                  return _buildPageWithAnimation(
+                    TutorialPage6(isWin: isWin),
+                  );
+                }
               ),
             ],
           ),

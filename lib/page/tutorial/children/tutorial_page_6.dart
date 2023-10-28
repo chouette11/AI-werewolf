@@ -7,8 +7,10 @@ import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 
 class TutorialPage6 extends ConsumerStatefulWidget {
   const TutorialPage6({
+    required this.isWin,
     Key? key,
   }) : super(key: key);
+  final bool isWin;
 
   @override
   ConsumerState<TutorialPage6> createState() => _TutorialPage6State();
@@ -29,27 +31,29 @@ class _TutorialPage6State extends ConsumerState<TutorialPage6> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
-                  '人間',
+                  '電脳体',
                   style: TextStyleConstant.normal32,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '敗北',
+                  widget.isWin ? '勝利' : '敗北',
                   style: TextStyleConstant.bold60,
                 ),
                 const Icon(
-                  Icons.diversity_3,
-                  color: ColorConstant.main,
+                  Icons.psychology_outlined,
+                  color: ColorConstant.accent,
                   size: 152,
                 ),
                 const SizedBox(height: 8),
-                const TutorialResultUsers(),
+                const TutorialResultUsers(
+                  roles: ['電脳体', '人間', 'AI', '人間', '電脳体'],
+                ),
                 const SizedBox(height: 32),
                 AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
                     TypewriterAnimatedText(
-                      '今回は3番がAIでした。\n人間陣営はこの3番を処刑することで\n勝利になります。',
+                      '今回も3番がAIでした。\n電脳体陣営はこの3番を処刑から守ることで\n勝利になります。',
                       textAlign: TextAlign.center,
                       textStyle: TextStyleConstant.normal16,
                     ),

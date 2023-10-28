@@ -7,9 +7,12 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 class TutorialExecutedDialog extends ConsumerWidget {
   const TutorialExecutedDialog({
     required this.id,
+    required this.index,
     Key? key,
   }) : super(key: key);
   final int id;
+  final int index;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return WillPopScope(
@@ -32,7 +35,7 @@ class TutorialExecutedDialog extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   context.pop();
-                  context.push('/tutorial/3', extra: id == 3);
+                  context.push('/tutorial/$index', extra: id == 3);
                 },
                 child: Container(
                   width: 56,

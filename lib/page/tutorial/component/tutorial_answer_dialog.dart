@@ -5,7 +5,9 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 
 class TutorialAnswerDialog extends ConsumerStatefulWidget {
-  const TutorialAnswerDialog({super.key});
+  const TutorialAnswerDialog({super.key, required this.index});
+
+  final int index;
 
   @override
   ConsumerState<TutorialAnswerDialog> createState() =>
@@ -68,7 +70,10 @@ class _TutorialAnswerDialogState extends ConsumerState<TutorialAnswerDialog> {
                         barrierDismissible: false,
                         context: context,
                         builder: (BuildContext context) {
-                          return TutorialExecutedDialog(id: selectedId);
+                          return TutorialExecutedDialog(
+                            id: selectedId,
+                            index: widget.index,
+                          );
                         },
                       );
                     },

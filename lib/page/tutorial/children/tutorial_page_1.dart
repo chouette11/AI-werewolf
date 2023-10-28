@@ -23,7 +23,7 @@ class TutorialPage1 extends ConsumerWidget {
         child: Scaffold(
           appBar: const TutorialAppBar(120),
           backgroundColor: ColorConstant.back,
-          bottomSheet: const TutorialTextField(),
+          bottomSheet: const TutorialTextField(text: '何うどんが好き？',),
           floatingActionButton: _ScrollButton(onTap: () {}),
           body: GestureDetector(
             onTap: () {

@@ -5,22 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TutorialResultUsers extends ConsumerWidget {
-  const TutorialResultUsers({super.key});
+  const TutorialResultUsers({super.key, required this.roles});
+
+  final List<String> roles;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final members = [
-      const MemberEntity(
-          uid: 'uid', assignedId: 1, role: '人間', isLive: true, voted: 0),
-      const MemberEntity(
-          uid: 'uid', assignedId: 2, role: '人間', isLive: true, voted: 0),
-      const MemberEntity(
-          uid: 'uid', assignedId: 3, role: 'AI', isLive: true, voted: 0),
-      const MemberEntity(
-          uid: 'uid', assignedId: 4, role: '電脳体', isLive: true, voted: 0),
-      const MemberEntity(
-          uid: 'uid', assignedId: 5, role: '電脳体', isLive: true, voted: 0)
-    ];
+    final members = roles
+        .asMap()
+        .map(
+          (i, value) => MapEntry(
+            key,
+            MemberEntity(
+              uid: 'uid',
+              assignedId: i + 1,
+              role: value,
+              isLive: true,
+              voted: 0,
+            ),
+          ),
+        )
+        .values
+        .toList();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

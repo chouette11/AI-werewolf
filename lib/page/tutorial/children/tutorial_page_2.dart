@@ -35,7 +35,7 @@ class _PageState extends ConsumerState<TutorialPage2> {
       if (count == 8) {
         showDialog(
             context: context,
-            builder: (context) => const TutorialAnswerDialog());
+            builder: (context) => const TutorialAnswerDialog(index: 3));
       }
     });
   }
