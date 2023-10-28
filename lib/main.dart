@@ -49,7 +49,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp.router(
       theme: ThemeData(
         primaryColor: ColorConstant.black100,
-        fontFamily: 'NotoSans',
+        fontFamily: 'Kaisei_Decol',
         dividerColor: Colors.transparent,
       ),
       debugShowCheckedModeBanner: false,
