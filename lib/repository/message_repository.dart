@@ -32,21 +32,17 @@ class MessageRepository {
     final api = ref.read(apiProvider);
     final firestore = ref.read(firestoreProvider);
     final resMessage = await api.fetchQuestionAnswerMessage(message, topic);
-    final random = Random().nextInt(2000);
-    final delay = message.content.length * 2 * 1000 + random;
     final resEntity = MessageEntity(
       content: resMessage.content,
       uid: resMessage.uid,
-      createdAt: DateTime.now().add(Duration(milliseconds: delay)),
+      createdAt: DateTime.now(),
     );
     // 疑問文でない場合何も保存しない
     if (resEntity.content == '') {
       return;
     }
     final messageDoc = resEntity.toMessageDocument();
-    Future.delayed(Duration(milliseconds: delay), () async {
-      await firestore.insertMessage(messageDoc, roomId);
-    });
+    await firestore.insertMessage(messageDoc, roomId);
   }
 
   /// タスクのストリームを取得
