@@ -37,6 +37,9 @@ class _PageState extends ConsumerState<TutorialPage5> {
             context: context,
             builder: (context) => const TutorialAnswerDialog(index: 6));
       }
+      if (count > 12) {
+        timer.cancel();
+      }
     });
   }
 
