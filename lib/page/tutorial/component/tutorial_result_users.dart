@@ -11,22 +11,18 @@ class TutorialResultUsers extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final members = roles
-        .asMap()
-        .map(
-          (i, value) => MapEntry(
-            key,
-            MemberEntity(
-              uid: 'uid',
-              assignedId: i + 1,
-              role: value,
-              isLive: true,
-              voted: 0,
-            ),
-          ),
-        )
-        .values
-        .toList();
+    List<MemberEntity> members = [];
+    for (int i = 0; i < roles.length; i++) {
+      members.add(
+        MemberEntity(
+          uid: 'uid',
+          assignedId: i + 1,
+          role: roles[i],
+          isLive: true,
+          voted: 0,
+        ),
+      );
+    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
