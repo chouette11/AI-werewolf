@@ -6,6 +6,7 @@ class ColorConstant {
   static const back = Color(0xFF474747);
 
   static const accent = Color(0xFF74AA9C);
+  static const accent2 = Color(0xFFEBFFFA);
   static const main = Color(0xFFFFFFFF);
   static const text = Color(0xFFFFFFFF);
 
