@@ -1,16 +1,43 @@
 import 'dart:async';
 
+import 'package:ai_werewolf/page/tutorial/component/tutorial_answer_dialog.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
+import 'package:go_router/go_router.dart';
+
+class TutorialBottomSheet extends StatelessWidget {
+  const TutorialBottomSheet({
+    super.key,
+    required this.isEnd,
+    required this.isFlash,
+    required this.index,
+    required this.role,
+  });
+
+  final bool isEnd;
+  final bool isFlash;
+  final int index;
+  final String role;
+
+  @override
+  Widget build(BuildContext context) {
+    if (isEnd) {
+      return _EndBottomSheet(index: index, role: role);
+    } else {
+      return TutorialTextField(isFlash: isFlash);
+    }
+  }
+}
 
 class TutorialTextField extends ConsumerStatefulWidget {
-  const TutorialTextField({super.key, this.text});
+  const TutorialTextField({super.key, this.text, required this.isFlash});
 
   final String? text;
+  final bool isFlash;
 
   @override
   ConsumerState<TutorialTextField> createState() => _TutorialTextFieldState();
@@ -25,7 +52,7 @@ class _TutorialTextFieldState extends ConsumerState<TutorialTextField>
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
       setState(() => count++);
       if (count % 2 == 0) {
         _controller.forward();
@@ -34,7 +61,7 @@ class _TutorialTextFieldState extends ConsumerState<TutorialTextField>
       }
     });
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _color = ColorTween(
@@ -66,13 +93,19 @@ class _TutorialTextFieldState extends ConsumerState<TutorialTextField>
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () async {},
+                onTap: () async {
+                  ref
+                      .read(tutorialTextBoolProvider.notifier)
+                      .update((state) => false);
+                  context.push('/tutorial/2');
+                },
                 child: AnimatedBuilder(
                   animation: _color,
                   builder: (context, child) {
                     return Icon(
                       Icons.send,
-                      color: _color.value,
+                      color:
+                          widget.isFlash ? _color.value : ColorConstant.accent,
                     );
                   },
                 ),
@@ -144,6 +177,59 @@ class _CustomTextBox extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _EndBottomSheet extends StatelessWidget {
+  const _EndBottomSheet({super.key, required this.index, required this.role});
+
+  final int index;
+  final String role;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      color: ColorConstant.accent,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            const Spacer(),
+            Text(
+              'あなたは $role',
+              style: TextStyleConstant.bold12,
+            ),
+            const Spacer(),
+            SizedBox(
+              width: 80,
+              height: 32,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return TutorialAnswerDialog(index: index);
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: ColorConstant.accent,
+                  backgroundColor: ColorConstant.main,
+                ),
+                child: Text(
+                  '解答',
+                  style: TextStyleConstant.bold12.copyWith(
+                    color: ColorConstant.accent,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }

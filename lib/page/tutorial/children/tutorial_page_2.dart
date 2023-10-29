@@ -57,7 +57,8 @@ class _PageState extends ConsumerState<TutorialPage2> {
       child: Scaffold(
         appBar: const TutorialAppBar(90),
         backgroundColor: ColorConstant.back,
-        bottomSheet: const TutorialTextField(),
+        bottomSheet: TutorialBottomSheet(
+            isEnd: count > 9, isFlash: false, index: 3, role: '人間'),
         floatingActionButton: _ScrollButton(
           onTap: () {
             _controller.animateTo(
