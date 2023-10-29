@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
-import 'package:go_router/go_router.dart';
 
 class TutorialPage1 extends ConsumerStatefulWidget {
   const TutorialPage1({super.key});
@@ -39,7 +38,6 @@ class _PageState extends ConsumerState<TutorialPage1> {
 
   @override
   Widget build(BuildContext context) {
-    bool flag = false;
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(
@@ -47,37 +45,30 @@ class _PageState extends ConsumerState<TutorialPage1> {
         child: Scaffold(
           appBar: const TutorialAppBar(120),
           backgroundColor: ColorConstant.back,
-          bottomSheet: const TutorialTextField(
+          bottomSheet: TutorialTextField(
             text: '何うどんが好き？',
+            isFlash: count >= 5,
           ),
           floatingActionButton: _ScrollButton(onTap: () {}),
-          body: GestureDetector(
-            onTap: () {
-              ref
-                  .read(tutorialTextBoolProvider.notifier)
-                  .update((state) => false);
-              context.push('/tutorial/2');
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: Colors.transparent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AnimatedTextKit(
-                    isRepeatingAnimation: false,
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        'あなたは人間陣営\n今から質問をすることによって\nAIを探し出す',
-                        textAlign: TextAlign.center,
-                        textStyle: TextStyleConstant.normal16,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 80),
-                ],
-              ),
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'あなたは人間陣営\n今から質問をすることによって\nAIを探し出す',
+                      textAlign: TextAlign.center,
+                      textStyle: TextStyleConstant.normal16,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 80),
+              ],
             ),
           ),
         ),
