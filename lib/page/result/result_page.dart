@@ -93,7 +93,8 @@ class _ResultPageState extends ConsumerState<ResultPage> {
                     const SizedBox(height: 8),
                     ResultUsers(roomId: widget.roomId),
                     const SizedBox(height: 48),
-                    BackTitleButton(
+                    ArrowButton(
+                      title: 'タイトルに戻る',
                       onTap: () async {
                         await ref
                             .read(messageRepositoryProvider)
