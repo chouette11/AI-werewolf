@@ -2,9 +2,10 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
 import 'package:flutter/material.dart';
 
-class BackTitleButton extends StatelessWidget {
-  const BackTitleButton({super.key, required this.onTap});
+class ArrowButton extends StatelessWidget {
+  const ArrowButton({super.key, required this.onTap, required this.title});
 
+  final String title;
   final void Function() onTap;
 
   @override
@@ -31,7 +32,7 @@ class BackTitleButton extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Text(
-            'タイトルへ戻る',
+            title,
             style: TextStyleConstant.normal20.copyWith(
               shadows: [
                 const Shadow(
