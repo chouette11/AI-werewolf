@@ -1,4 +1,5 @@
 import 'package:ai_werewolf/data/firestore_data_source.dart';
+import 'package:ai_werewolf/data/preferences_data_source.dart';
 import 'package:ai_werewolf/model/entity/user/user_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,5 +29,13 @@ class UserRepository {
     return firestore.fetchWaitingStream().map(
           (event) => UserEntity.fromDoc(event),
     );
+  }
+
+  /// ユーザーが起動したかを判別
+  Future<bool> getIsLaunch() async {
+    final pref = ref.read(preferencesProvider);
+    final value = await pref.getBool(PrefKey.isLaunch.name);
+    pref.setBool(PrefKey.isLaunch.name, true);
+    return value ?? false;
   }
 }
