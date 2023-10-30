@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:ai_werewolf/page/tutorial/component/tutorial_appbar.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_text_field.dart';
+import 'package:ai_werewolf/provider/audio_provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
@@ -18,11 +20,9 @@ class TutorialPage1 extends ConsumerStatefulWidget {
 
 class _PageState extends ConsumerState<TutorialPage1> {
   int count = 0;
-  final List<Widget> children = [];
 
   @override
   void initState() {
-    children.add(Text(count.toString()));
     super.initState();
     Timer.periodic(const Duration(seconds: 1), (timer) {
       print(count);
