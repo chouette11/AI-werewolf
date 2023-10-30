@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:ai_werewolf/page/result/component/back_title_button.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_result_users.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +21,26 @@ class TutorialPage3 extends ConsumerStatefulWidget {
 }
 
 class _TutorialPage3State extends ConsumerState<TutorialPage3> {
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      print(count);
+      setState(() => count++);
+      if (count > 5) {
+        timer.cancel();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.back,
       body: GestureDetector(
-        onTap: () {
-          context.push('/tutorial/4');
-        },
+        onTap: () => context.push('/tutorial/4'),
         child: Container(
           color: Colors.transparent,
           child: Center(
@@ -64,6 +79,20 @@ class _TutorialPage3State extends ConsumerState<TutorialPage3> {
                           textStyle: TextStyleConstant.normal16,
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 24),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 800),
+                      reverseDuration: const Duration(milliseconds: 800),
+                      child: count > 2
+                          ? ArrowButton(
+                              key: const Key('1'),
+                              title: '次へ',
+                              onTap: () => context.push('/tutorial/4'),
+                            )
+                          : const SizedBox(
+                              key: Key('2'),
+                            ),
                     ),
                   ],
                 ),

@@ -46,6 +46,7 @@ class _PageState extends ConsumerState<TutorialPage1> {
           appBar: const TutorialAppBar(120),
           backgroundColor: ColorConstant.back,
           bottomSheet: TutorialTextField(
+            index: 2,
             text: '何うどんが好き？',
             isFlash: count >= 5,
           ),

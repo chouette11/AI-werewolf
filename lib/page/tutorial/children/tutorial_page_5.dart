@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_answer_dialog.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_appbar.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_text_field.dart';
+import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class TutorialPage5 extends ConsumerStatefulWidget {
 
 class _PageState extends ConsumerState<TutorialPage5> {
   int count = 0;
-  int itemCount = 2;
+  int itemCount = 1;
   bool value = false;
   final List<Widget> children = [];
 
@@ -29,15 +30,22 @@ class _PageState extends ConsumerState<TutorialPage5> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       print(count);
       setState(() => count++);
-      if (count >= 0) {
+      if (itemCount == 2) {
+        ref.read(tutorialTextBoolProvider.notifier).update((state) => true);
+      } else if (itemCount == 7) {
+        ref.read(tutorialTextBoolProvider.notifier).update((state) => true);
+      } else {
         itemCount++;
       }
-      if (count == 10) {
-        showDialog(
-            context: context,
-            builder: (context) => const TutorialAnswerDialog(index: 6));
+
+      if (itemCount == 10) {
+        setState(() => value = true);
       }
-      if (count > 12) {
+      if (itemCount > 12) {
+        showDialog(
+          context: context,
+          builder: (context) => const TutorialAnswerDialog(index: 6),
+        );
         timer.cancel();
       }
     });
@@ -52,7 +60,31 @@ class _PageState extends ConsumerState<TutorialPage5> {
       child: Scaffold(
         appBar: const TutorialAppBar(90),
         backgroundColor: ColorConstant.back,
-        bottomSheet: const TutorialTextField(isFlash: false),
+        bottomSheet: itemCount > 2
+            ? TutorialBottomSheet(
+                text: '正月',
+                isFlash: itemCount == 7,
+                index: 6,
+                onTap: () {
+                  ref
+                      .read(tutorialTextBoolProvider.notifier)
+                      .update((state) => false);
+                  itemCount++;
+                },
+                isEnd: itemCount == 13,
+                role: '電脳体',
+              )
+            : TutorialTextField(
+                text: '冬',
+                isFlash: itemCount == 2,
+                index: 6,
+                onTap: () {
+                  ref
+                      .read(tutorialTextBoolProvider.notifier)
+                      .update((state) => false);
+                  itemCount++;
+                },
+              ),
         floatingActionButton: _ScrollButton(
           onTap: () {
             _controller.animateTo(
@@ -121,6 +153,7 @@ class _PageState extends ConsumerState<TutorialPage5> {
                     animatedTexts: [
                       TypewriterAnimatedText(
                         'AIが紛れやすい回答を行い\n人間陣営を欺け！',
+                        speed: const Duration(milliseconds: 50),
                         textAlign: TextAlign.center,
                         textStyle: TextStyleConstant.normal16,
                       ),

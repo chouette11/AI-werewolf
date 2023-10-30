@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ai_werewolf/page/tutorial/component/tutorial_appbar.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_text_field.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -8,12 +10,33 @@ import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/provider/presentation_providers.dart';
 import 'package:go_router/go_router.dart';
 
-class TutorialPage4 extends ConsumerWidget {
+class TutorialPage4 extends StatefulWidget {
   const TutorialPage4({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    bool flag = false;
+  State<TutorialPage4> createState() => _TutorialPage4State();
+}
+
+class _TutorialPage4State extends State<TutorialPage4> {
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      print(count);
+      setState(() => count++);
+      if (count > 2) {
+        context.push('/tutorial/5');
+      }
+      if (count > 4) {
+        timer.cancel();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(
@@ -21,40 +44,27 @@ class TutorialPage4 extends ConsumerWidget {
         child: Scaffold(
           appBar: const TutorialAppBar(120),
           backgroundColor: ColorConstant.back,
-          bottomSheet: const TutorialTextField(text: '冬', isFlash: false),
+          bottomSheet: const TutorialTextField(isFlash: false, index: 5),
           floatingActionButton: _ScrollButton(onTap: () {}),
-          body: GestureDetector(
-            onTap: () {
-              if (!flag) {
-                ref.read(tutorialTextBoolProvider.notifier).update((
-                    state) => true);
-                flag = true;
-                return;
-              }
-              ref.read(tutorialTextBoolProvider.notifier).update((
-                  state) => false);
-              context.push('/tutorial/5');
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: Colors.transparent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AnimatedTextKit(
-                    isRepeatingAnimation: false,
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        'あなたは電脳体陣営\n人間陣営の質問から\nAIを守り切る',
-                        textAlign: TextAlign.center,
-                        textStyle: TextStyleConstant.normal16,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 80),
-                ],
-              ),
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'あなたは電脳体陣営\n人間陣営の質問から\nAIを守り切る',
+                      textAlign: TextAlign.center,
+                      textStyle: TextStyleConstant.normal16,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 80),
+              ],
             ),
           ),
         ),

@@ -16,28 +16,41 @@ class TutorialBottomSheet extends StatelessWidget {
     required this.isFlash,
     required this.index,
     required this.role,
+    this.text,
+    this.onTap,
   });
 
   final bool isEnd;
   final bool isFlash;
   final int index;
   final String role;
+  final String? text;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     if (isEnd) {
       return _EndBottomSheet(index: index, role: role);
     } else {
-      return TutorialTextField(isFlash: isFlash);
+      return TutorialTextField(
+          isFlash: isFlash, text: text, index: index, onTap: onTap);
     }
   }
 }
 
 class TutorialTextField extends ConsumerStatefulWidget {
-  const TutorialTextField({super.key, this.text, required this.isFlash});
+  const TutorialTextField({
+    super.key,
+    required this.index,
+    this.text,
+    required this.isFlash,
+    this.onTap,
+  });
 
+  final int index;
   final String? text;
   final bool isFlash;
+  final void Function()? onTap;
 
   @override
   ConsumerState<TutorialTextField> createState() => _TutorialTextFieldState();
@@ -93,12 +106,13 @@ class _TutorialTextFieldState extends ConsumerState<TutorialTextField>
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () async {
-                  ref
-                      .read(tutorialTextBoolProvider.notifier)
-                      .update((state) => false);
-                  context.push('/tutorial/2');
-                },
+                onTap: widget.onTap ??
+                    () async {
+                      ref
+                          .read(tutorialTextBoolProvider.notifier)
+                          .update((state) => false);
+                      context.push('/tutorial/${widget.index}');
+                    },
                 child: AnimatedBuilder(
                   animation: _color,
                   builder: (context, child) {

@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:ai_werewolf/page/result/component/back_title_button.dart';
 import 'package:ai_werewolf/page/tutorial/component/tutorial_result_users.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ai_werewolf/util/constant/color_constant.dart';
 import 'package:ai_werewolf/util/constant/text_style_constant.dart';
+import 'package:go_router/go_router.dart';
 
 class TutorialPage6 extends ConsumerStatefulWidget {
   const TutorialPage6({
@@ -17,6 +21,19 @@ class TutorialPage6 extends ConsumerStatefulWidget {
 }
 
 class _TutorialPage6State extends ConsumerState<TutorialPage6> {
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      print(count);
+      setState(() => count++);
+      if (count > 5) {
+        timer.cancel();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +75,20 @@ class _TutorialPage6State extends ConsumerState<TutorialPage6> {
                       textStyle: TextStyleConstant.normal16,
                     ),
                   ],
+                ),
+                const SizedBox(height: 24),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 800),
+                  reverseDuration: const Duration(milliseconds: 800),
+                  child: count > 2
+                      ? ArrowButton(
+                          key: const Key('1'),
+                          title: 'タイトルに戻る',
+                          onTap: () => context.go('/'),
+                        )
+                      : const SizedBox(
+                          key: Key('2'),
+                        ),
                 ),
               ],
             ),
